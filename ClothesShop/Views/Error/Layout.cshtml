@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/fontAwesome")
+    <style>
+        body {
+            padding: 0px !important;
+        }
+
+        .containerDiv {
+            height: calc(100vh);
+        }
+
+        .row {
+            padding: 44% 0px;
+        }
+
+        img {
+            width: 100px;
+        }
+
+        h1 {
+            color: darkred;
+        }
+
+        h2 {
+            color: gray;
+        }
+
+        hgroup {
+            padding: 20px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-xs-12 col-md-4 col-md-push-4 containerDiv">
+        <div class="row">
+           @RenderBody()
+        </div>
+    </div>
+</body>
+</html>
+
+

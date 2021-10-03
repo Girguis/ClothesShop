@@ -1,0 +1,83 @@
+﻿@model ClothesShop.Areas.Settings.Models.LoginViewModel
+
+@{
+    Layout = "~/Areas/Settings/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.Logins;
+}
+<div class="container tableContainer">
+    <p class="f-left">
+        <a href="@Url.Action("Create","Logins", new { area = "Settings" })" class="btn btn-lg btn-outline-success">
+            <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddLogin
+        </a>
+    </p>
+    <table id="LoginsGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
+        <thead>
+            <tr class="theadData">
+                <th class="width30" data-headerid="FullName" data-dir="desc" onclick="TableManager.prototype.Sort(this);">
+                    <i class="fa fa-arrow-down searchArrow"></i> @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th class="width30" data-headerid="UserName" data-dir="" onclick="TableManager.prototype.Sort(this);">
+                     @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th class="width20"></th>
+                <th class="width20"></th>
+            </tr>
+            <tr class="searchRow">
+                <th class="padding0 width30">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="FullName_" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
+                    </div>
+                </th>
+                <th class="padding0 width30">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="UserName_" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
+                    </div>
+                </th>
+                <th class="width20"></th>
+                <th class="width20"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container text-center">
+    <ul id="Pager" class="pagination-sm"></ul>
+</div>
+@section scripts{
+    <script>
+        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteLogin)";
+        gridId = "LoginsGrid";
+        dataURL = "@Url.Action("GetAll", "Logins" , new { area = "Settings"})/";
+        isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Logins",ClothesShop.Enums.RoleType.Edit)" == "True";
+        isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Logins", ClothesShop.Enums.RoleType.Delete)" == "True";
+        updateURL = "@Url.Action("Edit", "Logins" , new { area = "Settings"})/";
+        deleteURL = "ConfirmDeleteLogin";
+        columns = [
+            { Name: "FullName", Class:"width30"},
+            { Name: "UserName", Class:"width30"},
+            { Name: "EDIT", Class:"width20"},
+            { Name: "DELETE", Class:"width20"}
+        ];
+        searchColumns = [
+            { Name: "FullName_", Type: "input" },
+            { Name: "UserName_", Type: "input" }
+        ];
+        orderBy = {
+            ColumnName: "ID",
+            Direction:"DESC",
+        }
+
+        function ConfirmDeleteLogin(id) {
+            var url = "@Url.Action("Delete","Logins" , new { area = "Settings"}) ";
+            var data = JSON.stringify({ id: id });
+            CommonManager.prototype.ConfirmDelete(url, data);
+        }
+
+        $(document).ready(function () {
+            var tableManager = new TableManager();
+            TableManager.prototype.Init();
+        });
+    </script>
+}

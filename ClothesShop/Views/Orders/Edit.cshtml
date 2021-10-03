@@ -1,0 +1,377 @@
+﻿@model  ClothesShop.Models.OrdersViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.EditOrder;
+}
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ID)
+        @Html.HiddenFor(m => m.CreatedBy)
+        @Html.HiddenFor(m => m.CreatedOn)
+        @Html.HiddenFor(m => m.RequestDate)
+        @Html.HiddenFor(m => m.CustomerID)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>@ClothesShop.Languages.Resources.EditOrder</h4>
+                </div>
+                <div class="panel-body">
+
+                    @{
+                        var products = ClothesShop.Helpers.Helper.GetProducts();
+                        var deliveryMen = ClothesShop.Helpers.Helper.GetDeliveryMen();
+                        var shipmentCompanies = ClothesShop.Helpers.Helper.GetShipmentCompanies();
+                        var employees = ClothesShop.Helpers.Helper.GetEmployees();
+                        if (employees != null && employees.Count > 0)
+                        {
+                            employees.Insert(0, new ClothesShop.Helpers.General() { ID = 0, Name = ClothesShop.Languages.Resources.NoSeller });
+                        }
+                    }
+                    <div class=" col-xs-12">
+                        <div class="col-xs-12 padding0 headerStyle">
+                            <h4>@ClothesShop.Languages.Resources.CustomerInformation</h4>
+                        </div>
+                        @Html.HiddenFor(model => model.Customer.ID)
+                        <div class="col-xs-12 padding0">
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.Customer.Name, htmlAttributes: new { @class = "control-label" })
+                                    <span class="text-danger">*</span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Customer.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Customer.Name, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.Customer.MobileNumber1, htmlAttributes: new { @class = "control-label" })
+                                    <span class="text-danger">*</span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Customer.MobileNumber1, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Customer.MobileNumber1, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.Customer.MobileNumber2, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Customer.MobileNumber2, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Customer.MobileNumber2, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.Customer.Address, htmlAttributes: new { @class = "control-label" })
+                                    <span class="text-danger">*</span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.TextAreaFor(model => model.Customer.Address, new { @class = "form-control col-xs-12 f-right", @rows = "2" })
+                                    @Html.ValidationMessageFor(model => model.Customer.Address, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label" })
+                                    <span class="text-danger">*</span>
+                                </div>
+
+                                <div class="col-xs-12 f-right">
+                                    @Html.DropDownListFor(model => model.CityID, new SelectList(ClothesShop.Helpers.Helper.GetCities(), "ID", "Name"), new { @class = "form-control col-xs-12 f-right SelectDropDownList" })
+                                    @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-xs-12 padding0 headerStyle">
+                            <h4>@ClothesShop.Languages.Resources.OrderDetails</h4>
+                        </div>
+                        <div class="col-xs-12 padding0 paddingTop10">
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.OrderStatusID, htmlAttributes: new { @class = "control-label" })
+                                    <span class="text-danger">*</span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.OrderStatusID, new SelectList(ClothesShop.Helpers.Helper.EnumToList<ClothesShop.Enums.OrderStatuses>(), "ID", "Name"), new { @class = "form-control SelectDropDownList" })
+                                    @Html.ValidationMessageFor(model => model.OrderStatusID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.EmployeeID, new SelectList(deliveryMen, "ID", "Name"), new { @class = "form-control SelectDropDownList" })
+                                    @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.SellerID, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.SellerID, new SelectList(employees, "ID", "Name"), new { @class = "form-control SelectDropDownList" })
+                                    @Html.ValidationMessageFor(model => model.SellerID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.ShipmentCompanyID, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.ShipmentCompanyID, new SelectList(shipmentCompanies, "ID", "Name"), new { @class = "form-control SelectDropDownList" })
+                                    @Html.ValidationMessageFor(model => model.ShipmentCompanyID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.ShipmentPrice, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.ShipmentPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ShipmentPrice, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.PaidAmount, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.PaidAmount, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PaidAmount, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-4 padding0 f-right txt-right">
+                                <div class="col-xs-12 margin5">
+                                    @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label" })
+                                </div>
+
+                                <div class="col-md-12">
+                                    @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", @rows = "2" })
+                                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger col-xs-12 padding0" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-xs-12">
+                        <div class="col-xs-12 padding0 headerStyle">
+                            <h4>@ClothesShop.Languages.Resources.Products</h4>
+                        </div>
+                        @{
+                            var currency = ClothesShop.Languages.Resources.LE;
+                        }
+                        <div class="col-xs-12 padding0 paddingTop10">
+                            <table id="Orders">
+                                <thead>
+                                    <tr>
+                                        <td class="width100">
+                                            <div class="col-xs-12 f-right txt-right padding0">
+                                                <div class="form-group col-xs-12 col-md-3 f-right">
+                                                    <div class="col-xs-12 col-md-12 f-right headerLabel">
+                                                        <label>@ClothesShop.Languages.Resources.Product</label>
+                                                        <span class="text-danger">*</span>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-12 f-right">
+                                                        @Html.DropDownListFor(model => model.Product.ID, new SelectList(products, "ID", "Name"), new { @class = "form-control col-xs-12 f-right SelectDropDownList", @onchange = "OrdersManager.prototype.OnChangeProduct();" })
+                                                        @Html.ValidationMessageFor(m => m.Product.ID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-md-3 f-right">
+                                                    <div class="col-xs-12 col-md-12 f-right headerLabel">
+                                                        <label>@ClothesShop.Languages.Resources.Color</label>
+                                                        <span class="text-danger">*</span>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-12 f-right">
+                                                        @Html.DropDownListFor(model => model.Product.ColorID, new SelectList(new List<ClothesShop.Helpers.General>(), "ID", "Name"), new { @class = "form-control col-xs-12 f-right SelectDropDownList" })
+                                                        @Html.ValidationMessageFor(m => m.Product.ColorID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-md-3 f-right">
+                                                    <div class="col-xs-12 col-md-12 f-right headerLabel">
+                                                        <label>@ClothesShop.Languages.Resources.Size</label>
+                                                        <span class="text-danger">*</span>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-12 f-right">
+                                                        @Html.DropDownListFor(model => model.Product.SizeID, new SelectList(new List<ClothesShop.Helpers.General>(), "ID", "Name"), new { @class = "form-control col-xs-12 f-right SelectDropDownList" })
+                                                        @Html.ValidationMessageFor(m => m.Product.SizeID, "", new { @class = "text-danger col-xs-12 padding0" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-md-2 f-right">
+                                                    <div class="col-xs-12 col-md-12 f-right headerLabel">
+                                                        <label>@ClothesShop.Languages.Resources.NumberOfPieces</label>
+                                                        <span class="text-danger">*</span>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-12 f-right">
+                                                        @Html.EditorFor(model => model.Product.NumberOfPieces, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right" } })
+                                                        @Html.ValidationMessageFor(m => m.Product.NumberOfPieces, "", new { @class = "text-danger col-xs-12 padding0" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-md-2 f-right">
+                                                    <div class="col-xs-12 col-md-12 f-right headerLabel">
+                                                        <label>@ClothesShop.Languages.Resources.SellingPrice</label>
+                                                        <span class="text-danger">*</span>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-12 f-right">
+                                                        @Html.EditorFor(model => model.Product.SellingPrice, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right" } })
+                                                        @Html.ValidationMessageFor(m => m.Product.SellingPrice, "", new { @class = "text-danger col-xs-12 padding0" })
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label style="display:block">&nbsp;</label>
+                                                    <a href="#" id="addNew" class="btn btn-lg btn-primary">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody id="tBody" class="f-right txt-right width100 GeneralTable2" style=" padding: 0px 15px;">
+                                    <tr class="thead">
+                                        <td class="width20">@ClothesShop.Languages.Resources.Product</td>
+                                        <td class="width20">@ClothesShop.Languages.Resources.Color</td>
+                                        <td class="width20">@ClothesShop.Languages.Resources.Size</td>
+                                        <td class="width10">@ClothesShop.Languages.Resources.NumberOfPieces</td>
+                                        <td class="width10">@ClothesShop.Languages.Resources.PiecePrice</td>
+                                        <td class="width20">@ClothesShop.Languages.Resources.Total</td>
+                                        <td class="width10"></td>
+                                    </tr>
+                                    <tr class="tfooter">
+                                        <td colspan="7">@ClothesShop.Languages.Resources.NoProducts</td>
+                                    </tr>
+                                    @if (Model != null && Model.Products != null && Model.Products.Count > 0)
+                                    {
+                                        for (var i = 0; i < Model.Products.Count; i++)
+                                        {
+                                            <tr>
+                                                @Html.HiddenFor(m => m.Products[i].ID)
+                                                @Html.HiddenFor(m => m.Products[i].ProductID)
+                                                @Html.HiddenFor(m => m.Products[i].ColorID)
+                                                @Html.HiddenFor(m => m.Products[i].SizeID)
+                                                @Html.HiddenFor(m => m.Products[i].Name)
+                                                @Html.HiddenFor(m => m.Products[i].ColorName)
+                                                @Html.HiddenFor(m => m.Products[i].SizeName)
+                                                @Html.HiddenFor(m => m.Products[i].NumberOfPieces)
+                                                @Html.HiddenFor(m => m.Products[i].SellingPrice)
+                                                <td class="width20">
+                                                    @Html.Label(Model.Products[i].Name)
+                                                    @Html.ValidationMessageFor(m => m.Products[i].Name, "", new { @class = "text-danger col-xs-12 padding0" })
+
+                                                </td>
+                                                <td class="width20">
+                                                    @Html.Label(Model.Products[i].ColorName)
+                                                    @Html.ValidationMessageFor(m => m.Products[i].ColorName, "", new { @class = "text-danger col-xs-12 padding0" })
+
+                                                </td>
+                                                <td class="width20">
+                                                    @Html.Label(Model.Products[i].SizeName)
+                                                    @Html.ValidationMessageFor(m => m.Products[i].SizeName, "", new { @class = "text-danger col-xs-12 padding0" })
+
+                                                </td>
+                                                <td class="width10">
+                                                    @Html.Label((Model.Products[i].NumberOfPieces.HasValue ? Model.Products[i].NumberOfPieces.Value.ToString() : ""))
+                                                    @Html.ValidationMessageFor(m => m.Products[i].NumberOfPieces, "", new { @class = "text-danger col-xs-12 padding0" })
+
+                                                </td>
+                                                <td class="width10">
+                                                    @Html.Label((Model.Products[i].SellingPrice.ToString()))
+                                                    @Html.ValidationMessageFor(m => m.Products[i].SellingPrice, "", new { @class = "text-danger col-xs-12 padding0" })
+
+                                                </td>
+                                                <td class="width20">
+                                                    @{
+                                                        var subTotal = Model.Products[i].SellingPrice * Model.Products[i].NumberOfPieces;
+                                                    }
+                                                    @subTotal @currency
+                                                    <input type="hidden" value="@subTotal" class="TotalValue">
+                                                </td>
+                                                <td class="width10">
+                                                    <button type="button" class="btn btn-lg btn-danger" onclick="OrdersManager.prototype.DeleteRow(this);">
+                                                        <i class="fa fa-remove"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                                <tfoot class="tFoot">
+                                    <tr>
+                                        <td class="width20" id="tFootTotal" style="padding-right:70%;"></td>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="panel-footer">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-md-6 f-right txt-right">
+                            <button type="submit" class="btn btn-lg btn-success" id="submit">
+                                @ClothesShop.Languages.Resources.Save
+                            </button>
+                        </div>
+                        <div class="col-xs-12 col-md-6 f-left txt-left">
+                            <a type="button" class="btn btn-lg btn-primary" href="@Url.Action("Index", "Orders")">
+                                @ClothesShop.Languages.Resources.BackToList
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section styles{
+    @Styles.Render("~/Styles/EmployeeAdd")
+}
+@section scripts{
+    @Scripts.Render("~/Scripts/Orders")
+<script>
+        var totalText = "@Html.Raw(ClothesShop.Languages.Resources.Total)" + " : ";
+    var mustHaveProducts = "@Html.Raw(ClothesShop.Languages.Resources.MustHaveProducts)";
+    var getProductInfoURL = "@Url.Action("GetProductInfo", "Products")";
+        $(document).ready(function () {
+            var _OrdersManager = new OrdersManager();
+            OrdersManager.prototype.Init();
+            OrdersManager.prototype.OnChangeProduct();
+            OrdersManager.prototype.OnChangeTotal();
+               @{
+                var deliveryDate = Model.DeliveryDate.HasValue ? Model.DeliveryDate.Value.ToString(ClothesShop.Helpers.DateTimeFormatter.ViewingDateFormat) : "";
+            }
+            $("#DeliveryDate").val("@deliveryDate");
+        });
+</script>
+}

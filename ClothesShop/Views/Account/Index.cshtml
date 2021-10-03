@@ -1,0 +1,81 @@
+﻿@using ClothesShop.Models
+@model LoginViewModel
+@using ClothesShop.Helpers
+@{
+    ViewBag.Title = ClothesShop.Languages.Resources.Login;
+    bool isRTL = Helper.IsRtl();
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <style>
+   #loginForm .labels {
+        float: @(isRTL? "right" : "left");
+    }
+    #loginForm{
+        direction:@(isRTL?"rtl":"ltr");
+    }
+    .card label {
+        text-align: @(isRTL? "right" : "left") !important;
+    }
+    </style>
+    @Styles.Render("~/Content/login")
+</head>
+<body>
+    <div class="col-xs-12 body-content">
+        <div class="row" id="loginForm">
+            <div class="d-flex justify-content-center h-100">
+                <div class="card col-sm-12 col-sm-6 col-md-3 col-sm-push-4">
+                    <div class="card-header">
+                        <h3>@ClothesShop.Languages.Resources.Login</h3>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.UserName, new { @class = "col-md-12 control-label labels" })
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control inputs", @placeholder = ClothesShop.Languages.Resources.UserName })
+                                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label labels" })
+                                <div class="col-md-12">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control inputs", @placeholder = ClothesShop.Languages.Resources.Password })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-center links">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-lg">@ClothesShop.Languages.Resources.Login</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@section Scripts {
+
+
+}
+

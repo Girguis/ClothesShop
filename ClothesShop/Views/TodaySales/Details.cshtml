@@ -1,0 +1,136 @@
+﻿@model ClothesShop.Models.TodayTransactionsViewModel
+
+@{
+    ViewBag.Title = ClothesShop.Languages.Resources.Details;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>@ClothesShop.Languages.Resources.Details</h4>
+            </div>
+            @{
+                string currency = ClothesShop.Languages.Resources.LE;
+            }
+            <div class="panel-body">
+                <div class=" col-xs-12">
+                    <div class="col-xs-12 padding0">
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.Date</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.CreatedOn_, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.TotalSellingPrice</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.TodayTotalTransactionsSellingPrice, new { htmlAttributes = new { @class = "" } }) @currency
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.CreatedBy</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.IsApproved</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @(Model.IsApproved?ClothesShop.Languages.Resources.YesText:ClothesShop.Languages.Resources.NoText)
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 padding0 f-right txt-right paddingTop10">
+                            <table class="table table-striped GeneralTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="width25">
+                                            @ClothesShop.Languages.Resources.Product
+                                        </th>
+                                        @*<th scope="col" class="width25">
+                                            @ClothesShop.Languages.Resources.Employee
+                                        </th>*@
+                                        <th scope="col" class="width25">
+                                            @ClothesShop.Languages.Resources.NumberOfPieces
+                                        </th>
+                                        <th scope="col" class="width25">
+                                            @ClothesShop.Languages.Resources.SellingPrice
+                                        </th>
+                                        <th scope="col" class="width25">
+                                            @ClothesShop.Languages.Resources.Total
+                                        </th>
+                                        @*<th scope="col" class="width20">
+                                            @ClothesShop.Languages.Resources.Notes
+                                        </th>*@
+                                    </tr>
+                                </thead>
+                                @if (Model != null && Model.Transactions != null && Model.Transactions.Count() > 0)
+                                {
+                                    foreach (var item in Model.Transactions)
+                                    {
+                                        <tr>
+                                            <td class="width25">
+                                                @Html.DisplayFor(modelItem => item.ProductName)
+                                            </td>
+                                            @*<td class="width25">
+                                                @Html.DisplayFor(modelItem => item.EmployeeName)
+                                            </td>*@
+                                            <td class="width25">
+                                                @Html.DisplayFor(modelItem => item.NumberOfPieces)
+                                            </td>
+                                            <td class="width25">
+                                                @Html.DisplayFor(modelItem => item.SellingPrice)
+                                            </td>
+                                            <td class="width25">
+                                                @{double total = item.NumberOfPieces.Value * item.SellingPrice; }
+                                                @total @currency
+                                            </td>
+                                            @*<td class="width20">
+                                                @Html.DisplayFor(modelItem => item.Notes)
+                                            </td>*@
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            @ClothesShop.Languages.Resources.NoData
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="form-group">
+                    <div class="col-xs-12 col-md-6 f-right txt-right">
+                        @if (!Model.IsApproved && ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales",ClothesShop.Enums.RoleType.Edit))
+                        {
+                            <a type="button" class="btn btn-lg btn-success" href="@Url.Action("Edit", "TodaySales")/@Model.ID">
+                                @ClothesShop.Languages.Resources.Edit
+                            </a>
+                        }
+                    </div>
+                    <div class="col-xs-12 col-md-6 f-left txt-left">
+                        <a type="button" class="btn btn-lg btn-primary" href="@Url.Action("Index", "TodaySales")">
+                            @ClothesShop.Languages.Resources.BackToList
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

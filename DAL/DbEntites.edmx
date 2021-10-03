@@ -1,0 +1,1613 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ClothesShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Colors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="MobileNumber1" Type="varchar" MaxLength="12" />
+          <Property Name="MobileNumber2" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="StartWorkingDate" Type="datetime" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="GenderID" Type="int" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="SSN" Type="varchar" MaxLength="15" />
+          <Property Name="Salary" Type="float" />
+          <Property Name="AdditionalInfo" Type="nvarchar(max)" />
+          <Property Name="FrontSSNURL" Type="nvarchar(max)" />
+          <Property Name="BackSSNURL" Type="nvarchar(max)" />
+          <Property Name="FrontLicenceURL" Type="nvarchar(max)" />
+          <Property Name="BackLicenceURL" Type="nvarchar(max)" />
+          <Property Name="JobName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="JobTypeID" Type="int" Nullable="false" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="Language" Type="nvarchar" MaxLength="2" />
+          <Property Name="MobileNumber1" Type="nvarchar" MaxLength="12" />
+          <Property Name="MobileNumber2" Type="nvarchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Cost" Type="float" />
+          <Property Name="TodayExpensesID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="JobRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobTypeID" Type="int" />
+          <Property Name="RoleID" Type="bigint" />
+          <Property Name="View" Type="bit" />
+          <Property Name="Add" Type="bit" />
+          <Property Name="Edit" Type="bit" />
+          <Property Name="Delete" Type="bit" />
+          <Property Name="Details" Type="bit" />
+        </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="bigint" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="bigint" />
+          <Property Name="RequestDate" Type="datetime" />
+          <Property Name="DeliveryDate" Type="date" />
+          <Property Name="ShipmentPrice" Type="float" />
+          <Property Name="PaidAmount" Type="float" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="EmployeeID" Type="bigint" />
+          <Property Name="ShipmentCompanyID" Type="bigint" />
+          <Property Name="OrderStatusID" Type="int" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="SellerID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ProductColors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" />
+          <Property Name="ColorID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ProductOrders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" />
+          <Property Name="OrderID" Type="bigint" />
+          <Property Name="OrginalPrice" Type="float" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="SellingPrice" Type="float" />
+          <Property Name="ColorID" Type="bigint" />
+          <Property Name="SizeID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="OrginalPrice" Type="float" />
+          <Property Name="IsEnabled" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductSizes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" />
+          <Property Name="SizeID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ProductSuppliers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionTypeID" Type="bigint" />
+          <Property Name="ProductID" Type="bigint" />
+          <Property Name="SupplierID" Type="bigint" />
+          <Property Name="NumberOfPieces" Type="int" />
+          <Property Name="OrginalPrice" Type="float" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="ArabicName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SalesRate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="From" Type="float" />
+          <Property Name="To" Type="float" />
+          <Property Name="RateColor" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ShipmentCompanies">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sizes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Size" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="MobileNumber1" Type="varchar" MaxLength="12" />
+          <Property Name="MobileNumber2" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="TodayExpenses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="IsApproved" Type="bit" />
+        </EntityType>
+        <EntityType Name="TodayTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="IsApproved" Type="bit" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="bigint" />
+          <Property Name="ProductID" Type="bigint" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="NumberOfPieces" Type="int" />
+          <Property Name="SellingPrice" Type="float" />
+          <Property Name="TodayTransactionID" Type="bigint" />
+        </EntityType>
+        <Association Name="FK_Employee_Cities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_TodayExpenses">
+          <End Role="TodayExpenses" Type="Self.TodayExpenses" Multiplicity="0..1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TodayExpenses">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="TodayExpensesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRoles_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="JobRoles" Type="Self.JobRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JobRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logins_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Cities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Seller">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="SellerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_ShipmentCompany">
+          <End Role="ShipmentCompanies" Type="Self.ShipmentCompanies" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipmentCompanies">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ShipmentCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColors_Colors">
+          <End Role="Colors" Type="Self.Colors" Multiplicity="0..1" />
+          <End Role="ProductColors" Type="Self.ProductColors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductColors">
+              <PropertyRef Name="ColorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColors_Product">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="ProductColors" Type="Self.ProductColors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductColors">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Colors">
+          <End Role="Colors" Type="Self.Colors" Multiplicity="0..1" />
+          <End Role="ProductOrders" Type="Self.ProductOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrders">
+              <PropertyRef Name="ColorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="ProductOrders" Type="Self.ProductOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrders">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Product">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="ProductOrders" Type="Self.ProductOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrders">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Sizes">
+          <End Role="Sizes" Type="Self.Sizes" Multiplicity="0..1" />
+          <End Role="ProductOrders" Type="Self.ProductOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrders">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSizes_Product">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="ProductSizes" Type="Self.ProductSizes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSizes">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSizes_Sizes">
+          <End Role="Sizes" Type="Self.Sizes" Multiplicity="0..1" />
+          <End Role="ProductSizes" Type="Self.ProductSizes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSizes">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSuppliers_Product">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="ProductSuppliers" Type="Self.ProductSuppliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSuppliers">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSuppliers_Suppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="ProductSuppliers" Type="Self.ProductSuppliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSuppliers">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_TodayTransactions">
+          <End Role="TodayTransactions" Type="Self.TodayTransactions" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TodayTransactions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="TodayTransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DeleteSystemData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="RequestDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="CustomerName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CustomerNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="OrderStatus" Type="int" Mode="In" />
+          <Parameter Name="SellerName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="DeliveryName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+          <Parameter Name="OrderDirection" Type="varchar" Mode="In" />
+          <Parameter Name="PageNumber" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="GetOrdersCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="RequestDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="CustomerName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CustomerNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="OrderStatus" Type="int" Mode="In" />
+          <Parameter Name="SellerName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="DeliveryName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="ClothesShopModelStoreContainer">
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Colors" EntityType="Self.Colors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobRoles" EntityType="Self.JobRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductColors" EntityType="Self.ProductColors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductOrders" EntityType="Self.ProductOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSizes" EntityType="Self.ProductSizes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSuppliers" EntityType="Self.ProductSuppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesRate" EntityType="Self.SalesRate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShipmentCompanies" EntityType="Self.ShipmentCompanies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TodayExpenses" EntityType="Self.TodayExpenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TodayTransactions" EntityType="Self.TodayTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Cities" Association="Self.FK_Employee_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_TodayExpenses" Association="Self.FK_Expenses_TodayExpenses">
+            <End Role="TodayExpenses" EntitySet="TodayExpenses" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRoles_Roles" Association="Self.FK_JobRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="JobRoles" EntitySet="JobRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_Employee" Association="Self.FK_Logins_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Cities" Association="Self.FK_Orders_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Employee" Association="Self.FK_Orders_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Seller" Association="Self.FK_Orders_Seller">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ShipmentCompany" Association="Self.FK_Orders_ShipmentCompany">
+            <End Role="ShipmentCompanies" EntitySet="ShipmentCompanies" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColors_Colors" Association="Self.FK_ProductColors_Colors">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="ProductColors" EntitySet="ProductColors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColors_Product" Association="Self.FK_ProductColors_Product">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductColors" EntitySet="ProductColors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Colors" Association="Self.FK_ProductOrders_Colors">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="ProductOrders" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Orders" Association="Self.FK_ProductOrders_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="ProductOrders" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Product" Association="Self.FK_ProductOrders_Product">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductOrders" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Sizes" Association="Self.FK_ProductOrders_Sizes">
+            <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="ProductOrders" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSizes_Product" Association="Self.FK_ProductSizes_Product">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductSizes" EntitySet="ProductSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSizes_Sizes" Association="Self.FK_ProductSizes_Sizes">
+            <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="ProductSizes" EntitySet="ProductSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSuppliers_Product" Association="Self.FK_ProductSuppliers_Product">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductSuppliers" EntitySet="ProductSuppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSuppliers_Suppliers" Association="Self.FK_ProductSuppliers_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="ProductSuppliers" EntitySet="ProductSuppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Employees" Association="Self.FK_Transactions_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Products" Association="Self.FK_Transactions_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_TodayTransactions" Association="Self.FK_Transactions_TodayTransactions">
+            <End Role="TodayTransactions" EntitySet="TodayTransactions" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClothesShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ClothesShopEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="UpdateProduct">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="OriginalPrice" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="AddColor">
+            <Parameter Name="Color" Mode="In" Type="String" />
+            <Parameter Name="ID" Mode="InOut" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="Cities" EntityType="ClothesShopModel.City" />
+          <EntitySet Name="Colors" EntityType="ClothesShopModel.Color" />
+          <EntitySet Name="Customers" EntityType="ClothesShopModel.Customer" />
+          <EntitySet Name="Employees" EntityType="ClothesShopModel.Employee" />
+          <EntitySet Name="Expenses" EntityType="ClothesShopModel.Expens" />
+          <EntitySet Name="JobRoles" EntityType="ClothesShopModel.JobRole" />
+          <EntitySet Name="Logins" EntityType="ClothesShopModel.Login" />
+          <EntitySet Name="Orders" EntityType="ClothesShopModel.Order" />
+          <EntitySet Name="ProductColors" EntityType="ClothesShopModel.ProductColor" />
+          <EntitySet Name="ProductOrders" EntityType="ClothesShopModel.ProductOrder" />
+          <EntitySet Name="Products" EntityType="ClothesShopModel.Product" />
+          <EntitySet Name="ProductSizes" EntityType="ClothesShopModel.ProductSize" />
+          <EntitySet Name="ProductSuppliers" EntityType="ClothesShopModel.ProductSupplier" />
+          <EntitySet Name="Roles" EntityType="ClothesShopModel.Role" />
+          <EntitySet Name="SalesRates" EntityType="ClothesShopModel.SalesRate" />
+          <EntitySet Name="ShipmentCompanies" EntityType="ClothesShopModel.ShipmentCompany" />
+          <EntitySet Name="Sizes" EntityType="ClothesShopModel.Size" />
+          <EntitySet Name="Suppliers" EntityType="ClothesShopModel.Supplier" />
+          <EntitySet Name="TodayExpenses" EntityType="ClothesShopModel.TodayExpens" />
+          <EntitySet Name="TodayTransactions" EntityType="ClothesShopModel.TodayTransaction" />
+          <EntitySet Name="Transactions" EntityType="ClothesShopModel.Transaction" />
+          <AssociationSet Name="FK_Employee_Cities" Association="ClothesShopModel.FK_Employee_Cities">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Cities" Association="ClothesShopModel.FK_Orders_Cities">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColors_Colors" Association="ClothesShopModel.FK_ProductColors_Colors">
+            <End Role="Color" EntitySet="Colors" />
+            <End Role="ProductColor" EntitySet="ProductColors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Colors" Association="ClothesShopModel.FK_ProductOrders_Colors">
+            <End Role="Color" EntitySet="Colors" />
+            <End Role="ProductOrder" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="ClothesShopModel.FK_Orders_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_Employee" Association="ClothesShopModel.FK_Logins_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Login" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Employee" Association="ClothesShopModel.FK_Orders_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Seller" Association="ClothesShopModel.FK_Orders_Seller">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Employees" Association="ClothesShopModel.FK_Transactions_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_TodayExpenses" Association="ClothesShopModel.FK_Expenses_TodayExpenses">
+            <End Role="TodayExpens" EntitySet="TodayExpenses" />
+            <End Role="Expens" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRoles_Roles" Association="ClothesShopModel.FK_JobRoles_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="JobRole" EntitySet="JobRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ShipmentCompany" Association="ClothesShopModel.FK_Orders_ShipmentCompany">
+            <End Role="ShipmentCompany" EntitySet="ShipmentCompanies" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Orders" Association="ClothesShopModel.FK_ProductOrders_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="ProductOrder" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColors_Product" Association="ClothesShopModel.FK_ProductColors_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductColor" EntitySet="ProductColors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Product" Association="ClothesShopModel.FK_ProductOrders_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductOrder" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrders_Sizes" Association="ClothesShopModel.FK_ProductOrders_Sizes">
+            <End Role="Size" EntitySet="Sizes" />
+            <End Role="ProductOrder" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSizes_Product" Association="ClothesShopModel.FK_ProductSizes_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductSize" EntitySet="ProductSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSuppliers_Product" Association="ClothesShopModel.FK_ProductSuppliers_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductSupplier" EntitySet="ProductSuppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Products" Association="ClothesShopModel.FK_Transactions_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSizes_Sizes" Association="ClothesShopModel.FK_ProductSizes_Sizes">
+            <End Role="Size" EntitySet="Sizes" />
+            <End Role="ProductSize" EntitySet="ProductSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSuppliers_Suppliers" Association="ClothesShopModel.FK_ProductSuppliers_Suppliers">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="ProductSupplier" EntitySet="ProductSuppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_TodayTransactions" Association="ClothesShopModel.FK_Transactions_TodayTransactions">
+            <End Role="TodayTransaction" EntitySet="TodayTransactions" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <FunctionImport Name="DeleteSystemData" />
+          <FunctionImport Name="GetOrders" ReturnType="Collection(ClothesShopModel.OrderViewModel)">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="RequestDate" Mode="In" Type="String" />
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="CustomerNumber" Mode="In" Type="String" />
+            <Parameter Name="OrderStatus" Mode="In" Type="Int32" />
+            <Parameter Name="SellerName" Mode="In" Type="String" />
+            <Parameter Name="DeliveryName" Mode="In" Type="String" />
+            <Parameter Name="OrderBy" Mode="In" Type="String" />
+            <Parameter Name="OrderDirection" Mode="In" Type="String" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="TotalCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetOrdersCount" ReturnType="Collection(Int32)">
+            <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="RequestDate" Mode="In" Type="String" />
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="CustomerNumber" Mode="In" Type="String" />
+            <Parameter Name="OrderStatus" Mode="In" Type="Int32" />
+            <Parameter Name="SellerName" Mode="In" Type="String" />
+            <Parameter Name="DeliveryName" Mode="In" Type="String" />
+          </FunctionImport>
+          </EntityContainer>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="ClothesShopModel.FK_Employee_Cities" FromRole="City" ToRole="Employee" />
+          <NavigationProperty Name="Orders" Relationship="ClothesShopModel.FK_Orders_Cities" FromRole="City" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Color1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductColors" Relationship="ClothesShopModel.FK_ProductColors_Colors" FromRole="Color" ToRole="ProductColor" />
+          <NavigationProperty Name="ProductOrders" Relationship="ClothesShopModel.FK_ProductOrders_Colors" FromRole="Color" ToRole="ProductOrder" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber1" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber2" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="ClothesShopModel.FK_Orders_Customers" FromRole="Customer" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StartWorkingDate" Type="DateTime" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GenderID" Type="Int32" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="SSN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Double" />
+          <Property Name="AdditionalInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FrontSSNURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BackSSNURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FrontLicenceURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BackLicenceURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JobName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="JobTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="Language" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber1" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber2" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="City" Relationship="ClothesShopModel.FK_Employee_Cities" FromRole="Employee" ToRole="City" />
+          <NavigationProperty Name="Logins" Relationship="ClothesShopModel.FK_Logins_Employee" FromRole="Employee" ToRole="Login" />
+          <NavigationProperty Name="Orders" Relationship="ClothesShopModel.FK_Orders_Employee" FromRole="Employee" ToRole="Order" />
+          <NavigationProperty Name="Orders1" Relationship="ClothesShopModel.FK_Orders_Seller" FromRole="Employee" ToRole="Order" />
+          <NavigationProperty Name="Transactions" Relationship="ClothesShopModel.FK_Transactions_Employees" FromRole="Employee" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Expens">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Double" />
+          <Property Name="TodayExpensesID" Type="Int64" />
+          <NavigationProperty Name="TodayExpens" Relationship="ClothesShopModel.FK_Expenses_TodayExpenses" FromRole="Expens" ToRole="TodayExpens" />
+        </EntityType>
+        <EntityType Name="JobRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobTypeID" Type="Int32" />
+          <Property Name="RoleID" Type="Int64" />
+          <Property Name="View" Type="Boolean" />
+          <Property Name="Add" Type="Boolean" />
+          <Property Name="Edit" Type="Boolean" />
+          <Property Name="Delete" Type="Boolean" />
+          <Property Name="Details" Type="Boolean" />
+          <NavigationProperty Name="Role" Relationship="ClothesShopModel.FK_JobRoles_Roles" FromRole="JobRole" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int64" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="ClothesShopModel.FK_Logins_Employee" FromRole="Login" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int64" />
+          <Property Name="RequestDate" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
+          <Property Name="ShipmentPrice" Type="Double" />
+          <Property Name="PaidAmount" Type="Double" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeID" Type="Int64" />
+          <Property Name="ShipmentCompanyID" Type="Int64" />
+          <Property Name="OrderStatusID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SellerID" Type="Int64" />
+          <NavigationProperty Name="City" Relationship="ClothesShopModel.FK_Orders_Cities" FromRole="Order" ToRole="City" />
+          <NavigationProperty Name="Customer" Relationship="ClothesShopModel.FK_Orders_Customers" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="ClothesShopModel.FK_Orders_Employee" FromRole="Order" ToRole="Employee" />
+          <NavigationProperty Name="Seller" Relationship="ClothesShopModel.FK_Orders_Seller" FromRole="Order" ToRole="Employee" />
+          <NavigationProperty Name="ShipmentCompany" Relationship="ClothesShopModel.FK_Orders_ShipmentCompany" FromRole="Order" ToRole="ShipmentCompany" />
+          <NavigationProperty Name="ProductOrders" Relationship="ClothesShopModel.FK_ProductOrders_Orders" FromRole="Order" ToRole="ProductOrder" />
+        </EntityType>
+        <EntityType Name="ProductColor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int64" />
+          <Property Name="ColorID" Type="Int64" />
+          <NavigationProperty Name="Color" Relationship="ClothesShopModel.FK_ProductColors_Colors" FromRole="ProductColor" ToRole="Color" />
+          <NavigationProperty Name="Product" Relationship="ClothesShopModel.FK_ProductColors_Product" FromRole="ProductColor" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int64" />
+          <Property Name="OrderID" Type="Int64" />
+          <Property Name="OrginalPrice" Type="Double" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="SellingPrice" Type="Double" />
+          <Property Name="ColorID" Type="Int64" />
+          <Property Name="SizeID" Type="Int64" />
+          <NavigationProperty Name="Color" Relationship="ClothesShopModel.FK_ProductOrders_Colors" FromRole="ProductOrder" ToRole="Color" />
+          <NavigationProperty Name="Order" Relationship="ClothesShopModel.FK_ProductOrders_Orders" FromRole="ProductOrder" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="ClothesShopModel.FK_ProductOrders_Product" FromRole="ProductOrder" ToRole="Product" />
+          <NavigationProperty Name="Size" Relationship="ClothesShopModel.FK_ProductOrders_Sizes" FromRole="ProductOrder" ToRole="Size" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrginalPrice" Type="Double" />
+          <Property Name="IsEnabled" Type="Boolean" />
+          <NavigationProperty Name="ProductColors" Relationship="ClothesShopModel.FK_ProductColors_Product" FromRole="Product" ToRole="ProductColor" />
+          <NavigationProperty Name="ProductOrders" Relationship="ClothesShopModel.FK_ProductOrders_Product" FromRole="Product" ToRole="ProductOrder" />
+          <NavigationProperty Name="ProductSizes" Relationship="ClothesShopModel.FK_ProductSizes_Product" FromRole="Product" ToRole="ProductSize" />
+          <NavigationProperty Name="ProductSuppliers" Relationship="ClothesShopModel.FK_ProductSuppliers_Product" FromRole="Product" ToRole="ProductSupplier" />
+          <NavigationProperty Name="Transactions" Relationship="ClothesShopModel.FK_Transactions_Products" FromRole="Product" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="ProductSize">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int64" />
+          <Property Name="SizeID" Type="Int64" />
+          <NavigationProperty Name="Product" Relationship="ClothesShopModel.FK_ProductSizes_Product" FromRole="ProductSize" ToRole="Product" />
+          <NavigationProperty Name="Size" Relationship="ClothesShopModel.FK_ProductSizes_Sizes" FromRole="ProductSize" ToRole="Size" />
+        </EntityType>
+        <EntityType Name="ProductSupplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionTypeID" Type="Int64" />
+          <Property Name="ProductID" Type="Int64" />
+          <Property Name="SupplierID" Type="Int64" />
+          <Property Name="NumberOfPieces" Type="Int32" />
+          <Property Name="OrginalPrice" Type="Double" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="ClothesShopModel.FK_ProductSuppliers_Product" FromRole="ProductSupplier" ToRole="Product" />
+          <NavigationProperty Name="Supplier" Relationship="ClothesShopModel.FK_ProductSuppliers_Suppliers" FromRole="ProductSupplier" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ArabicName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JobRoles" Relationship="ClothesShopModel.FK_JobRoles_Roles" FromRole="Role" ToRole="JobRole" />
+        </EntityType>
+        <EntityType Name="SalesRate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="From" Type="Double" />
+          <Property Name="To" Type="Double" />
+          <Property Name="RateColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ShipmentCompany">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="ClothesShopModel.FK_Orders_ShipmentCompany" FromRole="ShipmentCompany" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Size1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductOrders" Relationship="ClothesShopModel.FK_ProductOrders_Sizes" FromRole="Size" ToRole="ProductOrder" />
+          <NavigationProperty Name="ProductSizes" Relationship="ClothesShopModel.FK_ProductSizes_Sizes" FromRole="Size" ToRole="ProductSize" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber1" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber2" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductSuppliers" Relationship="ClothesShopModel.FK_ProductSuppliers_Suppliers" FromRole="Supplier" ToRole="ProductSupplier" />
+        </EntityType>
+        <EntityType Name="TodayExpens">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <NavigationProperty Name="Expenses" Relationship="ClothesShopModel.FK_Expenses_TodayExpenses" FromRole="TodayExpens" ToRole="Expens" />
+        </EntityType>
+        <EntityType Name="TodayTransaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <NavigationProperty Name="Transactions" Relationship="ClothesShopModel.FK_Transactions_TodayTransactions" FromRole="TodayTransaction" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int64" />
+          <Property Name="ProductID" Type="Int64" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfPieces" Type="Int32" />
+          <Property Name="SellingPrice" Type="Double" />
+          <Property Name="TodayTransactionID" Type="Int64" />
+          <NavigationProperty Name="Employee" Relationship="ClothesShopModel.FK_Transactions_Employees" FromRole="Transaction" ToRole="Employee" />
+          <NavigationProperty Name="Product" Relationship="ClothesShopModel.FK_Transactions_Products" FromRole="Transaction" ToRole="Product" />
+          <NavigationProperty Name="TodayTransaction" Relationship="ClothesShopModel.FK_Transactions_TodayTransactions" FromRole="Transaction" ToRole="TodayTransaction" />
+        </EntityType>
+        <Association Name="FK_Employee_Cities">
+          <End Type="ClothesShopModel.City" Role="City" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Cities">
+          <End Type="ClothesShopModel.City" Role="City" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColors_Colors">
+          <End Type="ClothesShopModel.Color" Role="Color" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductColor" Role="ProductColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductColor">
+              <PropertyRef Name="ColorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Colors">
+          <End Type="ClothesShopModel.Color" Role="Color" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductOrder" Role="ProductOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrder">
+              <PropertyRef Name="ColorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Type="ClothesShopModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logins_Employee">
+          <End Type="ClothesShopModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ClothesShopModel.Login" Role="Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Employee">
+          <End Type="ClothesShopModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Seller">
+          <End Type="ClothesShopModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="SellerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Employees">
+          <End Type="ClothesShopModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_TodayExpenses">
+          <End Type="ClothesShopModel.TodayExpens" Role="TodayExpens" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Expens" Role="Expens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TodayExpens">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expens">
+              <PropertyRef Name="TodayExpensesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRoles_Roles">
+          <End Type="ClothesShopModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.JobRole" Role="JobRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JobRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_ShipmentCompany">
+          <End Type="ClothesShopModel.ShipmentCompany" Role="ShipmentCompany" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipmentCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ShipmentCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Orders">
+          <End Type="ClothesShopModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductOrder" Role="ProductOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrder">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColors_Product">
+          <End Type="ClothesShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductColor" Role="ProductColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductColor">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Product">
+          <End Type="ClothesShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductOrder" Role="ProductOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrder">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrders_Sizes">
+          <End Type="ClothesShopModel.Size" Role="Size" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductOrder" Role="ProductOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductOrder">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSizes_Product">
+          <End Type="ClothesShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductSize" Role="ProductSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSize">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSuppliers_Product">
+          <End Type="ClothesShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductSupplier" Role="ProductSupplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSupplier">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Products">
+          <End Type="ClothesShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSizes_Sizes">
+          <End Type="ClothesShopModel.Size" Role="Size" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductSize" Role="ProductSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSize">
+              <PropertyRef Name="SizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSuppliers_Suppliers">
+          <End Type="ClothesShopModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.ProductSupplier" Role="ProductSupplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSupplier">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_TodayTransactions">
+          <End Type="ClothesShopModel.TodayTransaction" Role="TodayTransaction" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TodayTransaction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="TodayTransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="OrderViewModel" >
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="RequestDate" Nullable="false" />
+          <Property Type="String" Name="CustomerName" Nullable="false" />
+          <Property Type="String" Name="CustomerNumber" Nullable="false" />
+          <Property Type="String" Name="CustomerAddress" Nullable="false" />
+          <Property Type="Int32" Name="OrderStatusID" Nullable="false" />
+          <Property Type="String" Name="DeliveryManName" Nullable="false" />
+          <Property Type="String" Name="SellerName" Nullable="false" />
+          <Property Type="Double" Name="Total" Nullable="false" />
+          <Property Type="Double" Name="ShipmentPrice" Nullable="false" />
+          <Property Type="String" Name="OrderStatusName" Nullable="false" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClothesShopModelStoreContainer" CdmEntityContainer="ClothesShopEntities">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="ClothesShopModel.City">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="ClothesShopModel.Color">
+              <MappingFragment StoreEntitySet="Colors">
+                <ScalarProperty Name="Color1" ColumnName="Color" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ClothesShopModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="MobileNumber2" ColumnName="MobileNumber2" />
+                <ScalarProperty Name="MobileNumber1" ColumnName="MobileNumber1" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ClothesShopModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="MobileNumber2" ColumnName="MobileNumber2" />
+                <ScalarProperty Name="MobileNumber1" ColumnName="MobileNumber1" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="JobTypeID" ColumnName="JobTypeID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
+                <ScalarProperty Name="BackLicenceURL" ColumnName="BackLicenceURL" />
+                <ScalarProperty Name="FrontLicenceURL" ColumnName="FrontLicenceURL" />
+                <ScalarProperty Name="BackSSNURL" ColumnName="BackSSNURL" />
+                <ScalarProperty Name="FrontSSNURL" ColumnName="FrontSSNURL" />
+                <ScalarProperty Name="AdditionalInfo" ColumnName="AdditionalInfo" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="StartWorkingDate" ColumnName="StartWorkingDate" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="ClothesShopModel.Expens">
+              <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="TodayExpensesID" ColumnName="TodayExpensesID" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobRoles">
+            <EntityTypeMapping TypeName="ClothesShopModel.JobRole">
+              <MappingFragment StoreEntitySet="JobRoles">
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Delete" ColumnName="Delete" />
+                <ScalarProperty Name="Edit" ColumnName="Edit" />
+                <ScalarProperty Name="Add" ColumnName="Add" />
+                <ScalarProperty Name="View" ColumnName="View" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="JobTypeID" ColumnName="JobTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="ClothesShopModel.Login">
+              <MappingFragment StoreEntitySet="Logins">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ClothesShopModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="SellerID" ColumnName="SellerID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+                <ScalarProperty Name="ShipmentCompanyID" ColumnName="ShipmentCompanyID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="ShipmentPrice" ColumnName="ShipmentPrice" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductColors">
+            <EntityTypeMapping TypeName="ClothesShopModel.ProductColor">
+              <MappingFragment StoreEntitySet="ProductColors">
+                <ScalarProperty Name="ColorID" ColumnName="ColorID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductOrders">
+            <EntityTypeMapping TypeName="ClothesShopModel.ProductOrder">
+              <MappingFragment StoreEntitySet="ProductOrders">
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="ColorID" ColumnName="ColorID" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="OrginalPrice" ColumnName="OrginalPrice" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ClothesShopModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="OrginalPrice" ColumnName="OrginalPrice" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSizes">
+            <EntityTypeMapping TypeName="ClothesShopModel.ProductSize">
+              <MappingFragment StoreEntitySet="ProductSizes">
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSuppliers">
+            <EntityTypeMapping TypeName="ClothesShopModel.ProductSupplier">
+              <MappingFragment StoreEntitySet="ProductSuppliers">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="OrginalPrice" ColumnName="OrginalPrice" />
+                <ScalarProperty Name="NumberOfPieces" ColumnName="NumberOfPieces" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="TransactionTypeID" ColumnName="TransactionTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ClothesShopModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesRates">
+            <EntityTypeMapping TypeName="ClothesShopModel.SalesRate">
+              <MappingFragment StoreEntitySet="SalesRate">
+                <ScalarProperty Name="RateColor" ColumnName="RateColor" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipmentCompanies">
+            <EntityTypeMapping TypeName="ClothesShopModel.ShipmentCompany">
+              <MappingFragment StoreEntitySet="ShipmentCompanies">
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="ClothesShopModel.Size">
+              <MappingFragment StoreEntitySet="Sizes">
+                <ScalarProperty Name="Size1" ColumnName="Size" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ClothesShopModel.Supplier">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="MobileNumber2" ColumnName="MobileNumber2" />
+                <ScalarProperty Name="MobileNumber1" ColumnName="MobileNumber1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TodayExpenses">
+            <EntityTypeMapping TypeName="ClothesShopModel.TodayExpens">
+              <MappingFragment StoreEntitySet="TodayExpenses">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TodayTransactions">
+            <EntityTypeMapping TypeName="ClothesShopModel.TodayTransaction">
+              <MappingFragment StoreEntitySet="TodayTransactions">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="ClothesShopModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="TodayTransactionID" ColumnName="TodayTransactionID" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="NumberOfPieces" ColumnName="NumberOfPieces" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteSystemData" FunctionName="ClothesShopModel.Store.DeleteSystemData" />
+          <FunctionImportMapping FunctionImportName="GetOrders" FunctionName="ClothesShopModel.Store.GetOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClothesShopModel.OrderViewModel">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerNumber" ColumnName="CustomerNumber" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+                <ScalarProperty Name="DeliveryManName" ColumnName="DeliveryManName" />
+                <ScalarProperty Name="SellerName" ColumnName="SellerName" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ShipmentPrice" ColumnName="ShipmentPrice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrdersCount" FunctionName="ClothesShopModel.Store.GetOrdersCount" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

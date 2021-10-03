@@ -1,0 +1,238 @@
+﻿@model ClothesShop.Models.OrdersViewModel
+
+@{
+    ViewBag.Title = ClothesShop.Languages.Resources.Details;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    @Styles.Render("~/Styles/EmployeeAdd")
+}
+<div class="container">
+    <div class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>@ClothesShop.Languages.Resources.Details</h4>
+            </div>
+            <div class="panel-body">
+                @{
+                    string currency = ClothesShop.Languages.Resources.LE;
+                }
+                <div class="col-xs-12">
+                    <div class="col-xs-12 padding0 headerStyle">
+                        <h4>@ClothesShop.Languages.Resources.CustomerInformation</h4>
+                    </div>
+                    <div class="col-xs-12 padding0">
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.CustomerName</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.Customer.Name, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.Address</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.Customer.Address, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.MobileNumber1</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.Customer.MobileNumber1, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.MobileNumber2</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.Customer.MobileNumber2, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-12 padding0 headerStyle">
+                        <h4>@ClothesShop.Languages.Resources.OrderDetails</h4>
+                    </div>
+                    <div class="col-xs-12 padding0">
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.RequestDate</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.RequestDate_, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.DeliveryDate</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.Total</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.OrderTotalPrice, new { htmlAttributes = new { @class = "" } }) @currency
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.ShipmentPrice</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.ShipmentPrice, new { htmlAttributes = new { @class = "" } }) @currency
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.PaidAmount</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.PaidAmount, new { htmlAttributes = new { @class = "" } }) @currency
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.OrderStatus</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.OrderStatusName, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.Seller</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.SellerName, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.DeliveryMan</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.EmployeeName, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.ShipmentCompany</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.ShipmentCompanyName, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-6 padding0 f-right txt-right paddingTop10">
+                            <div class="col-xs-6 margin5 f-right">
+                                <label>@ClothesShop.Languages.Resources.Notes</label>
+                            </div>
+                            <div class="col-md-6 margin5">
+                                @Html.DisplayFor(model => model.Notes, new { htmlAttributes = new { @class = "" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-xs-12">
+                  
+                    <div class="col-xs-12 padding0">
+
+                     
+                        <div class="col-xs-12 padding0 f-right txt-right paddingTop10">
+                            <table class="table table-striped  GeneralTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="width25">
+                                            @ClothesShop.Languages.Resources.Product
+                                        </th>
+                                        <th scope="col" class="width25">
+                                            @ClothesShop.Languages.Resources.Color
+                                        </th>
+                                        <th scope="col" class="width10">
+                                            @ClothesShop.Languages.Resources.Size
+                                        </th>
+                                        <th scope="col" class="width10">
+                                            @ClothesShop.Languages.Resources.NumberOfPieces
+                                        </th>
+                                        <th scope="col" class="width10">
+                                            @ClothesShop.Languages.Resources.SellingPrice
+                                        </th>
+                                        <th scope="col" class="width20">
+                                            @ClothesShop.Languages.Resources.Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @if (Model != null && Model.Products != null && Model.Products.Count() > 0)
+                                {
+                                    foreach (var item in Model.Products)
+                                    {
+                                        <tr>
+                                            <td class="width25">
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td class="width25">
+                                                @Html.DisplayFor(modelItem => item.ColorName)
+                                            </td>
+                                            <td class="width10">
+                                                @Html.DisplayFor(modelItem => item.SizeName)
+                                            </td>
+                                            <td class="width10">
+                                                @Html.DisplayFor(modelItem => item.NumberOfPieces)
+                                            </td>
+                                            <td class="width10">
+                                                @Html.DisplayFor(modelItem => item.SellingPrice)
+                                            </td>
+                                            <td class="width20">
+                                                @{double total = item.NumberOfPieces.Value * item.SellingPrice; }
+                                                @total @currency
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            @ClothesShop.Languages.Resources.NoData
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="form-group">
+                    <div class="col-xs-12 col-md-6 f-right txt-right">
+                        @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders",ClothesShop.Enums.RoleType.Edit) && Model.OrderStatusID != (int)ClothesShop.Enums.OrderStatuses.TotallyDelivered)
+                        {
+                            <a type="button" class="btn btn-lg btn-success" href="@Url.Action("Edit", "Orders")/@Model.ID">
+                                @ClothesShop.Languages.Resources.Edit
+                            </a>
+                        }
+                    </div>
+                    <div class="col-xs-12 col-md-6 f-left txt-left">
+                        <a type="button" class="btn btn-lg btn-primary" href="@Url.Action("Index", "Orders")">
+                            @ClothesShop.Languages.Resources.BackToList
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

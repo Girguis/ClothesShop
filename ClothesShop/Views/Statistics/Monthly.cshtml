@@ -1,0 +1,84 @@
+﻿@model ClothesShop.Models.TransactionsSearchViewModel
+@{
+    ViewBag.Title = ClothesShop.Languages.Resources.MonthlyStatistics;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="form-group row f-right col-xs-12 col-md-8">
+        <div class="col-xs-12 col-md-3 f-right">
+            @Html.LabelFor(model => model.StartDate)
+            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control col-xs-12" } })
+        </div>
+        <div class="col-xs-12 col-md-3 f-right">
+            @Html.LabelFor(model => model.EndDate)
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control col-xs-12" } })
+        </div>
+        <div class="col-xs-12 col-md-3 f-right">
+            <label style="display:block;">&nbsp;</label>
+            <a href="#" onclick="StatisticsManager.prototype.SearchByMonth();" type="button" class="btn btn-lg btn-primary">
+                @ClothesShop.Languages.Resources.Search
+                <i class="fa fa-search"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="col-xs-12 col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <canvas id="MonthlyStatisticsChart" width="100" height="50"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <h5>@ClothesShop.Languages.Resources.MonthlyStatistics</h5>
+            </div>
+            <div class="panel-body" style="height: 150px !important;">
+                <div class="form-group col-xs-12">
+                    <label>@ClothesShop.Languages.Resources.PaymentAverage : </label>
+                    <span id="PaymentAverage"></span>
+                </div>
+                <div class="form-group col-xs-12">
+                    <label>@ClothesShop.Languages.Resources.PaymentRate : </label>
+                    <span id="PaymentRate"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/Styles/chart")
+    <style>
+        #PaymentRate {
+            color: white;
+            border-radius: 5px;
+            padding: 5px 15px;
+            font-size: 15px;
+        }
+    </style>
+}
+@section scripts{
+    @Scripts.Render("~/Scripts/chart")
+<script>
+        var label = "@ClothesShop.Languages.Resources.TotalSelled";
+    var title = "@ClothesShop.Languages.Resources.MonthlyStatistics";
+        var chart = null;
+    var _StartDate = "@ViewBag.StartDate";
+    var _EndDate = "@ViewBag.EndDate";
+    var notValidDays = "@string.Format(ClothesShop.Languages.Resources.CannotExccedDays, "31")";
+    var chartId = "MonthlyStatisticsChart";
+    var dateFormat = "@ClothesShop.Helpers.DateTimeFormatter.DateFormat.ToUpper()";
+    var getStatisticsURL = "@Url.Action("GetStatistics", "Statistics")";
+    $(document).ready(function () {
+
+        var _StatisticsManager = new StatisticsManager();
+        StatisticsManager.prototype.Init();
+        StatisticsManager.prototype.SearchByMonth();
+    });
+</script>
+}
+
+

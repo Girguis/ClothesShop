@@ -1,0 +1,81 @@
+﻿@model ClothesShop.Models.ShipmentCompanyViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.ShipmentCompanies;
+}
+<div class="container tableContainer">
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("ShipmentCompanies", ClothesShop.Enums.RoleType.Add))
+    {
+        <p class="f-left">
+            <a href="@Url.Action("Create", "ShipmentCompanies", new { area = "" })" class="btn btn-lg btn-outline-success">
+                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddShipmentCompany
+            </a>
+        </p>
+    }
+    <table id="ShipmentCompaniesGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
+        <thead>
+            <tr class="theadData">
+                <th class="width30" data-headerid="Name" data-dir="desc" onclick="TableManager.prototype.Sort(this);"><i class="fa fa-arrow-down searchArrow"></i> @Html.DisplayNameFor(model => model.Name)</th>
+                <th class="width25" data-headerid="MobileNumber" data-dir="" onclick="TableManager.prototype.Sort(this);"> @Html.DisplayNameFor(model => model.MobileNumber)</th>
+                <th class="width25" data-headerid="Address" data-dir="" onclick="TableManager.prototype.Sort(this);"> @Html.DisplayNameFor(model => model.Address)</th>
+                <th class="width10">&nbsp;</th>
+                <th class="width10">&nbsp;</th>
+            </tr>
+            <tr class="searchRow">
+                <th class="padding0 width30">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="Name" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
+                    </div>
+                </th>
+                <th class="padding0 width25">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="MobileNumber" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
+                    </div>
+                </th>
+                <th class="padding0 width25">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="Address" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
+                    </div>
+                </th>
+                <th class="width10"></th>
+                <th class="width10"></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div class="container text-center">
+    <ul id="Pager" class="pagination-sm"></ul>
+</div>
+@section scripts{
+    <script>
+        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteShipmentCompany)";
+        function ConfirmDeleteShipmentCompany(id) {
+            var url = '@Url.Action("Delete", "ShipmentCompanies")';
+            var data = JSON.stringify({ id: id });
+            CommonManager.prototype.ConfirmDelete(url, data);
+        }
+
+        var orderBy = {
+            ColumnName: "Name",
+            Direction: "desc",
+        }
+        var isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("ShipmentCompanies", ClothesShop.Enums.RoleType.Edit)" == "True";
+        var isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("ShipmentCompanies", ClothesShop.Enums.RoleType.Delete)" == "True";
+        var updateURL = "@Url.Action("Edit", "ShipmentCompanies")/";
+        var dataURL = '@Url.Action("GetAll", "ShipmentCompanies")';
+        var columns = [{ Name: "Name", Class: "width30" }, { Name: "MobileNumber", Class: "width25" }, { Name: "Address", Class: "width25" }, { Name: "EDIT", Class: "width10" }, { Name: "DELETE", Class: "width10" }];
+        var searchColumns = [{ Name: "Name", Type: "input" }, { Name: "MobileNumber", Type: "input" }, { Name: "Address", Type: "input" }];
+        var deleteURL = "ConfirmDeleteShipmentCompany";
+        var gridId = "ShipmentCompaniesGrid";
+        $(document).ready(function () {
+            var tableManager = new TableManager();
+            TableManager.prototype.Init();
+        })
+    </script>
+}

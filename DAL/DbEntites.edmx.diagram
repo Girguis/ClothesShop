@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cf0d99d1d5ce40f4b1cbf3d19ff30afb" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="ClothesShopModel.City" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="ClothesShopModel.Color" Width="1.5" PointX="8.25" PointY="2.25" />
+        <EntityTypeShape EntityType="ClothesShopModel.Customer" Width="1.5" PointX="3" PointY="11.5" />
+        <EntityTypeShape EntityType="ClothesShopModel.Employee" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="ClothesShopModel.Expens" Width="1.5" PointX="13" PointY="1.125" />
+        <EntityTypeShape EntityType="ClothesShopModel.JobRole" Width="1.5" PointX="15" PointY="10.125" />
+        <EntityTypeShape EntityType="ClothesShopModel.Login" Width="1.5" PointX="5.25" PointY="15.5" />
+        <EntityTypeShape EntityType="ClothesShopModel.Order" Width="1.5" PointX="5.25" PointY="4.75" />
+        <EntityTypeShape EntityType="ClothesShopModel.ProductColor" Width="1.5" PointX="13.5" PointY="6.5" />
+        <EntityTypeShape EntityType="ClothesShopModel.ProductOrder" Width="1.5" PointX="10.5" PointY="5.5" />
+        <EntityTypeShape EntityType="ClothesShopModel.Product" Width="1.5" PointX="8.25" PointY="9.875" />
+        <EntityTypeShape EntityType="ClothesShopModel.ProductSize" Width="1.5" PointX="10.5" PointY="13.5" />
+        <EntityTypeShape EntityType="ClothesShopModel.ProductSupplier" Width="1.5" PointX="10.5" PointY="9.75" />
+        <EntityTypeShape EntityType="ClothesShopModel.Role" Width="1.5" PointX="12.75" PointY="10.625" />
+        <EntityTypeShape EntityType="ClothesShopModel.SalesRate" Width="1.5" PointX="12.75" PointY="13.875" />
+        <EntityTypeShape EntityType="ClothesShopModel.ShipmentCompany" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="ClothesShopModel.Size" Width="1.5" PointX="8.25" PointY="13.375" />
+        <EntityTypeShape EntityType="ClothesShopModel.Supplier" Width="1.5" PointX="8.25" PointY="16.25" />
+        <EntityTypeShape EntityType="ClothesShopModel.TodayExpens" Width="1.5" PointX="10.75" PointY="1.125" />
+        <EntityTypeShape EntityType="ClothesShopModel.TodayTransaction" Width="1.5" PointX="6" PointY="1.25" />
+        <EntityTypeShape EntityType="ClothesShopModel.Transaction" Width="1.5" PointX="8.25" PointY="5.75" />
+        <AssociationConnector Association="ClothesShopModel.FK_Employee_Cities" />
+        <AssociationConnector Association="ClothesShopModel.FK_Orders_Cities" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductColors_Colors" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductOrders_Colors" />
+        <AssociationConnector Association="ClothesShopModel.FK_Orders_Customers" />
+        <AssociationConnector Association="ClothesShopModel.FK_Logins_Employee" />
+        <AssociationConnector Association="ClothesShopModel.FK_Orders_Employee" />
+        <AssociationConnector Association="ClothesShopModel.FK_Orders_Seller" />
+        <AssociationConnector Association="ClothesShopModel.FK_Transactions_Employees" />
+        <AssociationConnector Association="ClothesShopModel.FK_Expenses_TodayExpenses" />
+        <AssociationConnector Association="ClothesShopModel.FK_JobRoles_Roles" />
+        <AssociationConnector Association="ClothesShopModel.FK_Orders_ShipmentCompany" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductOrders_Orders" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductColors_Product" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductOrders_Product" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductOrders_Sizes" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductSizes_Product" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductSuppliers_Product" />
+        <AssociationConnector Association="ClothesShopModel.FK_Transactions_Products" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductSizes_Sizes" />
+        <AssociationConnector Association="ClothesShopModel.FK_ProductSuppliers_Suppliers" />
+        <AssociationConnector Association="ClothesShopModel.FK_Transactions_TodayTransactions" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,90 @@
+﻿@model ClothesShop.Models.ProductsSummaryViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.ProductSummary;
+}
+<div class="container tableContainer">
+    <table id="ProductsSummaryGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
+        <thead>
+            <tr class="theadData">
+                <th class="width30">@ClothesShop.Languages.Resources.Product</th>
+                <th class="width15">@ClothesShop.Languages.Resources.TotalIncoming</th>
+                <th class="width15">@ClothesShop.Languages.Resources.TotalReturned</th>
+                <th class="width10">@ClothesShop.Languages.Resources.TotalSelled</th>
+                <th class="width10">@ClothesShop.Languages.Resources.TotalRemaining</th>
+                <th class="width10">@ClothesShop.Languages.Resources.OriginalPrice</th>
+                <th class="width10">@ClothesShop.Languages.Resources.TotalProductPrice</th>
+            </tr>
+            <tr class="searchRow">
+                <th class="width30 padding0">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @id = "ProductName", @class = "form-control setMaxWidth", placeholder = ClothesShop.Languages.Resources.Search } })
+                    </div>
+                </th>
+                <th class="width15"></th>
+                <th class="width15"></th>
+                <th class="width10"></th>
+                <th class="width10"></th>
+                <th class="width10"></th>
+                <th class="width10"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+       <tfoot>
+       </tfoot>
+    </table>
+</div>
+<div class="container text-center">
+    <ul id="Pager" class="pagination-sm"></ul>
+</div>
+@section scripts{
+    <script>
+        gridId = "ProductsSummaryGrid";
+        viewName = "ProductsSummary";
+        dataURL ='@Url.Action("GetAll", "ProductsSummary")';
+        var totalSum = "@Html.Raw(ClothesShop.Languages.Resources.TotalCost)";
+        orderBy = {
+            ColumnName: "ProductName",
+            Direction: "DESC"
+        };
+        columns = [
+            { Name : "ProductName", Class:"width30"},
+            { Name: "TotalIncoming", Class: "width15" },
+            { Name : "TotalReturned", Class:"width15"},
+            { Name : "TotalSelled", Class:"width10"},
+            { Name : "TotalRemaining", Class:"width10"},
+            { Name : "OriginalPrice", Class:"width10"},
+            { Name : "TotalProductPrice", Class:"width10"},
+        ];
+        searchColumns = [{ Name: "ProductName", Type: "input" }];
+        var x = function (row, data, start, end, display) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '') * 1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over this page
+            pageTotal = api
+                .column(6, { page: 'current' })
+                .data()
+                .reduce(function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+
+            // Update footer
+            $(api.column(6).footer()).html(
+                totalSum + " : " + pageTotal + currencyLE
+            );
+        }
+        $(document).ready(function () {
+            var tableManager = new TableManager();
+            TableManager.prototype.Init();
+        });
+    </script>
+}

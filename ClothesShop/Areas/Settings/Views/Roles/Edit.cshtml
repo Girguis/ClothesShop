@@ -1,0 +1,63 @@
+﻿@model  List<ClothesShop.Areas.Settings.Models.JobRoleViewModel>
+
+@{
+    Layout = "~/Areas/Settings/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.UpdateRights;
+}
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal col-xs-12 col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>@ClothesShop.Languages.Resources.UpdateRights</h4>
+                </div>
+                <div class="panel-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group col-xs-12">
+                        <table class="table table-responsive table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>@ClothesShop.Languages.Resources.Name</th>
+                                    <th>@ClothesShop.Languages.Resources.View</th>
+                                    <th>@ClothesShop.Languages.Resources.Details</th>
+                                    <th>@ClothesShop.Languages.Resources.Add</th>
+                                    <th>@ClothesShop.Languages.Resources.Edit</th>
+                                    <th>@ClothesShop.Languages.Resources.Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(var i = 0;i<Model.Count;i++)
+                                {
+                                <tr>
+                                    @Html.HiddenFor(model => Model[i].ID)
+                                    @Html.HiddenFor(model => Model[i].RoleID)
+                                    @Html.HiddenFor(model => Model[i].JobTypeID)
+                                    <td>@Html.DisplayFor(model=> Model[i].Name)</td>
+                                    <td>@Html.CheckBoxFor(moddel => Model[i].View)</td>
+                                    <td>@Html.CheckBoxFor(moddel => Model[i].Details)</td>
+                                    <td>@Html.CheckBoxFor(moddel => Model[i].Add)</td>
+                                    <td>@Html.CheckBoxFor(moddel => Model[i].Edit)</td>
+                                    <td>@Html.CheckBoxFor(moddel => Model[i].Delete)</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-md-6 f-right txt-right">
+                            <button type="submit" class="btn btn-lg btn-success">
+                                @ClothesShop.Languages.Resources.Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

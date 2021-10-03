@@ -1,0 +1,145 @@
+﻿@model  ClothesShop.Models.ProductSuppliersViewModel
+
+@{
+    ViewBag.Title = ClothesShop.Languages.Resources.ProductSuppliers;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script>
+
+        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteProductSupplier)";
+        gridId = "ProductSuppliersGrid";
+        dataURL ='@Url.Action("GetAll", "ProductSuppliers")';
+        isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("ProductSuppliers", ClothesShop.Enums.RoleType.Edit)" == "True";
+        isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("ProductSuppliers", ClothesShop.Enums.RoleType.Delete)" == "True";
+        deleteURL = "ConfirmDeleteProductSupplier";
+        updateURL = "@Url.Action("Edit", "ProductSuppliers")/";
+        orderBy = {
+            ColumnName: "CreatedOn",
+            Direction:"DESC"
+        }
+        columns = [
+            { Name: "CreatedOn_", Class:"width15" },
+            { Name: "ProductName", Class:"width15" },
+            { Name: "SupplierName", Class:"width15" },
+            { Name: "TransactionName", Class:"width5" },
+            { Name: "NumberOfPieces", Class:"width7" },
+            { Name: "OrginalPrice", Class:"width7" },
+            { Name: "CreatedBy", Class: "width10" },
+            { Name: "EDIT", Class:"width5"},
+            { Name: "DELETE", Class:"width5"},
+        ];
+        searchColumns = [
+            { Name: "CreatedOn", Type: "date" },
+            { Name: "ProductName", Type: "input" },
+            { Name: "SupplierName", Type: "input" },
+            { Name: "TransactionTypeID", Type: "select" },
+            { Name: "NumberOfPieces", Type: "input" },
+            { Name: "OrginalPrice", Type: "input" },
+            { Name: "CreatedBy", Type: "input" }
+        ];
+
+        function ConfirmDeleteProductSupplier(id) {
+            var url ='@Url.Action("Delete", "ProductSuppliers")';
+            var data = JSON.stringify({ id: id });
+            CommonManager.prototype.ConfirmDelete(url, data);
+        }
+
+        $(document).ready(function () {
+            var tableManager = new TableManager();
+            TableManager.prototype.Init();
+        });
+    </script>
+
+}
+<div class="container tableContainer">
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("ProductSuppliers", ClothesShop.Enums.RoleType.Add))
+    {
+        <p class="f-left">
+            <a href="@Url.Action("Create", "ProductSuppliers", new { area = "" })" class="btn btn-lg btn-outline-success">
+                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddProductSupplier
+            </a>
+        </p>
+     }
+    <table id="ProductSuppliersGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
+        <thead>
+            <tr class="theadData">
+                <th class="width15" data-headerid="CreatedOn" data-dir="desc" onclick="TableManager.prototype.Sort(this);">
+                    <i class="fa fa-arrow-down searchArrow"></i> @Html.DisplayNameFor(model => model.CreatedOn)
+                </th>
+                <th class="width15" data-headerid="ProductName" data-dir="" onclick="TableManager.prototype.Sort(this);">
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th class="width15" data-headerid="SupplierName" data-dir="" onclick="TableManager.prototype.Sort(this);">
+                    @Html.DisplayNameFor(model => model.SupplierName)
+                </th>
+                <th class="width5" data-headerid="TransactionName" data-dir="" onclick="TableManager.prototype.Sort(this);">
+                    @Html.DisplayNameFor(model => model.TransactionName)
+                </th>
+                <th class="width7" data-headerid="NumberOfPieces" data-dir="" onclick="TableManager.prototype.Sort(this);">
+                    @Html.DisplayNameFor(model => model.NumberOfPieces)
+                </th>
+                <th class="width7" data-headerid="OrginalPrice" data-dir="" onclick="TableManager.prototype.Sort(this);">
+                    @Html.DisplayNameFor(model => model.OrginalPrice)
+                </th>
+                <th class="width10" data-headerid="CreatedBy" data-dir="" onclick="TableManager.prototype.Sort(this);">
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                </th>
+                <th class="width5"></th>
+                <th class="width5"></th>
+            </tr>
+            <tr class="searchRow">
+                <th class="padding0 width15">
+                    @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @id = "CreatedOn", @type = "date", @class = "form-control setMaxWidth", placeholder = ClothesShop.Languages.Resources.Search } })
+                </th>
+                <th class="width15 padding0">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @id = "ProductName", @class = "form-control setMaxWidth", placeholder = ClothesShop.Languages.Resources.Search } })
+                    </div>
+                </th>
+                <th class="width15 padding0">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        @Html.EditorFor(model => model.SupplierName, new { htmlAttributes = new { @id = "SupplierName", @class = "form-control setMaxWidth", placeholder = ClothesShop.Languages.Resources.Search } })
+                    </div>
+                </th>
+                <th class="width5 padding0">
+                    @{
+                        var transactionTypes = ClothesShop.Helpers.Helper.EnumToList<ClothesShop.Enums.TransactionTypes>();
+                        if (transactionTypes != null && transactionTypes.Count > 0)
+                        {
+                            transactionTypes.Insert(0, new ClothesShop.Helpers.General() { ID = -1, Name = ClothesShop.Languages.Resources.All });
+                        }
+                    }
+                    @Html.DropDownListFor(model => model.TransactionTypeID, new SelectList(transactionTypes, "ID", "Name"), new { @id = "TransactionTypeID", @class = "form-control setMaxWidth" })
+                </th>
+                <th class="width5 padding0">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        @Html.EditorFor(model => model.NumberOfPieces, new { htmlAttributes = new { @id = "NumberOfPieces", @class = "form-control setMaxWidth", placeholder = ClothesShop.Languages.Resources.Search } })
+                    </div>
+                </th>
+                <th class="width10 padding0">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        @Html.EditorFor(model => model.OrginalPrice, new { htmlAttributes = new { @id = "OrginalPrice", @class = "form-control setMaxWidth", placeholder = ClothesShop.Languages.Resources.Search } })
+                    </div>
+                </th>
+                <th class="width10 padding0">
+                    <div class="searchInput">
+                        <i class="fa fa-search"></i>
+                        @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @id = "CreatedBy", @class = "form-control setMaxWidth", placeholder = ClothesShop.Languages.Resources.Search } })
+                    </div>
+                </th>
+                <th class="width5"></th>
+                <th class="width5"></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div class="container text-center">
+    <ul id="Pager" class="pagination-sm"></ul>
+</div>

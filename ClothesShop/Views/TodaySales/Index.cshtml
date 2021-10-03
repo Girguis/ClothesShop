@@ -1,0 +1,70 @@
+﻿@model ClothesShop.Models.TodayTransactionsViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.TodaySales;
+}
+<div class="container tableContainer">
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales", ClothesShop.Enums.RoleType.Add))
+    {
+        <p class="f-left">
+            <a href="@Url.Action("Create", "TodaySales", new { area = "" })" class="btn btn-lg btn-outline-success">
+                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddTransaction
+            </a>
+        </p>
+    }
+    <table id="TodayTransactionsGrid" class="table table-striped table-bordered dt-responsive nowrap GeneralTable" width="100%" cellspacing="0">
+        <thead>
+            <tr class="theadData">
+                <th class="width30" data-headerid="CreatedOn" data-dir="desc" onclick="TableManager.prototype.Sort(this);"><i class="fa fa-arrow-down searchArrow"></i> @ClothesShop.Languages.Resources.Date</th>
+                <th class="width30">@ClothesShop.Languages.Resources.TotalSellingPrice</th>
+                <th class="width20"></th>
+                <th class="width20"></th>
+            </tr>
+            <tr class="searchRow">
+                <th class="padding0 width30">
+                    @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @id = "CreatedOn", @type = "date", @class = "form-control setMaxWidth" } })
+
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container text-center">
+    <ul id="Pager" class="pagination-sm"></ul>
+</div>
+@section scripts{
+    <script>
+        gridId = "TodayTransactionsGrid";
+        dataURL = '@Url.Action("GetAll", "TodaySales")';
+
+        var isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales", ClothesShop.Enums.RoleType.Edit)";
+        var isDetails = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales", ClothesShop.Enums.RoleType.Details)";
+        var isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales", ClothesShop.Enums.RoleType.Delete)";
+        detailsURL = "@Url.Action("Details","TodaySales")/";
+        updateURL = "@Url.Action("Edit", "TodaySales")/";
+        deleteURL = "ConfirmDeleteTodaySales";
+        var orderBy = {
+            ColumnName: "CreatedOn",
+            Direction: "DESC"
+        };
+        columns = [{ Name: "CreatedOn_", Class: "width30" }, { Name: "TodayTotalTransactionsSellingPrice", Class: "width30" }, { Name: "EDIT", Class: "width20" }, { Name: "DELETE", Class: "width20" }];
+        var searchColumns = [{
+            Name: "CreatedOn", Type:"date"}];
+        viewName = "TodaySales";
+        var msg = "@ClothesShop.Languages.Resources.AreYouSureDeleteProductSupplier";
+        $(document).ready(function () {
+            var tableManager = new TableManager();
+            TableManager.prototype.Init();
+        });
+        function ConfirmDeleteTodaySales(id) {
+            var url = '@Url.Action("Delete", "TodaySales")';
+            var data = JSON.stringify({ id: id });
+            CommonManager.prototype.ConfirmDelete(url, data);
+        }
+    </script>
+}

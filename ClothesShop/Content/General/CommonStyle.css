@@ -1,0 +1,114 @@
+﻿.GeneralTable {
+    
+    border-collapse: collapse;
+    overflow: hidden;
+    table-layout: fixed
+}
+
+    .GeneralTable tbody {
+        display: block;
+        overflow-y: auto;
+        max-height: calc(100vh - 300px);
+    }
+
+.GeneralTable thead, .GeneralTable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+/*
+.GeneralTable thead{
+    background-color: #427eb8;
+    color: white;
+    font-weight: 600;
+}*/
+
+/*.GeneralTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}*/
+
+.GeneralTable tbody tr td {
+    /*border-top: 1px solid #f7f6f6;*/
+    word-break: break-all;
+}
+.width100{
+    width:100%;
+}
+.width80 {
+    width: 80%;
+}
+.width30{
+    width:30%;
+}
+.width25{
+    width:25%;
+}
+.width7
+{
+    width:7%;
+}
+.width20 {
+    width: 20%;
+}
+.width15 {
+    width: 15%;
+}
+.width10 {
+    width: 10%;
+}
+.width5{
+    width:5%;
+}
+.margin5{
+    margin-bottom:5px;
+}
+.container{
+    width:100% !important;
+}
+.text-center{
+    text-align:center !important;
+}
+td a{
+    cursor:pointer;
+}
+input[type="checkbox"]{
+    width:16px;
+    height:16px;
+}
+.padding0{
+    padding:0px !important;
+}
+textarea{
+    resize:none;
+}
+.paddingTop10{
+    padding-top:10px;
+}
+.panel-body {
+    max-height: calc(100vh - 240px) !important;
+    height: calc(100vh - 240px) !important;
+    overflow: auto !important;
+}
+.panel-footer .form-group , .panel-heading h4{
+    margin-bottom:0px !important;
+}
+input, select, textarea {
+    max-width: auto !important;
+}
+.GeneralTable2 .thead {
+    background-color: #427eb8;
+    color: white;
+    font-weight: 600;
+}
+#Orders tbody tr td {
+        padding: 5px;
+}
+#Orders tbody tr td label{
+    font-weight:normal !important;
+}
+.tfooter {
+    text-align: center;
+    padding: 10px !important;
+    line-height: 2;
+    background: #efefef;
+}

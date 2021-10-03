@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Areas/Settings/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.DeleteSystemData;
+}
+<div class="container text-center paddingTop10">
+
+    <button class="btn btn-danger btn-lg" onclick="ConfirmDelete();">
+        @ClothesShop.Languages.Resources.DeleteSystemData
+    </button>
+</div>
+@section Scripts{
+    <script>
+        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureToDeleteAllData)";
+    function ConfirmDelete() {
+
+        var url = "@Url.Action("DeleteSystemData","SystemData" , new { area = "Settings"}) ";
+        CommonManager.prototype.ConfirmDelete(url, "");
+    }
+    </script>
+} 

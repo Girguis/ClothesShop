@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.InternalError;
+}
+<hgroup>
+    <h1 class="text-center"><img src="~/Images/close.png" /></h1>
+    <h1 class="text-center">@ClothesShop.Languages.Resources.InternalError</h1>
+    <h2 class="text-center">@ClothesShop.Languages.Resources.InternalServerError</h2>
+    <h5>
+        <a href="@Url.Action("Index","Home", new { area = "" })" class="btn btn-lg btn-primary">
+            @ClothesShop.Languages.Resources.BackToHome
+            <i class="fa fa-home"></i>
+        </a>
+    </h5>
+</hgroup>
+
+

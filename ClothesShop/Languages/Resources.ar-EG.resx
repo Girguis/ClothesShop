@@ -1,0 +1,769 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Male" xml:space="preserve">
+    <value>ذكر</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>انثى</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>الألوان</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>الموظفين</value>
+  </data>
+  <data name="ErrorWhileLogin" xml:space="preserve">
+    <value>حدث خطأ أثناء تسجيل الدخول</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>الصفحة الرئيسية</value>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>اسم المستخدم او كلمه المرور غير صحيحه</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
+  <data name="OtherInfo" xml:space="preserve">
+    <value>معلومات أخرى</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمه المرور</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>المنتجات</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>برجاء ادخال {0}</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>الإعدادات</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>الموردين</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>مرحبا</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="AddSupplier" xml:space="preserve">
+    <value>إضافة مورد</value>
+  </data>
+  <data name="NoSuppliers" xml:space="preserve">
+    <value>عفوا لا يوجد موردين</value>
+  </data>
+  <data name="AreYouSureDeleteSupplier" xml:space="preserve">
+    <value>هل أنت متأكد من حذف المورد؟</value>
+  </data>
+  <data name="UpdateSupplier" xml:space="preserve">
+    <value>تعديل بيانات المورد</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>العوده إلى القائمة</value>
+  </data>
+  <data name="MobileNumber1" xml:space="preserve">
+    <value>رقم الهاتف الأول</value>
+  </data>
+  <data name="MobileNumber2" xml:space="preserve">
+    <value>رقم الهاتف الثانى</value>
+  </data>
+  <data name="MobileNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="NoColors" xml:space="preserve">
+    <value>عفوا لا يوجد الوان</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="UpdateColor" xml:space="preserve">
+    <value>تعديل اللون</value>
+  </data>
+  <data name="UpdateProfile" xml:space="preserve">
+    <value>تعديل البروفايل</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="ErrorWhileDeleting" xml:space="preserve">
+    <value>حدث خطأ أثناء الحذف</value>
+  </data>
+  <data name="EditColor" xml:space="preserve">
+    <value>تعديل اللون</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="ColorAlreadyLinkedWithProduct" xml:space="preserve">
+    <value>هذا اللون مرتبط بمنتج</value>
+  </data>
+  <data name="AreYouSureDeleteColor" xml:space="preserve">
+    <value>هل أنت متأكد من حذف اللون؟</value>
+  </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>اسم الموقع</value>
+  </data>
+  <data name="AddColor" xml:space="preserve">
+    <value>إضافة لون</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>إضافة</value>
+  </data>
+  <data name="EqualText" xml:space="preserve">
+    <value>يجب ان يكون عدد أحرف {0} يساوى {2}.</value>
+  </data>
+  <data name="NumbersOnly" xml:space="preserve">
+    <value>{0} يجب ان تحتوى على ارقام فقط</value>
+  </data>
+  <data name="OriginalPrice" xml:space="preserve">
+    <value>السعر الأصلي</value>
+  </data>
+  <data name="Sizes" xml:space="preserve">
+    <value>المقاسات</value>
+  </data>
+  <data name="NoSizes" xml:space="preserve">
+    <value>عفوا لا يوجد مقاسات</value>
+  </data>
+  <data name="AreYouSureDeleteSize" xml:space="preserve">
+    <value>هل أنت متأكد من حذف المقاس؟</value>
+  </data>
+  <data name="UpdateSize" xml:space="preserve">
+    <value>تعديل المقاس</value>
+  </data>
+  <data name="AddSize" xml:space="preserve">
+    <value>إضافة مقاس</value>
+  </data>
+  <data name="NoProducts" xml:space="preserve">
+    <value>عفوا لا يوجد منتجات</value>
+  </data>
+  <data name="AreYouSureDeleteProduct" xml:space="preserve">
+    <value>هل أنت متأكد من حذف المنتج ؟</value>
+  </data>
+  <data name="UpdateProduct" xml:space="preserve">
+    <value>تعديل المنتج</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>إضافة منتج</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="AddShipmentCompany" xml:space="preserve">
+    <value>إضافة شركة شحن</value>
+  </data>
+  <data name="UpdateShipmentCompany" xml:space="preserve">
+    <value>تعديل بيانات شركة الشحن</value>
+  </data>
+  <data name="AreYouSureDeleteShipmentCompany" xml:space="preserve">
+    <value>هل أنت متأكد من حذف شركة الشحن؟</value>
+  </data>
+  <data name="NoShipmentCompanys" xml:space="preserve">
+    <value>عفوا لا يوجد شركات شحن</value>
+  </data>
+  <data name="ShipmentCompanies" xml:space="preserve">
+    <value>شركات الشحن</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المحافظة</value>
+  </data>
+  <data name="StartWorkingDate" xml:space="preserve">
+    <value>تاريخ بداية العمل</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>تاريخ الميلاد</value>
+  </data>
+  <data name="SSN" xml:space="preserve">
+    <value>الرقم القومى</value>
+  </data>
+  <data name="Salary" xml:space="preserve">
+    <value>المرتب</value>
+  </data>
+  <data name="AdditionalInfo" xml:space="preserve">
+    <value>معلومات إضافيه</value>
+  </data>
+  <data name="JobName" xml:space="preserve">
+    <value>اسم الوظيفة</value>
+  </data>
+  <data name="JobType" xml:space="preserve">
+    <value>نوع الوظيفة</value>
+  </data>
+  <data name="InvalidSSN" xml:space="preserve">
+    <value>الرقم القومى غير صحيح</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>يعمل</value>
+  </data>
+  <data name="FrontSSNPicture" xml:space="preserve">
+    <value>صوره امامية لبطاقة الرقم القومى</value>
+  </data>
+  <data name="BackSSNPicture" xml:space="preserve">
+    <value>صوره خلفية لبطاقة الرقم القومى</value>
+  </data>
+  <data name="FrontLicencePicture" xml:space="preserve">
+    <value>صوره اماميه للرخصة</value>
+  </data>
+  <data name="BackLicencePicture" xml:space="preserve">
+    <value>صوره خلفية للرخصة</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>التفاصيل</value>
+  </data>
+  <data name="AddEmployee" xml:space="preserve">
+    <value>إضافة موظف</value>
+  </data>
+  <data name="NoEmployees" xml:space="preserve">
+    <value>عفوا لا يوجد موظفين</value>
+  </data>
+  <data name="AreYouSureDeleteEmployee" xml:space="preserve">
+    <value>هل أنت متأكد من حذف الموظف ؟</value>
+  </data>
+  <data name="WorkInformation" xml:space="preserve">
+    <value>بيانات العمل</value>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>بيانات الموظف</value>
+  </data>
+  <data name="DeliveryMan" xml:space="preserve">
+    <value>مندوب</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>موظف</value>
+  </data>
+  <data name="Worker" xml:space="preserve">
+    <value>بائع</value>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>مدير</value>
+  </data>
+  <data name="UpdateEmployee" xml:space="preserve">
+    <value>تعديل بيانات الموظف</value>
+  </data>
+  <data name="EmployeeDetails" xml:space="preserve">
+    <value>بيانات الموظف</value>
+  </data>
+  <data name="MustBeGreaterThan" xml:space="preserve">
+    <value>عدد احرف {0} يجب ان تكون اكبر من {1} حرف.</value>
+  </data>
+  <data name="NumberOfPieces" xml:space="preserve">
+    <value>عدد القطع</value>
+  </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>المورد</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>المنتج</value>
+  </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>نوع العملية</value>
+  </data>
+  <data name="AddProductSupplier" xml:space="preserve">
+    <value>إضافة منتجات الموردين</value>
+  </data>
+  <data name="EditProductSupplier" xml:space="preserve">
+    <value>تعديل منتجات المورد</value>
+  </data>
+  <data name="ProductSuppliers" xml:space="preserve">
+    <value>منتجات الموردين</value>
+  </data>
+  <data name="StoringRecords" xml:space="preserve">
+    <value>دفتر المخزون</value>
+  </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>أنشئت بواسطة</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>تاريخ الإنشاء</value>
+  </data>
+  <data name="AreYouSureDeleteProductSupplier" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذه العملية؟</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>لا يوجد بيانات</value>
+  </data>
+  <data name="ShowingRecords" xml:space="preserve">
+    <value>صفحة {0} من {1}</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>السابق</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>التالي</value>
+  </data>
+  <data name="Processing" xml:space="preserve">
+    <value>جارى البحث ...</value>
+  </data>
+  <data name="ProductSummary" xml:space="preserve">
+    <value>ملخص المنتجات</value>
+  </data>
+  <data name="TotalIncoming" xml:space="preserve">
+    <value>إجمالي الداخل</value>
+  </data>
+  <data name="TotalReturned" xml:space="preserve">
+    <value>إجمالي المرتجعات</value>
+  </data>
+  <data name="TotalRemaining" xml:space="preserve">
+    <value>إجمالي المتبقى</value>
+  </data>
+  <data name="TotalSelled" xml:space="preserve">
+    <value>إجمالي المباع</value>
+  </data>
+  <data name="TotalProductPrice" xml:space="preserve">
+    <value>إجمالي تكلفة الصنف</value>
+  </data>
+  <data name="TotalCost" xml:space="preserve">
+    <value>إجمالي التكلفة الكلية</value>
+  </data>
+  <data name="TodayTransactions" xml:space="preserve">
+    <value>دفتر اليومية</value>
+  </data>
+  <data name="TodayExpenses" xml:space="preserve">
+    <value>المصروفات اليومية</value>
+  </data>
+  <data name="TodaySales" xml:space="preserve">
+    <value>المبيعات اليومية</value>
+  </data>
+  <data name="TodaySummary" xml:space="preserve">
+    <value>الملخص اليومى</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>من</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>إلى</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="AddExpenses" xml:space="preserve">
+    <value>إضافة المصروفات اليومية</value>
+  </data>
+  <data name="AddAndApprove" xml:space="preserve">
+    <value>حفظ وتأكيد</value>
+  </data>
+  <data name="AreYouSureDeleteTodayExpense" xml:space="preserve">
+    <value>هل أنت متأكد من حذف المصروفات ؟</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>التكلفة</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="IsApproved" xml:space="preserve">
+    <value>تم التأكيد</value>
+  </data>
+  <data name="EditExpenses" xml:space="preserve">
+    <value>تعديل المصروفات اليوميه</value>
+  </data>
+  <data name="SellingPrice" xml:space="preserve">
+    <value>سعر البيع</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="TotalSellingPrice" xml:space="preserve">
+    <value>إجمالي سعر البيع</value>
+  </data>
+  <data name="AddTransaction" xml:space="preserve">
+    <value>إضافة مبيعات اليوم</value>
+  </data>
+  <data name="EditTransaction" xml:space="preserve">
+    <value>تعديل مبيعات اليوم</value>
+  </data>
+  <data name="TotalNumberOfPieces" xml:space="preserve">
+    <value>إجمالي عدد القطع</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>الأحد</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>الإثنين</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>الثلاثاء</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>الأربعاء</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>الخميس</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>الجمعه</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>السبت</value>
+  </data>
+  <data name="WeekSummary" xml:space="preserve">
+    <value>الملخص الاسبوعى</value>
+  </data>
+  <data name="TotalExpenses" xml:space="preserve">
+    <value>إجمالي المصروفات</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>الإجمالي</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>جديد</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>قيد الانتظار</value>
+  </data>
+  <data name="PartialyDelivered" xml:space="preserve">
+    <value>تم التسليم جزئي</value>
+  </data>
+  <data name="TotallyDelivered" xml:space="preserve">
+    <value>تم التسليم كليا</value>
+  </data>
+  <data name="Delayed" xml:space="preserve">
+    <value>مؤجل</value>
+  </data>
+  <data name="NotDelivered" xml:space="preserve">
+    <value>لم يستلم</value>
+  </data>
+  <data name="CanceledByAgent" xml:space="preserve">
+    <value>ملغي من قبل العميل</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>داخل</value>
+  </data>
+  <data name="Returned" xml:space="preserve">
+    <value>مرتجع</value>
+  </data>
+  <data name="Lossses" xml:space="preserve">
+    <value>خسائر</value>
+  </data>
+  <data name="PiecePrice" xml:space="preserve">
+    <value>سعر القطعة</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>اللون</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>المقاس</value>
+  </data>
+  <data name="AreYouSureDeleteOrder" xml:space="preserve">
+    <value>هل أنت متأكد من حذف الاوردر؟</value>
+  </data>
+  <data name="AddOrder" xml:space="preserve">
+    <value>إضافة طلب</value>
+  </data>
+  <data name="EditOrder" xml:space="preserve">
+    <value>تعديل الطلب</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>اسم العميل</value>
+  </data>
+  <data name="PaidAmount" xml:space="preserve">
+    <value>المبلغ المدفوع</value>
+  </data>
+  <data name="ShipmentPrice" xml:space="preserve">
+    <value>سعر الشحن</value>
+  </data>
+  <data name="ShipmentCompany" xml:space="preserve">
+    <value>شركة الشحن</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>حالة الطلب</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>كود</value>
+  </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>تاريخ الطلب</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>الطلبات</value>
+  </data>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>تاريخ التوصيل</value>
+  </data>
+  <data name="CustomerInformation" xml:space="preserve">
+    <value>بيانات العميل</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>تفاصيل الطلب</value>
+  </data>
+  <data name="LE" xml:space="preserve">
+    <value>ج.م</value>
+  </data>
+  <data name="MustHaveProducts" xml:space="preserve">
+    <value>يجب ان يحتوى الطلب على منتج واحد على الاقل</value>
+  </data>
+  <data name="NoDeliveryMan" xml:space="preserve">
+    <value>بدون مندوب</value>
+  </data>
+  <data name="WithoutShipmentCompany" xml:space="preserve">
+    <value>بدون شركة شحن</value>
+  </data>
+  <data name="OrdersDelivery" xml:space="preserve">
+    <value>توصيل الطلبات</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>القائمة</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>الصلاحيات</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>الحسابات</value>
+  </data>
+  <data name="UpdateRights" xml:space="preserve">
+    <value>تعديل الصلاحيات</value>
+  </data>
+  <data name="UnAuthorized" xml:space="preserve">
+    <value>نأسف ليس لديك صلاحيه للقيام بهذه العملية</value>
+  </data>
+  <data name="PasswordAndConfirmNotMatched" xml:space="preserve">
+    <value>كلمة المرور و تأكيد كلمة المرور غير متطابقتين</value>
+  </data>
+  <data name="AddLogin" xml:space="preserve">
+    <value>إضافة حساب</value>
+  </data>
+  <data name="UpdateLogin" xml:space="preserve">
+    <value>تعديل بيانات الحساب</value>
+  </data>
+  <data name="AreYouSureDeleteLogin" xml:space="preserve">
+    <value>هل أنت متأكد من حذف الحساب؟</value>
+  </data>
+  <data name="Logins" xml:space="preserve">
+    <value>الحسابات</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="UserNameAlreadyExists" xml:space="preserve">
+    <value>اسم المستخدم موجود بالفعل</value>
+  </data>
+  <data name="NumberOfOrders" xml:space="preserve">
+    <value>عدد الطلبات</value>
+  </data>
+  <data name="TotalOrdersCash" xml:space="preserve">
+    <value>إجمالي مبلغ الطلبات</value>
+  </data>
+  <data name="EditOrders" xml:space="preserve">
+    <value>تعديل الطلبات</value>
+  </data>
+  <data name="PrintSheet" xml:space="preserve">
+    <value>طباعة الشيت</value>
+  </data>
+  <data name="AddOrders" xml:space="preserve">
+    <value>إضافة طلبات</value>
+  </data>
+  <data name="NoAddedOrders" xml:space="preserve">
+    <value>لم يتم اضافة طلبات للمندوب الحالى</value>
+  </data>
+  <data name="AreYouSureDeleteOrderFromDeliveryMan" xml:space="preserve">
+    <value>هل أنت متأكد من حذف الطلب من على المندوب وجعل حالة الطلب لجديد ؟</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>إغلاق</value>
+  </data>
+  <data name="AreYouSureYouWantToChangeStatusTo" xml:space="preserve">
+    <value>هل أنت متأكد من تغيير حالة الطلب إلى</value>
+  </data>
+  <data name="InvalidPaidAmount" xml:space="preserve">
+    <value>القيمة المدفوعة غير صالحة</value>
+  </data>
+  <data name="ChangeOrderStatus" xml:space="preserve">
+    <value>تغيير حالة الطلب</value>
+  </data>
+  <data name="MustBeLessThan" xml:space="preserve">
+    <value>عدد احرف {0} يجب ان تكون اقل من او تساوى {1} حرف.</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>طباعة</value>
+  </data>
+  <data name="Seller" xml:space="preserve">
+    <value>اسم البائع</value>
+  </data>
+  <data name="NoSeller" xml:space="preserve">
+    <value>بدون بائع</value>
+  </data>
+  <data name="SalesRate" xml:space="preserve">
+    <value>التعديلات البيانية</value>
+  </data>
+  <data name="AreYouSureDeleteSalesRate" xml:space="preserve">
+    <value>هل أنت متأكد من حذف التعديل البيانى؟</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>الإحصائيات والتسجيلات البيانية</value>
+  </data>
+  <data name="WeeklyStatistics" xml:space="preserve">
+    <value>الإحصائيات الإسبوعية</value>
+  </data>
+  <data name="MonthlyStatistics" xml:space="preserve">
+    <value>الإحصائيات الشهرية</value>
+  </data>
+  <data name="CannotExccedDays" xml:space="preserve">
+    <value>عدد الايام لا يمكن ان يزيد عن {0} يوم</value>
+  </data>
+  <data name="PaymentAverage" xml:space="preserve">
+    <value>متوسط المبيعات</value>
+  </data>
+  <data name="PaymentRate" xml:space="preserve">
+    <value>معدل المبيعات</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>الأول</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>الأخير</value>
+  </data>
+  <data name="Elba4a" xml:space="preserve">
+    <value>الباشا</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="ErrorWhileProcessRequest" xml:space="preserve">
+    <value>لقد حدث خطأ اثناء معالجة الطلب</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>غير موجوده</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>الصفحة التى طلبتها غير موجوده</value>
+  </data>
+  <data name="InternalError" xml:space="preserve">
+    <value>خطأ داخلى</value>
+  </data>
+  <data name="InternalServerError" xml:space="preserve">
+    <value>لقد حدث خطأ داخلى برجاء التواصل مع المسئول</value>
+  </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>العوده إلى الصفحة الرئيسية</value>
+  </data>
+  <data name="NoNotes" xml:space="preserve">
+    <value>لا يوجد ملاحظات</value>
+  </data>
+  <data name="AreYouSureToDeleteAllData" xml:space="preserve">
+    <value>هل انت متأكد من حذف جميع البيانات؟</value>
+  </data>
+  <data name="DeleteSystemData" xml:space="preserve">
+    <value>حذف بيانات النظام</value>
+  </data>
+</root>
