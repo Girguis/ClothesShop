@@ -149,6 +149,24 @@ namespace ClothesShop.Controllers
             order.PaidAmount = paidAmount;
             return Json(_OrdersRepo.ChangeOrderStatus(order));
         }
+        [HttpPost]
+        [Authorization("Delivery", (RoleType.Edit))]
+        public JsonResult ChangeOrdersStatus(List<long> orderIds, OrderStatuses orderStatusId)
+        {
+            if (orderIds == null || orderIds.Count <= 0)
+                return Json(false);
+            foreach (long orderId in orderIds)
+            {
+                var order = _OrdersRepo.GetByID(orderId);
+                if (orderStatusId == OrderStatuses.New || orderStatusId == OrderStatuses.Delayed || orderStatusId == OrderStatuses.NotDelivered || orderStatusId == OrderStatuses.CanceledByAgent)
+                    order.EmployeeID = null;
+                order.OrderStatusID = (int)orderStatusId;
+                if (!_OrdersRepo.ChangeOrderStatus(order))
+                    return Json(false);
+            }
+            return Json(true);
+        }
+
         private OrderDeliveryViewModel GetOrderDeliveryViewModel(Employee o)
         {
             var orders = o.Orders != null ? o.Orders.Where(c => c.OrderStatusID == (int)Enums.OrderStatuses.Waiting) : new List<Order>();

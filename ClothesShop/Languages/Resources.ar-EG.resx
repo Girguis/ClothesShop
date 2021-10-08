@@ -766,4 +766,13 @@
   <data name="DeleteSystemData" xml:space="preserve">
     <value>حذف بيانات النظام</value>
   </data>
+  <data name="AreYouSureYouWantToChangeOrdersStatusTo" xml:space="preserve">
+    <value>هل انت متأكد من تغيير حالة الطلبات الى</value>
+  </data>
+  <data name="OrdersStatus" xml:space="preserve">
+    <value>حالة الطلبات</value>
+  </data>
+  <data name="ChangeOrdersStatus" xml:space="preserve">
+    <value>تغيير حالة الطلبات</value>
+  </data>
 </root>

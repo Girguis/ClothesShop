@@ -766,4 +766,13 @@
   <data name="DeleteSystemData" xml:space="preserve">
     <value>Delete System Data</value>
   </data>
+  <data name="AreYouSureYouWantToChangeOrdersStatusTo" xml:space="preserve">
+    <value>Are You Sure You Want To Change Orders Status to</value>
+  </data>
+  <data name="OrdersStatus" xml:space="preserve">
+    <value>Orders Status</value>
+  </data>
+  <data name="ChangeOrdersStatus" xml:space="preserve">
+    <value>Change Orders Status</value>
+  </data>
 </root>

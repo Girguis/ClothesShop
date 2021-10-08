@@ -349,6 +349,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are You Sure You Want To Change Orders Status to.
+        /// </summary>
+        public static string AreYouSureYouWantToChangeOrdersStatusTo {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToChangeOrdersStatusTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are You Sure You Want To Change Status To.
         /// </summary>
         public static string AreYouSureYouWantToChangeStatusTo {
@@ -417,6 +426,15 @@ namespace ClothesShop.Languages {
         public static string CannotExccedDays {
             get {
                 return ResourceManager.GetString("CannotExccedDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Orders Status.
+        /// </summary>
+        public static string ChangeOrdersStatus {
+            get {
+                return ResourceManager.GetString("ChangeOrdersStatus", resourceCulture);
             }
         }
         
@@ -1272,6 +1290,15 @@ namespace ClothesShop.Languages {
         public static string OrdersDelivery {
             get {
                 return ResourceManager.GetString("OrdersDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orders Status.
+        /// </summary>
+        public static string OrdersStatus {
+            get {
+                return ResourceManager.GetString("OrdersStatus", resourceCulture);
             }
         }
         

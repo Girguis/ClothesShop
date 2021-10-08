@@ -1098,41 +1098,6 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="Textbox25">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>: تليفون ارضى</Value>
-                  <Style>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Right</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>0.70528in</Top>
-          <Left>4.81401in</Left>
-          <Height>0.23666in</Height>
-          <Width>0.77777in</Width>
-          <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
         <Textbox Name="Textbox26">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
@@ -1155,40 +1120,7 @@
           <Left>4.85224in</Left>
           <Height>0.23666in</Height>
           <Width>0.74094in</Width>
-          <ZIndex>3</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox32">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>02-33039201</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Right</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>0.70528in</Top>
-          <Left>3.76957in</Left>
-          <Height>0.23666in</Height>
-          <Width>1.04444in</Width>
-          <ZIndex>4</ZIndex>
+          <ZIndex>2</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1220,10 +1152,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>0.6914in</Top>
-          <Left>3.16774in</Left>
+          <Left>5.10524in</Left>
           <Height>0.23666in</Height>
           <Width>0.46944in</Width>
-          <ZIndex>5</ZIndex>
+          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1242,7 +1174,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>01011708963 - 01157798664 - 01020149447</Value>
+                  <Value>01119968662-01119968663</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -1253,9 +1185,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>0.6914in</Top>
+          <Left>1.9375in</Left>
           <Height>0.23666in</Height>
           <Width>3.16926in</Width>
-          <ZIndex>6</ZIndex>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

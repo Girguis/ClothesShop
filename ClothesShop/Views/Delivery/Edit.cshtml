@@ -42,6 +42,7 @@
                         <table id="OrdersGrid" class="table table-striped table-bordered dt-responsive nowrap GeneralTable Margin0" width="100%" cellspacing="0">
                             <thead>
                                 <tr class="theadData">
+                                    <td class="width5"></td>
                                     <th class="width5">@ClothesShop.Languages.Resources.Code</th>
                                     <th>@ClothesShop.Languages.Resources.CustomerName</th>
                                     <th>@ClothesShop.Languages.Resources.Address</th>
@@ -63,6 +64,7 @@
                                         foreach (var order in orders)
                                         {
                                             <tr>
+                                                <td class="width5"><input type='checkbox' id='checkBox_@order.ID' data-id='@order.ID' onchange='OnChangeSelection(this)'/></td>
                                                 <td class="width5">@order.ID</td>
                                                 <td>@order.Customer.Name</td>
                                                 <td>@order.Customer.Address</td>
@@ -100,12 +102,16 @@
             </div>
             <div class="panel-footer">
                 <div class="form-group">
-                    <div class="col-xs-12 col-md-6 f-right txt-right">
+                    <div class="col-xs-12 col-md-4 f-right txt-right">
                         <a href="@Url.Action("Create","Delivery" , new { area = "" , id = ViewBag.ID })" class="btn btn-lg btn-success">
                             @ClothesShop.Languages.Resources.AddOrder
                         </a>
+                            <a href="#" onclick="OpenChangeStatusPopUp()" class="btn btn-primary btn-lg">
+                                @ClothesShop.Languages.Resources.ChangeOrdersStatus<i class="fa fa-pencil"></i>
+                            </a>
                     </div>
-                    <div class="col-xs-12 col-md-6 f-left txt-left">
+             
+                    <div class="col-xs-12 col-md-4 f-left txt-left">
                         @Html.ActionLink(ClothesShop.Languages.Resources.BackToList, "Index", "", htmlAttributes: new { @class = "btn btn-lg btn-primary" })
                     </div>
                 </div>
@@ -163,12 +169,68 @@
     </div>
 
 </div>
+
+<div id="UpdatStatusModal2" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="display: inline;">@ClothesShop.Languages.Resources.ChangeOrdersStatus</h5>
+                <button type="button" class="close f-left" onclick="CloseModal2();"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="UpdatStatusModalBody">
+                <div class="row Padding0 Margin0">
+
+                    <div class="form-horizontal">
+                        <div class="row col-xs-12 Padding0 Margin0">
+
+                            <div class="col-xs-12 f-right">
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <label>@ClothesShop.Languages.Resources.OrdersStatus</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        @Html.DropDownList("OrdersStatusList", new SelectList(ClothesShop.Helpers.Helper.EnumToList<ClothesShop.Enums.OrderStatuses>(), "ID", "Name"), new { @id = "OrdersStatusList", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="ChangeOrdersStatus();" class="btn btn-lg btn-success">@ClothesShop.Languages.Resources.Save</button>
+                <button type="button" class="btn btn-lg btn-default" onclick="CloseModal2();">@ClothesShop.Languages.Resources.Close</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 @section styles{
     @Styles.Render("~/Styles/EmployeeAdd")
 }
 @section scripts{
     <script>
         var msg = "";
+        var IdsList = [];
+
+        function OnChangeSelection(element) {
+            var isChecked = $(element).is(":checked");
+            var orderId = $(element).attr("data-id");
+            if (isChecked == true) {
+                if (IdsList.indexOf(orderId) == -1)
+                    IdsList.push(orderId);
+            }
+            else {
+                var index = IdsList.indexOf(orderId);
+                if (index != -1)
+                    IdsList.splice(index, 1);
+            }
+        }
+
         function ConfirmDeleteOrder(id) {
             msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteOrderFromDeliveryMan)";
             var url = '@Url.Action("ChangeOrderStatus", "Delivery")';
@@ -193,9 +255,15 @@
             $("#OrderID").val(id);
             OnChangeOrderStatusSelection();
         }
+        function OpenChangeStatusPopUp() {
+            $("#UpdatStatusModal2").modal("show");
+        }
         function CloseModal() {
             $("#OrderID").val("");
             $("#UpdatStatusModal").modal("hide");
+        }
+        function CloseModal2() {
+            $("#UpdatStatusModal2").modal("hide");
         }
         function ChangeOrderStatus() {
 
@@ -213,6 +281,19 @@
             msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureYouWantToChangeStatusTo)" + " " + orderStatus +" ؟ ";
             var url = '@Url.Action("ChangeOrderStatus", "Delivery")';
             var data = JSON.stringify({ orderId: orderId, deliverManId: deliveryManId, orderStatusId: orderStatusId, paidAmount: paidAmount });
+            CommonManager.prototype.ConfirmDelete(url, data);
+        }
+
+        function ChangeOrdersStatus() {
+            if (IdsList.length <= 0) {
+                CloseModal2();
+                return;
+            }
+            var orderStatus = $("#OrdersStatusList option:selected").text();
+            var ordersStatusId = $("#OrdersStatusList option:selected").val();
+            msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureYouWantToChangeOrdersStatusTo)" + " " + orderStatus +" ؟ ";
+            var url = '@Url.Action("ChangeOrdersStatus", "Delivery")';
+            var data = JSON.stringify({ orderIds: IdsList, orderStatusId: ordersStatusId });
             CommonManager.prototype.ConfirmDelete(url, data);
         }
     </script>
