@@ -81,7 +81,7 @@
 
             $("#tBody").append(tr);
 
-            $("#Product_NumberOfPieces").val("");
+            //$("#Product_NumberOfPieces").val("");
             $("#Product_SellingPrice").val("");
             self.OnChangeTotal();
         });

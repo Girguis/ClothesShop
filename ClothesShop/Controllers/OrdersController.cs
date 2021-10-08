@@ -54,8 +54,11 @@ namespace ClothesShop.Controllers
                 Product = new ProductsViewModel()
                 {
                     ID = 0,
+                    NumberOfPieces=1,
+                    SellingPrice=285
                 }
             };
+            
             return View(model);
         }
 

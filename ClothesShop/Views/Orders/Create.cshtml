@@ -188,7 +188,7 @@
                                                         <span class="text-danger">*</span>
                                                     </div>
                                                     <div class="col-xs-12 col-md-12 f-right">
-                                                        @Html.EditorFor(model => model.Product.NumberOfPieces, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right" } })
+                                                        @Html.EditorFor(model => model.Product.NumberOfPieces, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right", @value = Model.Product.NumberOfPieces } })
                                                         @Html.ValidationMessageFor(m => m.Product.NumberOfPieces, "", new { @class = "text-danger col-xs-12 padding0" })
                                                     </div>
                                                 </div>
@@ -198,7 +198,7 @@
                                                         <span class="text-danger">*</span>
                                                     </div>
                                                     <div class="col-xs-12 col-md-12 f-right">
-                                                        @Html.EditorFor(model => model.Product.SellingPrice, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right" } })
+                                                        @Html.EditorFor(model => model.Product.SellingPrice, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right",@value=Model.Product.SellingPrice } })
                                                         @Html.ValidationMessageFor(m => m.Product.SellingPrice, "", new { @class = "text-danger col-xs-12 padding0" })
                                                     </div>
                                                 </div>
