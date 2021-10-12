@@ -9,6 +9,9 @@
         });
         $("#submit").on("click", function (e) {
             var i = $("#tBody tr").length - 2;
+            if ($("#tBody .tfooter").length == 0) {
+                i++;
+            }
             if (i == 0) {
                 CommonManager.prototype.Alert(mustHaveProducts);
                 e.preventDefault();
