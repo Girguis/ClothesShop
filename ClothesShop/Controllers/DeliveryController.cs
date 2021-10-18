@@ -15,6 +15,8 @@ using DAL;
 using iTextSharp.text.pdf;
 using Microsoft.Reporting.WebForms;
 using Authorization = ClothesShop.Infrastructure.Authorization;
+using Microsoft.Office.Interop.Excel;
+using System.Text;
 
 namespace ClothesShop.Controllers
 {
@@ -237,11 +239,12 @@ namespace ClothesShop.Controllers
                 {
                     CustomerName = n.Customer != null ? n.Customer.Name : "",
                     CustomerAddress = n.Customer != null ? GetLastPartOfAddress(n.Customer.Address) : "",
-                    CustomerMobileNumber=n.Customer.MobileNumber1,
+                    CustomerMobileNumber = n.Customer.MobileNumber1,
                     SellerName = n.Seller != null ? n.Seller.FullName : "",
                     OrderPrice = n.ProductOrders.Sum(p => p.Quantity * p.SellingPrice).Value,
                     ShipmentPrice = n.ShipmentPrice,
-                    OrderCode=n.ID,
+                    OrderCode = n.ID,
+                    RequestDate = n.RequestDate.Value.ToString("dd/MM/yyyy")
                 }).ToList();
                 var deliveryDataSet = new
                 {
@@ -291,17 +294,166 @@ namespace ClothesShop.Controllers
                 //return file path  
                 string FilePathReturn = @"Images/TempFiles/" + FileName;
                 string app = "";
-                if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
-                    app = "ClothesShop/";
+                //if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
+                //    app = "ClothesShop/";
 
                 return Content(app + FilePathReturn);
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-
             }
             return null;
+        }
+        private List<System.Data.DataTable> GetExcelData(long id)
+        {
+            var employee = _EmployeesRepo.GetByID(id);
+            var orders = employee.Orders.Where(o => o.OrderStatusID == (int)OrderStatuses.Waiting);
+            var deliveryDetailsData = orders.Select(n => new
+            {
+                CustomerName = n.Customer != null ? n.Customer.Name : "",
+                CustomerAddress = n.Customer != null ? GetLastPartOfAddress(n.Customer.Address) : "",
+                CustomerMobileNumber = n.Customer.MobileNumber1.ToString(),
+                SellerName = n.Seller != null ? n.Seller.FullName : "",
+                OrderPrice = n.ProductOrders.Sum(p => p.Quantity * p.SellingPrice).Value,
+                ShipmentPrice = n.ShipmentPrice,
+                OrderCode = n.ID,
+                RequestDate = n.RequestDate.Value.ToString("dd/MM/yyyy")
+            }).ToList();
+            var deliveryData = new
+            {
+                CurrentDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"),
+                DeliveryFullName = employee.FullName,
+                DeliveryMobileNumber = string.Join(" - ", new string[] { employee.MobileNumber1, employee.MobileNumber2 }),
+                NumberOfOrders = orders.Count(),
+                TotalOrderPrice = orders.Sum(o => o.ProductOrders.Sum(x => x.Quantity * x.SellingPrice)),
+                TotalShipmentPrice = orders.Sum(o => o.ShipmentPrice)
+            };
+            List<System.Data.DataTable> table = new List<System.Data.DataTable>();
+            System.Data.DataTable t1 = new System.Data.DataTable();
+            System.Data.DataTable t2 = new System.Data.DataTable();
+            t1.Columns.Add("التاريخ", typeof(DateTime));
+            t1.Columns.Add("المندوب", typeof(string));
+            t1.Columns.Add("رقم المندوب", typeof(string));
+            t1.Columns.Add("عدد الطلبات", typeof(int));
+            t1.Columns.Add("اجمالى مبلغ الطلبات", typeof(float));
+            t1.Columns.Add("اجمالى مبلغ الشحن", typeof(float));
+            t1.Columns.Add("موبيل", typeof(string));
+            t1.Rows.Add(deliveryData.CurrentDate, deliveryData.DeliveryFullName, deliveryData.DeliveryMobileNumber
+                , deliveryData.NumberOfOrders, deliveryData.TotalOrderPrice, deliveryData.TotalShipmentPrice, "01119968662-01119968663");
+            table.Add(t1);
+
+                       
+            t2.Columns.Add("ع", typeof(int));
+            t2.Columns.Add("كود الطلب", typeof(int));
+            t2.Columns.Add("اسم العميل", typeof(string));
+            t2.Columns.Add("رقم العميل", typeof(string));
+            t2.Columns.Add("العنوان", typeof(string));
+            t2.Columns.Add("المبلغ", typeof(float));
+            t2.Columns.Add("حالة الطلب", typeof(string));
+            t2.Columns.Add("صاحب الطلب", typeof(string));
+            t2.Columns.Add("تاريخ الطلب", typeof(string));
+            for(int i=0;i<deliveryDetailsData.Count;i++)
+            {
+                t2.Rows.Add((i + 1), deliveryDetailsData[i].OrderCode, deliveryDetailsData[i].CustomerName,
+                    deliveryDetailsData[i].CustomerMobileNumber, deliveryDetailsData[i].CustomerAddress,
+                    deliveryDetailsData[i].OrderPrice, String.Empty, deliveryDetailsData[i].SellerName,
+                    deliveryDetailsData[i].RequestDate);
+            }
+            table.Add(t2);
+            return table;
+        }
+        public ActionResult ExportToCSV(long id)
+        {
+            string FileName = "Sheet_" + DateTime.Now.Ticks.ToString() + ".csv";
+            List<System.Data.DataTable> table = GetExcelData(id);
+            if (table == null || table.Count <= 0 || table[0].Rows == null || table[0].Rows.Count <= 0)
+                return null;
+            System.Data.DataTable dtDataTable = table[0];
+            System.Data.DataTable dtDataTable2 = table[1];
+            string dir = HttpContext.Server.MapPath(@"~\Images\ExcelFiles\");
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+            string strFilePath = dir + FileName;
+
+            StreamWriter sw = new StreamWriter(strFilePath,false, Encoding.UTF8);
+            //headers    
+            for (int i = 0; i < dtDataTable.Columns.Count; i++)
+            {
+                sw.Write(dtDataTable.Columns[i]);
+                if (i < dtDataTable.Columns.Count - 1)
+                {
+                    sw.Write(",");
+                }
+            }
+            sw.Write(sw.NewLine);
+            foreach (DataRow dr in dtDataTable.Rows)
+            {
+                for (int i = 0; i < dtDataTable.Columns.Count; i++)
+                {
+                    if (!Convert.IsDBNull(dr[i]))
+                    {
+                        string value = dr[i].ToString();
+                        if (value.Contains(','))
+                        {
+                            value = String.Format("\"{0}\"", value);
+                            sw.Write(value);
+                        }
+                        else
+                        {
+                            sw.Write(dr[i].ToString());
+                        }
+                    }
+                    if (i < dtDataTable.Columns.Count - 1)
+                    {
+                        sw.Write(",");
+                    }
+                }
+                sw.Write(sw.NewLine);
+            }
+            sw.Write(sw.NewLine);
+            sw.Write(sw.NewLine);
+            for (int i = 0; i < dtDataTable2.Columns.Count; i++)
+            {
+                sw.Write(dtDataTable2.Columns[i]);
+                if (i < dtDataTable2.Columns.Count - 1)
+                {
+                    sw.Write(",");
+                }
+            }
+            sw.Write(sw.NewLine);
+            foreach (DataRow dr in dtDataTable2.Rows)
+            {
+                for (int i = 0; i < dtDataTable2.Columns.Count; i++)
+                {
+                    if (!Convert.IsDBNull(dr[i]))
+                    {
+                        string value = dr[i].ToString();
+                        if (value.Contains(','))
+                        {
+                            value = String.Format("\"{0}\"", value);
+                            sw.Write(value);
+                        }
+                        else
+                        {
+                            sw.Write(dr[i].ToString());
+                        }
+                    }
+                    if (i < dtDataTable2.Columns.Count - 1)
+                    {
+                        sw.Write(",");
+                    }
+                }
+                sw.Write(sw.NewLine);
+            }
+            sw.Close();
+            string FilePathReturn = @"Images/ExcelFiles/" + FileName;
+            string app = "";
+            //if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
+            //    app = "ClothesShop/";
+
+            return Content(app + FilePathReturn);
+
         }
 
         private string GetLastPartOfAddress(string address)

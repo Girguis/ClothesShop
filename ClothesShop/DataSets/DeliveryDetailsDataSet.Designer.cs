@@ -293,6 +293,8 @@ namespace ClothesShop.DataSets {
             
             private global::System.Data.DataColumn columnCustomerMobileNumber;
             
+            private global::System.Data.DataColumn columnRequestDate;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public DeliveryDetailsDataSetDataTable() {
@@ -384,6 +386,14 @@ namespace ClothesShop.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn RequestDateColumn {
+                get {
+                    return this.columnRequestDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -419,7 +429,7 @@ namespace ClothesShop.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public DeliveryDetailsDataSetRow AddDeliveryDetailsDataSetRow(string CustomerName, string CustomerAddress, double OrderPrice, double ShipmentPrice, string SellerName, string OrderCode, string CustomerMobileNumber) {
+            public DeliveryDetailsDataSetRow AddDeliveryDetailsDataSetRow(string CustomerName, string CustomerAddress, double OrderPrice, double ShipmentPrice, string SellerName, string OrderCode, string CustomerMobileNumber, string RequestDate) {
                 DeliveryDetailsDataSetRow rowDeliveryDetailsDataSetRow = ((DeliveryDetailsDataSetRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CustomerName,
@@ -428,7 +438,8 @@ namespace ClothesShop.DataSets {
                         ShipmentPrice,
                         SellerName,
                         OrderCode,
-                        CustomerMobileNumber};
+                        CustomerMobileNumber,
+                        RequestDate};
                 rowDeliveryDetailsDataSetRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDeliveryDetailsDataSetRow);
                 return rowDeliveryDetailsDataSetRow;
@@ -458,6 +469,7 @@ namespace ClothesShop.DataSets {
                 this.columnSellerName = base.Columns["SellerName"];
                 this.columnOrderCode = base.Columns["OrderCode"];
                 this.columnCustomerMobileNumber = base.Columns["CustomerMobileNumber"];
+                this.columnRequestDate = base.Columns["RequestDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -477,6 +489,8 @@ namespace ClothesShop.DataSets {
                 base.Columns.Add(this.columnOrderCode);
                 this.columnCustomerMobileNumber = new global::System.Data.DataColumn("CustomerMobileNumber", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCustomerMobileNumber);
+                this.columnRequestDate = new global::System.Data.DataColumn("RequestDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRequestDate);
                 this.columnCustomerName.MaxLength = 100;
                 this.columnCustomerAddress.MaxLength = 200;
                 this.columnSellerName.MaxLength = 100;
@@ -739,6 +753,22 @@ namespace ClothesShop.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string RequestDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableDeliveryDetailsDataSet.RequestDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RequestDate\' in table \'DeliveryDetailsDataSet\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeliveryDetailsDataSet.RequestDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsCustomerNameNull() {
                 return this.IsNull(this.tableDeliveryDetailsDataSet.CustomerNameColumn);
             }
@@ -819,6 +849,18 @@ namespace ClothesShop.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetCustomerMobileNumberNull() {
                 this[this.tableDeliveryDetailsDataSet.CustomerMobileNumberColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsRequestDateNull() {
+                return this.IsNull(this.tableDeliveryDetailsDataSet.RequestDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetRequestDateNull() {
+                this[this.tableDeliveryDetailsDataSet.RequestDateColumn] = global::System.Convert.DBNull;
             }
         }
         

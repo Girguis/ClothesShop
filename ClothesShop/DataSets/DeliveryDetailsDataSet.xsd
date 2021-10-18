@@ -12,7 +12,7 @@
   <xs:element name="DeliveryDetailsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DeliveryDetailsDataSet" msprop:Generator_UserDSName="DeliveryDetailsDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="DeliveryDetailsDataSet" msprop:Generator_TableClassName="DeliveryDetailsDataSetDataTable" msprop:Generator_TableVarName="tableDeliveryDetailsDataSet" msprop:Generator_TablePropName="_DeliveryDetailsDataSet" msprop:Generator_RowDeletingName="DeliveryDetailsDataSetRowDeleting" msprop:Generator_RowChangingName="DeliveryDetailsDataSetRowChanging" msprop:Generator_RowEvHandlerName="DeliveryDetailsDataSetRowChangeEventHandler" msprop:Generator_RowDeletedName="DeliveryDetailsDataSetRowDeleted" msprop:Generator_UserTableName="DeliveryDetailsDataSet" msprop:Generator_RowChangedName="DeliveryDetailsDataSetRowChanged" msprop:Generator_RowEvArgName="DeliveryDetailsDataSetRowChangeEvent" msprop:Generator_RowClassName="DeliveryDetailsDataSetRow">
+        <xs:element name="DeliveryDetailsDataSet" msprop:Generator_TableClassName="DeliveryDetailsDataSetDataTable" msprop:Generator_TableVarName="tableDeliveryDetailsDataSet" msprop:Generator_RowChangedName="DeliveryDetailsDataSetRowChanged" msprop:Generator_TablePropName="_DeliveryDetailsDataSet" msprop:Generator_RowDeletingName="DeliveryDetailsDataSetRowDeleting" msprop:Generator_RowChangingName="DeliveryDetailsDataSetRowChanging" msprop:Generator_RowEvHandlerName="DeliveryDetailsDataSetRowChangeEventHandler" msprop:Generator_RowDeletedName="DeliveryDetailsDataSetRowDeleted" msprop:Generator_RowClassName="DeliveryDetailsDataSetRow" msprop:Generator_UserTableName="DeliveryDetailsDataSet" msprop:Generator_RowEvArgName="DeliveryDetailsDataSetRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="CustomerName" msprop:Generator_ColumnVarNameInTable="columnCustomerName" msprop:Generator_ColumnPropNameInRow="CustomerName" msprop:Generator_ColumnPropNameInTable="CustomerNameColumn" msprop:Generator_UserColumnName="CustomerName" minOccurs="0">
@@ -40,6 +40,7 @@
               </xs:element>
               <xs:element name="OrderCode" msprop:Generator_ColumnVarNameInTable="columnOrderCode" msprop:Generator_ColumnPropNameInRow="OrderCode" msprop:Generator_ColumnPropNameInTable="OrderCodeColumn" msprop:Generator_UserColumnName="OrderCode" type="xs:string" minOccurs="0" />
               <xs:element name="CustomerMobileNumber" msprop:Generator_ColumnVarNameInTable="columnCustomerMobileNumber" msprop:Generator_ColumnPropNameInRow="CustomerMobileNumber" msprop:Generator_ColumnPropNameInTable="CustomerMobileNumberColumn" msprop:Generator_UserColumnName="CustomerMobileNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="RequestDate" msprop:Generator_ColumnVarNameInTable="columnRequestDate" msprop:Generator_ColumnPropNameInRow="RequestDate" msprop:Generator_ColumnPropNameInTable="RequestDateColumn" msprop:Generator_UserColumnName="RequestDate" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

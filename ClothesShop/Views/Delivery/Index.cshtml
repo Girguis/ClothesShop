@@ -23,6 +23,7 @@
                 <th class="width10">&nbsp;</th>
                 <th class="width10">&nbsp;</th>
                 <th class="width10">&nbsp;</th>
+                <th class="width10">&nbsp;</th>
             </tr>
             <tr class="searchRow">
                 <th class="width20 padding0">
@@ -39,6 +40,7 @@
                 </th>
                 <th class="width15" ></th>
                 <th class="width15" ></th>
+                <th class="width10">&nbsp;</th>
                 <th class="width10">&nbsp;</th>
                 <th class="width10">&nbsp;</th>
                 <th class="width10">&nbsp;</th>
@@ -65,16 +67,18 @@
         var addURL = "@Url.Action("Create", "Delivery")/";
         var detailsURL = "";
         var printURL = "@Url.Action("ExportToPDF","Delivery")";
+        var ExportURL = "@Url.Action("ExportToCSV", "Delivery")";
         var dataURL ='@Url.Action("GetAll", "Delivery")';
         var columns = [{ Name: "EmployeeName", Class: "width20" }, { Name: "EmployeeMobileNumber", Class: "width20" },
             { Name: "NumberOfOrders", Class: "width15" },
             { Name: "TotalOrderCash", Class: "width15" },
-            { Name: "ADD", Class: "width10" }, { Name: "EDIT", Class: "width10" }, { Name: "PRINT", Class: "width10" }];
+            { Name: "ADD", Class: "width10" }, { Name: "EDIT", Class: "width10" }, { Name: "PRINT", Class: "width10" }, {Name:"ExportToExcel",Class:"width10"}];
 
         var searchColumns = [{ Name: "EmployeeName", Type: "input" }, { Name: "EmployeeMobileNumber", Type: "input" }];
         printText = "@Html.Raw(ClothesShop.Languages.Resources.PrintSheet)";
         addText = "@Html.Raw(ClothesShop.Languages.Resources.AddOrders)";
         updateText = "@Html.Raw(ClothesShop.Languages.Resources.EditOrders)";
+    exportText = "@Html.Raw(ClothesShop.Languages.Resources.EditOrders)";
         var deleteURL = "";
         var gridId = "DeliveryGrid";
         var rootURL = "@Url.Content("/")";

@@ -230,6 +230,10 @@
                         if (printURL && isDetails)
                             table += "<a class='btn btn-outline-secondary'  onclick='PrintManager.prototype.Print(\"" + printURL + "?id="+lst[i][uniqueID]+"\")' href='#'><i class='fa fa-print'></i> " + printText + "</a>";
                     }
+                    else if (columns[j].Name == "ExportToExcel") {
+                        if (ExportURL && isDetails)
+                            table += "<a class='btn btn-outline-secondary'  onclick='PrintManager.prototype.Export(\"" + ExportURL + "?id="+lst[i][uniqueID]+"\")' href='#'><i class='fa fa-file-excel-o'></i> " + exportText + "</a>";
+                    }
                     else {
                         var columnName = columns[j].Name;
                         var data = lst[i][columnName];

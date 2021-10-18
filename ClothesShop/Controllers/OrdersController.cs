@@ -422,8 +422,8 @@ namespace ClothesShop.Controllers
                 string FilePathReturn = @"Images/TempFiles/" + FileName;
 
                 string app = "";
-                if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
-                    app = "ClothesShop/";
+                //if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
+                //    app = "ClothesShop/";
 
                 return Content(app + FilePathReturn);
             }
