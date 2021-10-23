@@ -67,7 +67,7 @@
         var addURL = "@Url.Action("Create", "Delivery")/";
         var detailsURL = "";
         var printURL = "@Url.Action("ExportToPDF","Delivery")";
-        var ExportURL = "@Url.Action("ExportToCSV", "Delivery")";
+        var ExportURL = "@Url.Action("ExportToExcel", "Delivery")";
         var dataURL ='@Url.Action("GetAll", "Delivery")';
         var columns = [{ Name: "EmployeeName", Class: "width20" }, { Name: "EmployeeMobileNumber", Class: "width20" },
             { Name: "NumberOfOrders", Class: "width15" },
@@ -78,7 +78,7 @@
         printText = "@Html.Raw(ClothesShop.Languages.Resources.PrintSheet)";
         addText = "@Html.Raw(ClothesShop.Languages.Resources.AddOrders)";
         updateText = "@Html.Raw(ClothesShop.Languages.Resources.EditOrders)";
-    exportText = "@Html.Raw(ClothesShop.Languages.Resources.EditOrders)";
+    exportText = "@Html.Raw(ClothesShop.Languages.Resources.ExcelSheet)";
         var deleteURL = "";
         var gridId = "DeliveryGrid";
         var rootURL = "@Url.Content("/")";

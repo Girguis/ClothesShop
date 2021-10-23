@@ -763,6 +763,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Excel sheet.
+        /// </summary>
+        public static string ExcelSheet {
+            get {
+                return ResourceManager.GetString("ExcelSheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Female.
         /// </summary>
         public static string Female {

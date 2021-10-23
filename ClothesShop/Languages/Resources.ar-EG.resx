@@ -775,4 +775,7 @@
   <data name="ChangeOrdersStatus" xml:space="preserve">
     <value>تغيير حالة الطلبات</value>
   </data>
+  <data name="ExcelSheet" xml:space="preserve">
+    <value>شيت Excel</value>
+  </data>
 </root>

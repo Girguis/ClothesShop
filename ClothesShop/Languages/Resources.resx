@@ -775,4 +775,7 @@
   <data name="ChangeOrdersStatus" xml:space="preserve">
     <value>Change Orders Status</value>
   </data>
+  <data name="ExcelSheet" xml:space="preserve">
+    <value>Excel sheet</value>
+  </data>
 </root>
