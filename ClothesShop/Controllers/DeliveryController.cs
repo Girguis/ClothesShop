@@ -377,6 +377,9 @@ namespace ClothesShop.Controllers
                     sheet.Range[colNames[8] + count].Value = deliveryDetailsData[i].RequestDate;
                     count++;
                 }
+                Validation validation = workbook.Worksheets[0].Range["G5:G" + (deliveryDetailsData.Count + 4)].DataValidation;
+                validation.Values = new string[] { "تم التسليم كليا", "تم التسليم جزئي", "لم يستلم"};
+
                 sheet.Range.Style.Font.Size = 14;
                 sheet.AllocatedRange.AutoFitColumns();
                 sheet.AllocatedRange.AutoFitRows();
@@ -393,7 +396,7 @@ namespace ClothesShop.Controllers
                 if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
                     app = "ClothesShop/";
 
-                return Content(FilePathReturn);
+                return Content(app + FilePathReturn);
             }
             catch (Exception ex)
             {
