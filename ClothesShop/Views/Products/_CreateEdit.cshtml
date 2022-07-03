@@ -1,0 +1,64 @@
+﻿@model ClothesShop.Models.ProductViewModel
+
+<div class="col-md-5 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label" })
+        <span class="form-label form-label text-danger">*</span>
+    </div>
+    <div class="col-md-12">
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "form-label text-danger col-sm-12 " })
+    </div>
+</div>
+<div class="col-md-5 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.OriginalPrice, htmlAttributes: new { @class = "form-label" })
+        <span class="form-label form-label text-danger">*</span>
+    </div>
+    <div class="col-md-12">
+        @Html.EditorFor(model => model.OriginalPrice, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+        @Html.ValidationMessageFor(model => model.OriginalPrice, "", new { @class = "form-label text-danger col-sm-12 " })
+    </div>
+</div>
+
+<div class="col-md-10 mb-3">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.ColorIDs, htmlAttributes: new { @class = "form-label" })
+        <span class="text-danger">*</span>
+    </div>
+
+    <div class="col-sm-12">
+        @{
+            var colors = ClothesShop.Helpers.Helper.GetColors();
+            var oldColors = Model.ColorIDs;
+            foreach (var color in colors)
+            {
+                <div class="col-sm-12 col-md-3 mb-1 customStyle">
+                    <input type="checkbox" name="ColorIDs" value="@color.ID" @(oldColors != null && oldColors.Contains(color.ID.ToString()) ? "checked" : "") /> @color.Name
+                </div>
+            }
+        }
+        @Html.ValidationMessageFor(model => model.ColorIDs, "", new { @class = "text-danger col-sm-12 p-0" })
+    </div>
+</div>
+
+<div class="col-md-10 mb-3">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.SizeIDs, htmlAttributes: new { @class = "form-label" })
+        <span class="text-danger">*</span>
+    </div>
+    <div class="col-sm-12">
+        @{
+            var sizes = ClothesShop.Helpers.Helper.GetSizes();
+            var oldSizes = Model.SizeIDs;
+            foreach (var size in sizes)
+            {
+                <div class="col-sm-12 col-md-3 mb-1 customStyle">
+                    <input type="checkbox" name="SizeIDs" value="@size.ID" @(oldSizes != null && oldSizes.Contains(size.ID.ToString()) ? "checked" : "") /> @size.Name
+                </div>
+
+            }
+        }
+        @Html.ValidationMessageFor(model => model.SizeIDs, "", new { @class = "text-danger col-sm-12 p-0" })
+    </div>
+</div>

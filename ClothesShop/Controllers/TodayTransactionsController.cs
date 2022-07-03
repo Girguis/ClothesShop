@@ -106,14 +106,13 @@ namespace ClothesShop.Controllers
                 int totalRecords = result.Count();
 
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords / obj.PageSize * 1.0));
               
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
     }

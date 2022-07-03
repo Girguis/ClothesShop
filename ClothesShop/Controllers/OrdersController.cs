@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -11,8 +12,10 @@ using ClothesShop.Helpers;
 using ClothesShop.Infrastructure;
 using ClothesShop.Models;
 using DAL;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.Reporting.WebForms;
+using Newtonsoft.Json;
 using Authorization = ClothesShop.Infrastructure.Authorization;
 
 namespace ClothesShop.Controllers
@@ -192,6 +195,7 @@ namespace ClothesShop.Controllers
                     ShipmentCompanyName = t.ShipmentCompany != null ? t.ShipmentCompany.Name : "",
                     SellerName = t.Seller != null ? t.Seller.FullName : "",
                 };
+                orderViewModel.ProductSeralized = JsonConvert.SerializeObject(orderViewModel.Products);
             }
             catch (Exception ex)
             {
@@ -205,6 +209,7 @@ namespace ClothesShop.Controllers
             try
             {
                 long? nullVal = null;
+                t.Products = JsonConvert.DeserializeObject<List<ProductsViewModel>>(t.ProductSeralized)?.ToList();
                 order = new Order()
                 {
                     ID = t.ID,
@@ -271,27 +276,26 @@ namespace ClothesShop.Controllers
                     orderStatusId = int.Parse(filtering.GetValue("OrderStatusID"));
 
                 if (filtering.GetValue("RequestDate") != null && !string.IsNullOrEmpty(filtering.GetValue("RequestDate")))
-                    requestDate = DateTime.ParseExact(filtering.GetValue("RequestDate"), "dd/MM/yyyy", System.Globalization.CultureInfo.CurrentCulture).ToString("MM/dd/yyyy");
+                    requestDate = DateTime.ParseExact(filtering.GetValue("RequestDate"), "yyyy/MM/dd", System.Globalization.CultureInfo.CurrentCulture).ToString("MM/dd/yyyy");
 
                 string name = filtering.GetValue("Customer_Name");
                 string mobileNumber1 = filtering.GetValue("Customer_MobileNumber1");
                 string address = filtering.GetValue("Customer_Address");
                 string deliveryName = filtering.GetValue("EmployeeName");
                 string sellerName = filtering.GetValue("SellerName");
-                string orderBy = obj.OrderBy.ColumnName;
-                string orderDirection = obj.OrderBy.Direction;
+                string orderBy = obj.OrderBy?.ColumnName;
+                string orderDirection = obj.OrderBy?.Direction;
 
                 List<OrderViewModel> data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, out totalRecords).ToList();
                 if (data != null && data.Count() > 0)
                     data = data.Select(c => { c.OrderStatusName = Helper.EnumToList<OrderStatuses>().Where(x => x.ID == c.OrderStatusID).First().Name; return c; }).ToList();
                 //totalRecords = result.Count();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords * 1.0 / pageSize));
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
 
@@ -343,18 +347,103 @@ namespace ClothesShop.Controllers
                 result = filtering.OrderBy(obj.OrderBy, result);
 
                 totalRecords = result.Count();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords * 1.0 / pageSize));
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
                 //Returning Json Data    
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
-        public ActionResult ExportToPDF(long id)
+        [Authorization("Orders", (RoleType.Details))]
+        public ActionResult ExportMultipleBills(string ids)
+        {
+            try 
+            { 
+                //new List<int>{3542,3541,3540}
+                List<int> orderIDs = ids.Split(new String[] { "," },StringSplitOptions.None).Select(x=>int.Parse(x)).ToList();
+                string SourcePdfPath = HttpContext.Server.MapPath("~/Images/SourcePdfFiles/");
+                string DestinationPdfPath = HttpContext.Server.MapPath("~/Images/DestPdfFile/");
+
+                if (Directory.Exists(SourcePdfPath))
+                    Directory.Delete(SourcePdfPath,true);
+            
+                Directory.CreateDirectory(SourcePdfPath);
+            
+                if (Directory.Exists(DestinationPdfPath))
+                    Directory.Delete(DestinationPdfPath, true);
+
+                Directory.CreateDirectory(DestinationPdfPath);
+
+                foreach (var orderID in orderIDs)
+                {
+                    string path = CreatePDF(orderID);
+                    System.IO.File.Copy(path, SourcePdfPath + orderID+".pdf",true);
+                }
+                string tempFileDir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
+                if (Directory.Exists(tempFileDir))
+                    Directory.Delete(tempFileDir,true);
+
+                string[] filenames = Directory.GetFiles(SourcePdfPath);
+                string outputFileName = "Orders_"+DateTime.Now.ToString("MMddyyyyhhmmss")+".pdf";
+                string outputPath = HttpContext.Server.MapPath("~/Images/DestPdfFile/" + outputFileName);
+
+                Document doc = new Document();
+                PdfCopy writer = new PdfCopy(doc, new FileStream(outputPath, FileMode.Create));
+                if (writer == null)
+                {
+                    return null;
+                }
+                doc.Open();
+                foreach (string filename in filenames)
+                {
+                    PdfReader reader = new PdfReader(filename);
+                    reader.ConsolidateNamedDestinations();
+                    for (int i = 1; i <= reader.NumberOfPages; i++)
+                    {
+                        PdfImportedPage page = writer.GetImportedPage(reader, i);
+                        writer.AddPage(page);
+                    }
+                    reader.Close();
+                }
+                writer.Close();
+                doc.Close();
+
+                var bytes = System.IO.File.ReadAllBytes(outputPath);
+                PdfReader pdfReader = new PdfReader(bytes);
+                FileStream output = new FileStream(outputPath, FileMode.Open);
+
+                string Agent = HttpContext.Request.Headers["User-Agent"].ToString();
+
+                //create and set PdfStamper  
+                PdfStamper pdfStamper = new PdfStamper(pdfReader, output, '0', true);
+
+                if (Agent.Contains("Firefox"))
+                    pdfStamper.JavaScript = "var res = app.loaded('var pp = this.getPrintParams();pp.interactive = pp.constants.interactionLevel.full;this.print(pp);');";
+                else
+                    pdfStamper.JavaScript = "var res = app.setTimeOut('var pp = this.getPrintParams();pp.interactive = pp.constants.interactionLevel.full;this.print(pp);', 200);";
+
+                pdfStamper.FormFlattening = false;
+                pdfStamper.Close();
+                pdfReader.Close();
+
+                if (Directory.Exists(SourcePdfPath))
+                    Directory.Delete(SourcePdfPath, true);
+                string app = ConfigurationManager.AppSettings["preExists"];
+
+                string FilePathReturn = @"Images/DestPdfFile/" + outputFileName;
+                return Content(app + FilePathReturn);
+            }
+            catch (Exception ex)
+            {
+                Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
+            }
+            return null;
+        }
+
+        public String CreatePDF(long id)
         {
             try
             {
@@ -411,6 +500,79 @@ namespace ClothesShop.Controllers
                 //create and set PdfStamper  
                 PdfStamper pdfStamper = new PdfStamper(reader, output, '0', true);
 
+
+                pdfStamper.FormFlattening = false;
+                pdfStamper.Close();
+                reader.Close();
+
+                return dir + FileName;
+            }
+            catch (Exception ex)
+            {
+                Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
+            }
+            return null;
+        }
+
+        [Authorization("Orders", (RoleType.Details))]
+        public ActionResult ExportToPDF(long id)
+        {
+            try
+            {
+                //Report  
+                ReportViewer reportViewer = new ReportViewer();
+
+                reportViewer.ProcessingMode = ProcessingMode.Local;
+                reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice.rdlc");
+                var x = _OrdersRepo.GetByID(id);
+                var orderDataSet = new
+                {
+                    CityName = x.City != null ? x.City.Name : "",
+                    CustomerAddress = x.Customer != null ? x.Customer.Address : "",
+                    CustomerMobileNumber = x.Customer != null ? string.Join(" - ", new string[] { x.Customer.MobileNumber1, x.Customer.MobileNumber2 }) : "",
+                    CustomerName = x.Customer != null ? x.Customer.Name : "",
+                    Notes = x.Notes != null ? x.Notes : Languages.Resources.NoNotes,
+                    OrderID = x.ID,
+                    ShipmentPrice = x.ShipmentPrice.HasValue ? x.ShipmentPrice : 0,
+                    DisplayDate = DateTime.Now,
+                };
+
+                var orderDetailsDataSet = x.ProductOrders.Select(v => new
+                {
+                    ProductName = "( " + (v.Size != null ? v.Size.Size1 : "") + " - " + (v.Color != null ? v.Color.Color1 : "") + " ) " + (v.Product != null ? v.Product.Name : ""),
+                    Quantity = v.Quantity,
+                    SellingPrice = v.SellingPrice
+                }).ToList();
+                reportViewer.LocalReport.DataSources.Clear();
+                reportViewer.LocalReport.DataSources.Add(new ReportDataSource("OrderDataSet", new[] { orderDataSet }.ToList()));
+                reportViewer.LocalReport.DataSources.Add(new ReportDataSource("OrderDetailsDataSet", orderDetailsDataSet));
+                reportViewer.LocalReport.Refresh();
+
+
+                //Byte  
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType, encoding, filenameExtension;
+
+                byte[] bytes = reportViewer.LocalReport.Render("Pdf", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+                //File  
+                string FileName = "Order_" + DateTime.Now.Ticks.ToString() + ".pdf";
+                string dir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
+                if (Directory.Exists(dir))
+                    Directory.Delete(dir,true);
+                Directory.CreateDirectory(dir);
+                string FilePath = dir + FileName;
+
+                //create and set PdfReader  
+                PdfReader reader = new PdfReader(bytes);
+                FileStream output = new FileStream(FilePath, FileMode.Create);
+
+                string Agent = HttpContext.Request.Headers["User-Agent"].ToString();
+
+                //create and set PdfStamper  
+                PdfStamper pdfStamper = new PdfStamper(reader, output, '0', true);
+
                 if (Agent.Contains("Firefox"))
                     pdfStamper.JavaScript = "var res = app.loaded('var pp = this.getPrintParams();pp.interactive = pp.constants.interactionLevel.full;this.print(pp);');";
                 else
@@ -421,9 +583,7 @@ namespace ClothesShop.Controllers
                 reader.Close();
                 string FilePathReturn = @"Images/TempFiles/" + FileName;
 
-                string app = "";
-                if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
-                    app = "ClothesShop/";
+                string app = ConfigurationManager.AppSettings["preExists"];
 
                 return Content(app + FilePathReturn);
             }

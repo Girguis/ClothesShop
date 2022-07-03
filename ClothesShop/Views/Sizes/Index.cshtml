@@ -1,67 +1,50 @@
 ﻿@model IEnumerable<ClothesShop.Models.SizeViewModel>
-
+@using ClothesShop.Languages
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.Sizes;
 }
-<div class="container tableContainer">
-    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Sizes", ClothesShop.Enums.RoleType.Add))
-    {
-        <p class="f-left">
-            <a href="@Url.Action("Create", "Sizes", new { area = "" })" class="btn btn-lg btn-outline-success">
-                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddSize
-            </a>
-        </p>
-    }
-    <table id="SizesGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
-        <thead>
-            <tr class="theadData">
-                <th class="width80" data-headerid="Name" data-dir="desc" onclick="TableManager.prototype.Sort(this);"><i class="fa fa-arrow-down searchArrow"></i> @Html.DisplayNameFor(model => model.Name)</th>
-                <th class="width10"></th>
-                <th class="width10"></th>
-            </tr>
-            <tr class="searchRow">
-                <th class="padding0 width80">
-                    <div class="searchInput">
 
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="Name" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
-                    </div>
-                </th>
-                <th class="width10"></th>
-                <th class="width10"></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
-<div class="container text-center">
-    <ul id="Pager" class="pagination-sm"></ul>
-</div>
 @section scripts{
+    @Scripts.Render("~/bundles/sizes")
     <script>
-        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteSize)";
-        function ConfirmDeleteSize(id) {
-            var url ='@Url.Action("Delete", "Sizes")';
-            var data = JSON.stringify({ id: id });
-            CommonManager.prototype.ConfirmDelete(url, data);
-        }
-        var orderBy = {
-            ColumnName: "Name",
-            Direction: "desc",
-        }
-        var isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Sizes", ClothesShop.Enums.RoleType.Edit)" == "True";
-        var isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Sizes", ClothesShop.Enums.RoleType.Delete)" == "True";
-        var updateURL = "@Url.Action("Edit", "Sizes")/";
-        var dataURL = '@Url.Action("GetAll", "Sizes")';
-        var columns = [{ Name: "Name", Class: "width80" }, { Name: "EDIT", Class: "width10" }, { Name: "DELETE", Class: "width10" }];
-        var searchColumns = [{ Name: "Name", Type: "input" }];
-        var deleteURL = "ConfirmDeleteSize";
-        var gridId = "SizesGrid";
-        $(document).ready(function () {
-            var tableManager = new TableManager();
-            TableManager.prototype.Init();
-        })
+    $(document).ready(function () {
+            SizesManager.Instance.Init({
+                "grid_id": "#SizesGrid",
+                "grid_height": "calc(100vh - 200px)",
+                "url": "@Url.Action("GetAll","Sizes")",
+                "grid_captions": {
+                    "name": "@Resources.FullName",
+                },
+                "view_update": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Sizes", ClothesShop.Enums.RoleType.Edit)" == "True",
+                "update_url": "@Url.Action("Edit", "Sizes")/",
+                "update_text": "<i class='dx dx-icon-edit'/> @Resources.Edit",
+
+                "view_delete": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Sizes", ClothesShop.Enums.RoleType.Delete)" == "True",
+                "delete_url": "@Url.Action("Delete", "Sizes")",
+                "delete_text": "<i class='dx dx-icon-trash'/> @Resources.Delete",
+
+                "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteSize)",
+                "confirm_title": "@Html.Raw(Resources.Delete)",
+                "yes_text": "@Html.Raw(Resources.YesText)",
+                "no_text": "@Html.Raw(Resources.NoText)",
+                "success_delete": "@Html.Raw(Resources.DeletedSuccessfully)",
+                "error_delete": "@Html.Raw(Resources.ErrorWhileDeleting)",
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All"
+            });
+        });
     </script>
 }
+<div class="container-fluid">
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Sizes", ClothesShop.Enums.RoleType.Add))
+    {
+            <a href="@Url.Action("Create","Sizes", new { area = "" })" class="btn btn-success mb-2">
+                @Resources.AddSize <i class="dx dx-icon-add"></i>
+            </a>
+    }
+
+    <div id="SizesGrid">
+    </div>
+</div>

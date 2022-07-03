@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -10,6 +12,7 @@ using ClothesShop.Helpers;
 using ClothesShop.Infrastructure;
 using ClothesShop.Models;
 using DAL;
+using Newtonsoft.Json;
 using Authorization = ClothesShop.Infrastructure.Authorization;
 
 namespace ClothesShop.Controllers
@@ -72,8 +75,8 @@ namespace ClothesShop.Controllers
         [Authorization("TodayExpens", (RoleType.Add))]
         public ActionResult Create(TodayExpenseViewModel todayExpens)
         {
-            if (todayExpens.Expenses == null || todayExpens.Expenses.Count() <= 0)
-                return View(todayExpens);
+            //if (todayExpens.Expenses == null || todayExpens.Expenses.Count() <= 0)
+            //    return View(todayExpens);
             ModelState.Remove("Expense.Name");
             ModelState.Remove("Expense.Cost");
             if (ModelState.IsValid)
@@ -116,8 +119,8 @@ namespace ClothesShop.Controllers
         [Authorization("TodayExpens", (RoleType.Edit))]
         public ActionResult Edit(TodayExpenseViewModel todayExpens)
         {
-            if (todayExpens.Expenses == null || todayExpens.Expenses.Count() <= 0)
-                return View(todayExpens);
+            //if (todayExpens.Expenses == null || todayExpens.Expenses.Count() <= 0)
+            //    return View(todayExpens);
             ModelState.Remove("Expense.Name");
             ModelState.Remove("Expense.Cost");
             if (ModelState.IsValid)
@@ -140,7 +143,7 @@ namespace ClothesShop.Controllers
 
         private TodayExpenseViewModel GetTodayExpensViewModel(TodayExpens e)
         {
-            return new TodayExpenseViewModel()
+            var obj = new TodayExpenseViewModel()
             {
                 ID = e.ID,
                 IsApproved = e.IsApproved.Value,
@@ -154,9 +157,12 @@ namespace ClothesShop.Controllers
                     Cost = ee.Cost.Value
                 }).ToList(),
             };
+            obj.TodayExpenseSeralized = JsonConvert.SerializeObject(obj.Expenses);
+            return obj;
         }
         private TodayExpens GetTodayExpensModel(TodayExpenseViewModel e, bool isNew = false)
         {
+            e.Expenses = JsonConvert.DeserializeObject<List<ExpensesViewModel>>(e.TodayExpenseSeralized)?.ToList();
             return new TodayExpens()
             {
                 ID = e.ID,
@@ -169,7 +175,7 @@ namespace ClothesShop.Controllers
                     Name = ee.Name,
                     ID = ee.ID,
                     TodayExpensesID = ee.TodayExpensesID
-                }).ToList()
+                }).ToList(),
             };
         }
 
@@ -188,6 +194,10 @@ namespace ClothesShop.Controllers
                 var productSuppliers = _TodayExpensesRepo.GetAll();
                 var result = productSuppliers.Select(n => GetTodayExpensViewModel(n));
                 Filtering<TodayExpenseViewModel> filtering = new Filtering<TodayExpenseViewModel>();
+
+                if (obj.FilteredColumns.Count() > 0 && obj.FilteredColumns[0].ColumnName == "CreatedOn")
+                    obj.FilteredColumns[0].SearchValue = DateTime.ParseExact(obj.FilteredColumns[0].SearchValue, "yyyy/MM/dd", CultureInfo.CurrentCulture).ToString("dd/MM/yyyy");
+
                 filtering.Columns = obj.FilteredColumns;
 
                 //Sorting    
@@ -197,14 +207,14 @@ namespace ClothesShop.Controllers
                 totalRecords = result.Count();
 
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords *1.0 / pageSize));
+              
 
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
     }

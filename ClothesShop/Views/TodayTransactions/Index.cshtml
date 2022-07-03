@@ -1,229 +1,144 @@
 ﻿@model ClothesShop.Models.TransactionsSearchViewModel
+@using ClothesShop.Languages
 @{
     ViewBag.Title = ClothesShop.Languages.Resources.TodaySummary;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{
-    string currency = ClothesShop.Languages.Resources.LE;
-}
-<div class="container">
-    <div class="col-xs-12">
-        <div class="card-body col-xs-12">
-            <div class="col-xs-12 col-md-6 padding0 f-right card">
-                <div class="card-header">
-                    @ClothesShop.Languages.Resources.TodaySummary
-                </div>
-                <div class="card-body">
-                    <div class="col-xs-12 col-md-8 padding0 f-right">
-                        <div class="col-xs-12 txt-right">
-                            <label>@ClothesShop.Languages.Resources.TotalSelled : </label>
-                            <span>@ViewBag.TotalTodaySales @currency</span>
 
-
-                        </div>
-                        <div class="col-xs-12 txt-right">
-                            <label>@ClothesShop.Languages.Resources.TotalExpenses : </label>
-                            <span>@ViewBag.TotalTodayExpenses  @currency</span>
-
-                        </div>
-                        <div class="col-xs-12 txt-right">
-                            <label>@ClothesShop.Languages.Resources.TotalRemaining : </label>
-                            <span>@ViewBag.TotalTodayRemaining  @currency</span>
-
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-4 f-left">
-                        <div class="form-group col-xs-12">
-                            <a href="@Url.Action("Index","TodaySales")" class="btn btn-outline-primary  f-left">
-                                @ClothesShop.Languages.Resources.TodaySales
-                            </a>
-                        </div>
-                        <div class="col-xs-12">
-                            <a href="@Url.Action("Index","TodayExpens")" class="btn btn-outline-primary  f-left">
-                                @ClothesShop.Languages.Resources.TodayExpenses
-                            </a>
-                        </div>
-                    </div>
-                </div>
+<div class="container-fluid dir-rtl">
+    <div class="col-md-12">
+        <div class="card col-sm-12 col-md-5 d-inline-block">
+            <div class="card-header pb-0">
+                @Resources.TodaySummary
             </div>
-            <div class="form-group col-xs-12 col-md-6 padding0 f-right card">
-                <div class="card-header">
-                    @ClothesShop.Languages.Resources.WeekSummary
+            <div class="card-body pt-0">
+                <hr />
+                <div class="col-sm-12 col-md-5 d-inline-block">
+                    <div class="col-sm-12">
+                        <label>@Resources.TotalSelled : </label>
+                        <span>@ViewBag.TotalTodaySales  @Resources.LE</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>@Resources.TotalExpenses : </label>
+                        <span>@ViewBag.TotalTodayExpenses  @Resources.LE</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>@Resources.TotalRemaining : </label>
+                        <span>@ViewBag.TotalTodayRemaining  @Resources.LE</span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="col-xs-12 txt-right">
-                        <label>@ClothesShop.Languages.Resources.TotalSelled : </label>
-                        <span id="sTotalSelled"></span>
+                <div class="col-sm-12 col-md-6 d-inline-block" style="text-align:left;">
+                    <div class="col-sm-12 col-md-12">
+                        <a href="@Url.Action("Index","TodaySales")" class="btn btn-outline-primary">
+                            @Resources.TodaySales
+                        </a>
                     </div>
-                    <div class="col-xs-12 txt-right">
-                        <label>@ClothesShop.Languages.Resources.TotalExpenses : </label>
-                        <span id="sTotalExpenses"></span>
-                    </div>
-                    <div class="col-xs-12 txt-right">
-                        <label>@ClothesShop.Languages.Resources.TotalRemaining : </label>
-                        <span id="sTotalRemaining"></span>
+                    <div class="col-sm-12 col-md-12">
+                        <a href="@Url.Action("Index","TodayExpens")" class="btn btn-outline-primary">
+                            @Resources.TodayExpenses
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group row f-right col-xs-12 col-md-8">
-        <div class="col-xs-12 col-md-3 f-right">
-            @Html.LabelFor(model => model.StartDate)
-            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control col-xs-12" } })
+        <div class="card col-sm-12 col-md-5 d-inline-block">
+            <div class="card-header pb-0">
+                @Resources.WeekSummary
+            </div>
+            <div class="card-body pt-0">
+                <hr />
+                <div class="col-sm-12 txt-right">
+                    <label>@Resources.TotalSelled : </label>
+                    <span id="sTotalSelled"></span>
+                </div>
+                <div class="col-sm-12 txt-right">
+                    <label>@Resources.TotalExpenses : </label>
+                    <span id="sTotalExpenses"></span>
+                </div>
+                <div class="col-sm-12 txt-right">
+                    <label>@Resources.TotalRemaining : </label>
+                    <span id="sTotalRemaining"></span>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-12 col-md-3 f-right">
-            @Html.LabelFor(model => model.EndDate)
-            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control col-xs-12" } })
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3 mb-3 d-inline-block">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.StartDate)
+                @Html.HiddenFor(m => m.StartDate)
+                <div id="StartDateID"></div>
+            </div>
         </div>
-        <div class="col-xs-12 col-md-3 f-right">
-            <label style="display:block;">&nbsp;</label>
-            <a href="#" onclick="OnSearchTransactions();" type="button" class="btn btn-lg btn-primary">
-                @ClothesShop.Languages.Resources.Search
-                <i class="fa fa-search"></i>
-            </a>
+        <div class="col-md-3 mb-3 d-inline-block">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.EndDate)
+                @Html.HiddenFor(m => m.EndDate)
+                <div id="EndDateID"></div>
+            </div>
+        </div>
+        <div class="col-md-1 mb-3 d-inline-block">
+            <div class="col-md-12">
+                <a href="#" id="searchBtn" type="button" class="btn btn-md btn-primary">
+                    <i class="dx dx-icon-search"></i> @Resources.Search
+                </a>
+            </div>
         </div>
     </div>
-    <div class="row col-xs-12 padding0">
-        <table id="TodayTransactionsGrid"  class="table table-striped table-bordered table-hover table-responsive GeneralTable" width="100%" cellspacing="0">
-            <thead>
-                <tr class="theadData">
-                    <th> @ClothesShop.Languages.Resources.Product</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>@ClothesShop.Languages.Resources.TotalNumberOfPieces</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+    <div id="TodayTransactionsGrid"></div>
 </div>
 
-@section styles{
-    <style>
-        .card {
-            border-radius: 5px;
-            background: white;
-            padding: 10px;
-            border: 1px solid #e9e9e9;
-            box-shadow: 2px 2px #dcdcdc;
-        }
-
-        .card-header {
-            border-radius: 5px;
-            background: white;
-            padding: 10px;
-            border: 1px solid #e9e9e9;
-            text-align: center;
-            color: #2f2f79;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .GeneralTable tbody {
-            max-height: calc(100vh - 390px);
-        }
-    </style>
-}
 @section scripts{
+    @Scripts.Render("~/bundles/todayTransactions")
     <script>
-        var gridId = "TodayTransactionsGrid";
-        dataURL = '@Url.Action("GetAll", "TodayTransactions")';
-        var columns = [
-                { Name: "ProductName", Class: ""},
-                { Name: "DayOne",  Class: ""},
-            { Name: "DayTwo",  Class: ""},
-            { Name: "DayThree",  Class: ""},
-            { Name: "DayFour",  Class: ""},
-            { Name: "DayFive",  Class: ""},
-            { Name: "DaySix",  Class: ""},
-            { Name: "DaySeven",  Class: ""},
-            { Name: "TotalDays", Class: ""}
-        ];
-        var searchColumns = [];
-        var orderBy = {
-            ColumnName: "ID",
-            Direction: "desc",
-        };
-        viewName = "TodayTransactions";
+    var days =
+        ['@Resources.Sunday',
+        '@Resources.Monday',
+        '@Resources.Tuesday',
+        '@Resources.Wednesday',
+        '@Resources.Thursday',
+        '@Resources.Friday',
+        '@Resources.Saturday'];
         $(document).ready(function () {
-            var tableManager = new TableManager();
-
-            $("#StartDate").val("@ViewBag.StartDate");
-            $("#EndDate").val("@ViewBag.EndDate");
-
-            $("#StartDate").on("change", function (e) {
-                var fromValue = $(this).val();
-
-                var today = new Date(fromValue);
-                today = moment(new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6)).format("@ClothesShop.Helpers.DateTimeFormatter.ViewingDateFormat.ToUpper()");
-                $("#EndDate").val(today);
+            TodayTransactionsManager.Instance.Init({
+                "grid_id": "#TodayTransactionsGrid",
+                "grid_data_url": "@Url.Action("GetAll", "TodayTransactions")",
+                "grid_height":"calc(100vh - 420px)",
+                "week_summary_url": "@Url.Action("GetWeekSummary", "TodayTransactions")",
+                "grid_captions": {
+                    "product_name": "@Resources.Product",
+                    "day_one":"@Resources.Saturday",
+                    "day_two":"@Resources.Sunday",
+                    "day_three":"@Resources.Monday",
+                    "day_four":"@Resources.Tuesday",
+                    "day_five":"@Resources.Wednesday",
+                    "day_six":"@Resources.Thursday",
+                    "day_seven": "@Resources.Friday",
+                    "total_number_of_pieces": "@Resources.TotalNumberOfPieces"
+                },
+                "search_btn": "#searchBtn",
+                "total_selled_text": "@Resources.TotalSelled",
+                "days_list": days,
+                "start_date": {
+                    "div_id":"#StartDateID",
+                    "id": "#StartDate",
+                    "message": "@Resources.Date"
+                },
+                "end_date": {
+                    "div_id":"#EndDateID",
+                    "id": "#EndDate",
+                    "message": "@Resources.Date"
+                },
+                "interval": 7,
+                "not_valid_msg": "@string.Format(Resources.CannotExccedDays, "7")",
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All",
+                "s_total_selled": "#sTotalSelled",
+                "s_total_expenses": "#sTotalExpenses",
+                "s_total_remaining":"#sTotalRemaining",
+                "currency": "@Resources.LE"
             });
-            $("#EndDate").on("change", function (e) {
-                var toValue = $(this).val();
-                var today = new Date(toValue);
-                today = moment(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6)).format("@ClothesShop.Helpers.DateTimeFormatter.ViewingDateFormat.ToUpper()");
-                $("#StartDate").val(today);
-            });
-            SetDaysOfWeekHeader();
-            GetWeekSummary();
-            TableManager.prototype.Init();
         });
-
-        function OnSearchTransactions() {
-            SetDaysOfWeekHeader();
-            TableManager.prototype.Init();
-            GetWeekSummary();
-        }
-        function SetDaysOfWeekHeader() {
-            var days = ['@ClothesShop.Languages.Resources.Sunday', '@ClothesShop.Languages.Resources.Monday',
-                        '@ClothesShop.Languages.Resources.Tuesday', '@ClothesShop.Languages.Resources.Wednesday',
-                        '@ClothesShop.Languages.Resources.Thursday', '@ClothesShop.Languages.Resources.Friday',
-                '@ClothesShop.Languages.Resources.Saturday'];
-            var startDate = $("#StartDate").val();
-            var date = null;
-            for (var i = 0; i < 7; i++) {
-                today = new Date(startDate);
-                date = moment(new Date(today.getFullYear(), today.getMonth(), today.getDate() + i)).format("MM/DD/YYYY");
-                date = new Date(date);
-                var dayName = days[date.getDay()];
-                $("tr.theadData th:nth-child(" + (i + 2) + ")").text(dayName);
-            }
-        }
-        function GetWeekSummary() {
-            var model =
-            {
-                StartDate: $("#StartDate").val(),
-                EndDate: $("#EndDate").val(),
-            };
-            $.ajax({
-                url: '@Url.Action("GetWeekSummary", "TodayTransactions")',
-                data: { model: model },
-                dataType: "JSON",
-                type:"POST",
-                success: function (result) {
-                    
-                    var sales = 0;
-                    var expanses = 0;
-                    var remaining = 0;
-                    if (result) {
-                        sales = result.TotalSales;
-                        expanses = result.TotalExpenses;
-                        remaining = result.TotalRemaining;
-                    }
-                    sales += currencyLE;
-                    expanses += currencyLE;
-                    remaining += currencyLE;
-                    $("#sTotalSelled").text(sales);
-                    $("#sTotalExpenses").text(expanses);
-                    $("#sTotalRemaining").text(remaining);
-                }
-            });
-        }
     </script>
 }

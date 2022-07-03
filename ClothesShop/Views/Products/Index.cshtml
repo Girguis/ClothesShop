@@ -1,75 +1,55 @@
 ﻿@model ClothesShop.Models.ProductViewModel
-
+@using ClothesShop.Languages
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.Products;
 }
-<div class="container tableContainer">
-    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Products", ClothesShop.Enums.RoleType.Add))
-    {
-        <p class="f-left">
-            <a href="@Url.Action("Create", "Products", new { area = "" })" class="btn btn-lg btn-outline-success">
-                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddProduct
-            </a>
-        </p>
-    }
-    <table id="ProductsGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
 
-        <thead>
-            <tr class="theadData">
-                <th class="width25" data-headerid="Name" data-dir="desc" onclick="TableManager.prototype.Sort(this);"><i class="fa fa-arrow-down searchArrow"></i> @Html.DisplayNameFor(model => model.Name)</th>
-                <th class="width10"> @Html.DisplayNameFor(model => model.OriginalPrice)</th>
-                <th class="width25"> @Html.DisplayNameFor(model => model.ColorIDs)</th>
-                <th class="width25"> @Html.DisplayNameFor(model => model.SizeIDs)</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-            </tr>
-            <tr class="searchRow">
-                <th class="padding0 width25">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="Name" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
-                    </div>
-                </th>
-                <th class="padding0 width10"></th>
-                <th class="padding0 width25"></th>
-                <th class="padding0 width25"></th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
-<div class="container text-center">
-    <ul id="Pager" class="pagination-sm"></ul>
-</div>
+
 @section scripts{
+    @Scripts.Render("~/bundles/products")
     <script>
-        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteProduct)";
-        function ConfirmDeleteProduct(id) {
-            var url = '@Url.Action("Delete", "Products")';
-            var data = JSON.stringify({ id: id });
-            CommonManager.prototype.ConfirmDelete(url, data);
-        }
+    $(document).ready(function () {
+        
+        ProductsManager.Instance.Init({
+            "grid_id": "#ProductsGrid",
+                "grid_height": "calc(100vh - 200px)",
+                "url": "@Url.Action("GetAll", "Products")",
+                "grid_captions": {
+                    "name": "@Resources.FullName",
+                    "originalPrice": "@Resources.OriginalPrice",
+                    "colors": "@Resources.Colors",
+                    "sizes": "@Resources.Sizes",
+               },
+                "view_update": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Products", ClothesShop.Enums.RoleType.Edit)" == "True",
+                "update_url": "@Url.Action("Edit", "Products")/",
+                "update_text": "<i class='dx dx-icon-edit'/> @Resources.Edit",
 
-           var orderBy = {
-            ColumnName: "Name",
-            Direction: "desc",
-        }
-        var isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Products", ClothesShop.Enums.RoleType.Edit)" == "True";
-        var isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Products", ClothesShop.Enums.RoleType.Delete)" == "True";
-        var updateURL = "@Url.Action("Edit", "Products")/";
-        var dataURL ='@Url.Action("GetAll", "Products")';
-        var columns = [{ Name: "Name", Class: "width25" }, { Name: "OriginalPrice", Class: "width10" }, { Name: "ColorNames", Class: "width25" }, { Name: "SizeNames", Class: "width25" },  { Name: "EDIT", Class: "" }, { Name: "DELETE", Class: "" }];
-        var searchColumns = [{ Name: "Name", Type: "input" }];
-        var deleteURL = "ConfirmDeleteProduct";
-        var gridId = "ProductsGrid";
-        $(document).ready(function () {
-            var tableManager = new TableManager();
-            TableManager.prototype.Init();
-        })
+                "view_delete": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Products", ClothesShop.Enums.RoleType.Delete)" == "True",
+                "delete_url": "@Url.Action("Delete", "Products")",
+                "delete_text": "<i class='dx dx-icon-trash'/> @Resources.Delete",
 
+                "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteProduct)",
+                "confirm_title": "@Html.Raw(Resources.Delete)",
+                "yes_text": "@Html.Raw(Resources.YesText)",
+                "no_text": "@Html.Raw(Resources.NoText)",
+                "success_delete": "@Html.Raw(Resources.DeletedSuccessfully)",
+                "error_delete": "@Html.Raw(Resources.ErrorWhileDeleting)",
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All"
+            });
+        });
     </script>
 }
+<div class="container-fluid">
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Products", ClothesShop.Enums.RoleType.Add))
+    {
+            <a href="@Url.Action("Create","Products", new { area = "" })" class="btn btn-success mb-2">
+                @Resources.AddProduct  <i class="dx dx-icon-add"></i>
+            </a>
+    }
+
+    <div id="ProductsGrid">
+    </div>
+</div>

@@ -138,22 +138,21 @@ namespace ClothesShop.Controllers
         }
         [HttpPost]
         [Authorization("Delivery", (RoleType.Edit))]
-        public JsonResult ChangeOrderStatus(long? orderId, long? deliverManId, OrderStatuses orderStatusId, double? paidAmount)
+        public JsonResult ChangeOrderStatus(long? orderId, OrderStatuses orderStatusId, double? paidAmount)
         {
             if (!orderId.HasValue)
                 return Json(false);
             var order = _OrdersRepo.GetByID(orderId.Value);
             if (orderStatusId == OrderStatuses.New || orderStatusId == OrderStatuses.Delayed || orderStatusId == OrderStatuses.NotDelivered || orderStatusId == OrderStatuses.CanceledByAgent)
-                deliverManId = null;
+                order.EmployeeID = null;
 
-            order.EmployeeID = deliverManId;
             order.OrderStatusID = (int)orderStatusId;
             order.PaidAmount = paidAmount;
             return Json(_OrdersRepo.ChangeOrderStatus(order));
         }
         [HttpPost]
         [Authorization("Delivery", (RoleType.Edit))]
-        public JsonResult ChangeOrdersStatus(List<long> orderIds, OrderStatuses orderStatusId)
+        public JsonResult ChangeOrdersStatus(List<int> orderIds, OrderStatuses orderStatusId)
         {
             if (orderIds == null || orderIds.Count <= 0)
                 return Json(false);
@@ -210,15 +209,14 @@ namespace ClothesShop.Controllers
                 result = filtering.OrderBy(obj.OrderBy, result);
 
                 totalRecords = result.Count();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords * 1.0 / pageSize));
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
                 //Returning Json Data    
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
 
@@ -293,10 +291,8 @@ namespace ClothesShop.Controllers
 
                 //return file path  
                 string FilePathReturn = @"Images/TempFiles/" + FileName;
-                string app = "";
-                if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
-                    app = "ClothesShop/";
-
+                string app = ConfigurationManager.AppSettings["preExists"];
+               
                 return Content(app + FilePathReturn);
             }
             catch (Exception ex)
@@ -381,6 +377,7 @@ namespace ClothesShop.Controllers
                 validation.Values = new string[] { "تم التسليم كليا", "تم التسليم جزئي", "لم يستلم"};
 
                 sheet.Range.Style.Font.Size = 14;
+                sheet.Range.Style.Font.FontName = "Calibri";
                 sheet.AllocatedRange.AutoFitColumns();
                 sheet.AllocatedRange.AutoFitRows();
 
@@ -392,9 +389,7 @@ namespace ClothesShop.Controllers
                 workbook.SaveToFile(strFilePath);
 
                 string FilePathReturn = @"Images/ExcelFiles/" + FileName;
-                string app = "";
-                if (!HttpContext.Request.Url.AbsoluteUri.ToLower().Contains("clothesshop.local"))
-                    app = "ClothesShop/";
+                string app = ConfigurationManager.AppSettings["preExists"];
 
                 return Content(app + FilePathReturn);
             }

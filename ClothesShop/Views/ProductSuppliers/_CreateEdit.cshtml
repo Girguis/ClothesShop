@@ -1,0 +1,65 @@
+﻿@model ClothesShop.Models.ProductSuppliersViewModel
+
+<div class="col-md-5 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.TransactionTypeID, htmlAttributes: new { @class = "form-label" })
+        <span class="form-label text-danger">*</span>
+    </div>
+
+    <div class="col-sm-12 col-md-12">
+        @Html.HiddenFor(model => model.TransactionTypeID)
+        <div id="TransactionType"></div>
+        @Html.ValidationMessageFor(model => model.TransactionTypeID, "", new { @class = "form-label text-danger" })
+    </div>
+</div>
+
+
+<div class="col-md-5 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.SupplierID, htmlAttributes: new { @class = "form-label" })
+        <span class="form-label text-danger">*</span>
+    </div>
+
+    <div class="col-sm-12 col-md-12">
+        @Html.HiddenFor(model => model.SupplierID)
+        <div id="Supplier"></div>
+        @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "form-label text-danger" })
+    </div>
+</div>
+
+<div class="col-md-5 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.ProductID, htmlAttributes: new { @class = "form-label" })
+        <span class="form-label text-danger">*</span>
+    </div>
+
+    <div class="col-sm-12 col-md-12">
+        @Html.HiddenFor(model => model.ProductID)
+        <div id="Product"></div>
+        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "form-label text-danger" })
+    </div>
+</div>
+
+<div class="col-md-5 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.NumberOfPieces, htmlAttributes: new { @class = "form-label" })
+        <span class="form-label text-danger">*</span>
+    </div>
+
+    <div class="col-sm-12 col-md-12">
+        @Html.EditorFor(model => model.NumberOfPieces, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NumberOfPieces, "", new { @class = "form-label text-danger col-xs-12 padding0" })
+    </div>
+</div>
+
+<div class="col-md-5 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        @Html.LabelFor(model => model.OrginalPrice, htmlAttributes: new { @class = "form-label" })
+        <span class="form-label text-danger">*</span>
+    </div>
+
+    <div class="col-sm-12 col-md-12">
+        @Html.EditorFor(model => model.OrginalPrice, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.OrginalPrice, "", new { @class = "form-label text-danger col-xs-12 padding0" })
+    </div>
+</div>

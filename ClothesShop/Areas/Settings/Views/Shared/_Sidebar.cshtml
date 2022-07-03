@@ -1,0 +1,67 @@
+﻿@using ClothesShop.Languages
+@using ClothesShop.Helpers
+@using ClothesShop.Enums
+@{
+    var hasRole = RolesHelper.CheckRoleRight("Roles");
+    var hasLogin = RolesHelper.CheckRoleRight("Logins");
+}
+<style>
+    .sidebarImage {
+        height: 15px;
+        width: 15px;
+    }
+</style>
+<nav id="sidebar" class="sidebar js-sidebar pull-right">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand sidebar-link" href="@Url.Action("Index", "Home", new { area = ""})">
+            <img src="~/Images/logo.png" style="height:50px;" />
+            <span>@Resources.Elba4a</span>
+        </a>
+        <ul class="sidebar-nav">
+            @if (hasRole)
+            {
+                <li class="sidebar-header">
+                    @Resources.Rights
+                </li>
+
+                <li class="sidebar-item" id="ManagerRoles">
+                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.Manager })">
+                        <img class="sidebarImage" src="~/Images/manager.png" /> <span class="align-middle">@Resources.Manager</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item" id="EmployeeRoles">
+                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.Employee })">
+                        <img class="sidebarImage" src="~/Images/employee.png" /> <span class="align-middle">@Resources.Employee</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item" id="WorkerRoles">
+                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.Worker })">
+                        <img class="sidebarImage" src="~/Images/employee.png" /> <span class="align-middle">@Resources.Worker</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" id="DeliveryManRoles">
+                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.DeliveryMan })">
+                        <img class="sidebarImage" src="~/Images/motorcycle.png" /> <span class="align-middle">@Resources.DeliveryMan</span>
+                    </a>
+                </li>
+            }
+
+            @if (hasLogin)
+            {
+                <li class="sidebar-item" id="AccountsRoles">
+                    <a class="sidebar-link" href="@Url.Action("Index", "Logins", new { area = "Settings" })">
+                        <img class="sidebarImage" src="~/Images/accountant.png" /> <span class="align-middle">@Resources.Accounts</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" id="DeleteSystemDataRoles">
+                    <a class="sidebar-link" href="@Url.Action("Index", "SystemData", new { area = "Settings" })">
+                        <img class="sidebarImage" src="~/Images/repair.png" /> <span class="align-middle">@Resources.DeleteSystemData</span>
+                    </a>
+                </li>
+            }
+        </ul>
+</div>
+</nav>
+

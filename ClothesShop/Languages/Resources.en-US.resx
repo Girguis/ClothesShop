@@ -778,4 +778,25 @@
   <data name="ExcelSheet" xml:space="preserve">
     <value>Excel sheet</value>
   </data>
+  <data name="PageInfo" xml:space="preserve">
+    <value>Page {0} Of {1} ({2})</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>Data has been deleted successfully</value>
+  </data>
+  <data name="AreYouSureDeleteTodaySales" xml:space="preserve">
+    <value>Are you sure you want to delete today sales?</value>
+  </data>
+  <data name="MustHaveSales" xml:space="preserve">
+    <value>Today sales must have at least one sale info</value>
+  </data>
+  <data name="MustHaveExpenses" xml:space="preserve">
+    <value>Today Expenses must have at least one expen info</value>
+  </data>
+  <data name="SelectAtLeastOneOrder" xml:space="preserve">
+    <value>Please Select At Least One Order</value>
+  </data>
+  <data name="EditedSuccessfully" xml:space="preserve">
+    <value>Edited Successfully</value>
+  </data>
 </root>

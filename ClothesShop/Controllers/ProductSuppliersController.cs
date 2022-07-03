@@ -55,7 +55,8 @@ namespace ClothesShop.Controllers
         [Authorization("ProductSuppliers", (RoleType.Add))]
         public ActionResult Create()
         {
-            return View();
+            var model = new ProductSuppliersViewModel();
+            return View(model);
         }
 
         // POST: ProductSuppliers/Create
@@ -135,10 +136,11 @@ namespace ClothesShop.Controllers
                 var pageSize = obj.PageSize;
 
                 int totalRecords = 0;
-
                 var productSuppliers = _ProductSuppliersRepo.GetAll();
                 var result = productSuppliers.Select(n => GetProductSupllierViewModel(n));
                 Filtering<ProductSuppliersViewModel> filtering = new Filtering<ProductSuppliersViewModel>();
+                if(obj.FilteredColumns.Count()>0 && obj.FilteredColumns[0].ColumnName == "CreatedOn")
+                    obj.FilteredColumns[0].SearchValue = DateTime.ParseExact(obj.FilteredColumns[0].SearchValue, "yyyy/MM/dd", CultureInfo.CurrentCulture).ToString("dd/MM/yyyy");
                 filtering.Columns = obj.FilteredColumns;
 
                 result = filtering.Search(result);
@@ -148,17 +150,14 @@ namespace ClothesShop.Controllers
 
                 totalRecords = result.Count();
 
-
-
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords * 1.0 / pageSize));
 
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
         private ProductSuppliersViewModel GetProductSupllierViewModel(ProductSupplier productSupplier)

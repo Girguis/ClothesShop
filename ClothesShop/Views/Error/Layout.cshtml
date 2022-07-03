@@ -6,21 +6,10 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Styles.Render("~/Content/fontAwesome")
+    <link href="~/Content/css/app.css" rel="stylesheet" />
     <style>
         body {
             padding: 0px !important;
-        }
-
-        .containerDiv {
-            height: calc(100vh);
-        }
-
-        .row {
-            padding: 44% 0px;
         }
 
         img {
@@ -39,14 +28,13 @@
             padding: 20px;
             border: 1px solid lightgray;
             border-radius: 5px;
+            text-align:center;
         }
     </style>
 </head>
 <body>
-    <div class="col-xs-12 col-md-4 col-md-push-4 containerDiv">
-        <div class="row">
+    <div class="col-sm-12 col-md-4" style="display:inline;">
            @RenderBody()
-        </div>
     </div>
 </body>
 </html>

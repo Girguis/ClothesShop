@@ -20,14 +20,14 @@ namespace ClothesShop.Models
         [Required(ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.RequiredField))]
         [Display(ResourceType = typeof(Languages.Resources), Name = nameof(Languages.Resources.Colors))]
         [MinLength(1)]
-        public IList<string> ColorIDs { get; set; }
+        public virtual IList<string> ColorIDs { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.RequiredField))]
         [Display(ResourceType = typeof(Languages.Resources), Name = nameof(Languages.Resources.Sizes))]
         [MinLength(1)]
-        public IList<string> SizeIDs { get; set; }
+        public virtual IList<string> SizeIDs { get; set; }
 
-        public IList<string> ColorNames { get; set; }
-        public IList<string> SizeNames { get; set; }
+        public virtual IList<string> ColorNames { get; set; }
+        public virtual IList<string> SizeNames { get; set; }
     }
 }

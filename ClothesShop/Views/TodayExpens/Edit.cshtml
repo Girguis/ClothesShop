@@ -1,118 +1,67 @@
 ﻿@model ClothesShop.Models.TodayExpenseViewModel
-
+@using ClothesShop.Languages
 @{
     ViewBag.Title = ClothesShop.Languages.Resources.EditExpenses;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(m => m.ID)
-        @Html.HiddenFor(m => m.IsApproved)
-        @Html.HiddenFor(m => m.CreatedBy)
-        @Html.HiddenFor(m => m.CreatedOn)
 
-        <div class="form-horizontal col-xs-12 col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>@ClothesShop.Languages.Resources.EditExpenses</h4>
-                </div>
-                <div class="panel-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <table id="TodaysExpenses">
-                        <thead>
-                            <tr>
-                                <td>
-                                    <div class="form-group col-xs-12 f-right txt-right">
-                                        <div class="col-xs-12 col-md-5 f-right">
-                                            @ClothesShop.Languages.Resources.Name
-                                        </div>
-                                        <div class="col-xs-12 col-md-5 f-right">
-                                            @ClothesShop.Languages.Resources.Cost
-                                        </div>
-                                        <div class="col-xs-12 col-md-5 f-right">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-group col-xs-12 f-right txt-right">
-                                        <div class="col-xs-12 col-md-5 f-right">
-                                            @Html.EditorFor(m => m.Expense.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(m => m.Expense.Name, "", new { @class = "text-danger col-xs-12 padding0" })
-                                        </div>
-                                        <div class="col-xs-12 col-md-5 f-right">
-                                            @Html.EditorFor(m => m.Expense.Cost, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(m => m.Expense.Cost, "", new { @class = "text-danger col-xs-12 padding0" })
-                                        </div>
-                                        <div class="col-xs-12 col-md-2 f-right">
-                                            <a href="#" id="addNew" class="btn btn-primary">
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody">
-                            @if (Model != null && Model.Expenses != null && Model.Expenses.Count > 0)
-                            {
-                                for (var i = 0; i < Model.Expenses.Count; i++)
-                                {
-                                    <tr>
-                                        <td>
-                                            <div class="form-group col-xs-12 f-right txt-right">
-                                                @Html.HiddenFor(m=>m.Expenses[i].ID)
-                                                <div class="col-xs-12 col-md-5 f-right">
-                                                    @Html.EditorFor(m => m.Expenses[i].Name, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(m => m.Expenses[i].Name, "", new { @class = "text-danger col-xs-12 padding0" })
-                                                </div>
-                                                <div class="col-xs-12 col-md-5 f-right">
-                                                    @Html.EditorFor(m => m.Expenses[i].Cost, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(m => m.Expenses[i].Cost, "", new { @class = "text-danger col-xs-12 padding0" })
-                                                </div>
-                                                <div class="col-xs-12 col-md-2 f-right">
-                                                    <button type="button" class="btn btn-lg btn-danger" onclick="TodayExpensesManager.prototype.DeleteRow(this)">
-                                                        <i class="fa fa-remove"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
+@using (Html.BeginForm("Edit", "TodayExpens", FormMethod.Post, new { @id = "TodayExpensForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ID)
+    @Html.HiddenFor(m => m.IsApproved)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.CreatedOn)
+    @Html.HiddenFor(m => m.TodayExpenseSeralized)
 
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="panel-footer">
-                    <div class="form-group">
-                        <div class="col-xs-12 col-md-6 f-right txt-right">
-                            <button type="submit" class="btn  btn-success" onclick="$('#IsApproved').val(false);">
-                                @ClothesShop.Languages.Resources.Save
-                            </button>
-                            <button type="submit" class="btn  btn-success" onclick="$('#IsApproved').val(true);">
-                                @ClothesShop.Languages.Resources.AddAndApprove
-                            </button>
-                        </div>
-                        <div class="col-xs-12 col-md-6 f-left txt-left">
-                            @Html.ActionLink(ClothesShop.Languages.Resources.BackToList, "Index", "", htmlAttributes: new { @class = "btn btn-primary" })
-                        </div>
-                    </div>
-                </div>
+    <div class="container-fluid dir-rtl col-md-8 offset-md-2">
+        <div class="card m-0">
+            <div class="card-header pb-0">
+                <h4>@Resources.EditExpenses</h4>
+            </div>
+            <div class="card-body custom-card-body pt-2 m-0">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.Partial("_CreateEdit", Model)
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-success" onclick="$('#IsApproved').val(false);">
+                     @Resources.Save
+                </button>
+                <button type="submit" class="btn btn-md btn-success" onclick="$('#IsApproved').val(true);">
+                    @Resources.AddAndApprove
+                </button>
+                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "TodayExpens")">
+                    @Resources.BackToList
+                </a>
             </div>
         </div>
-    }
-</div>
-@section scripts{
-    @Scripts.Render("~/Scripts/TodayExpenses")
-    <script>
-        $(document).ready(function () {
-            var _TodayExpensesManager = new TodayExpensesManager();
-            TodayExpensesManager.prototype.Init();
-
-        });
-    </script>
+    </div>
 }
+
+@section scripts{
+    @Scripts.Render("~/bundles/todayExpensInfo")
+}
+<script>
+    $(document).ready(function () {
+        var oldExpens = '@Model.TodayExpenseSeralized';
+        TodayExpensInfoManager.Instance.Init({
+            "no_data": "@Html.Raw(Resources.NoData)",
+            "lst": CommonManager.Instance.NeowtonsoftDesealize(oldExpens),
+            "grid_captions": {
+                "name": "@Resources.Name",
+                "cost": "@Resources.Cost",
+                "delete": "@Resources.Delete"
+            },
+            "name_id":"#Name",
+            "cost_id":"#Cost",
+            "add_id": "#addNew",
+            "grid_id": "#TodayExpensGrid",
+            "is_details": false,
+            "page_info": "@Resources.PageInfo",
+            "currency": "@Resources.LE",
+            "todayExpenseSeralized_id": "#TodayExpenseSeralized",
+            "form_id": "#TodayExpensForm",
+            "must_expens_msg": "@Resources.MustHaveExpenses"
+        })
+    });
+</script>

@@ -54,12 +54,13 @@ namespace ClothesShop.Models
                 return RequestDate.HasValue? RequestDate.Value.ToString(DateTimeFormatter.DateFormat + " " + DateTimeFormatter.TimeFormat):"";
             }
         }
-        public CustomerViewModel Customer { get; set; }
+        public virtual CustomerViewModel Customer { get; set; }
 
-       // [Required(ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.RequiredField))]
-       // [MinLength(1)]
-        public List<ProductsViewModel> Products { get; set; }
-        public ProductsViewModel Product { get; set; }
+        // [Required(ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.RequiredField))]
+        // [MinLength(1)]
+        public virtual List<ProductsViewModel> Products { get; set; }
+        public virtual ProductsViewModel Product { get; set; }
+        public string ProductSeralized { get; set; }
 
         [Display(ResourceType = typeof(Languages.Resources), Name = nameof(Languages.Resources.Total))]
         public double OrderTotalPrice { get; set; }

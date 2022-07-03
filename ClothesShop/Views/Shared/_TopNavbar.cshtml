@@ -1,0 +1,46 @@
+﻿@using ClothesShop.Helpers
+@using ClothesShop.Languages
+@{
+    var userName = "";
+    if (Session["UserName"] != null)
+    {
+        userName = Session["UserName"].ToString();
+    }
+}
+
+<nav class="navbar navbar-expand navbar-light navbar-bg">
+    <a class="sidebar-toggle js-sidebar-toggle">
+        <i class="hamburger align-self-center"></i>
+    </a>
+    <a class="">
+        @Html.ActionLink(ClothesShop.Languages.Resources.Home, "Index", "Home", new { area = "" }, null)
+    </a>
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav navbar-align">
+
+            <li class="nav-item dropdown">
+                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                    <i class="align-middle" data-feather="settings"></i>
+                </a>
+
+                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                    <span class="text-dark">@Resources.Welcome <span id="UserName">@userName</span></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    @if (RolesHelper.CheckRoleRight("Roles") || RolesHelper.CheckRoleRight("Logins"))
+                    {
+                        <a class="dropdown-item" href="@Url.Action("Index", "Setting", new { area = "Settings" })">
+                            <span class="align-middle me-1" data-feather="settings"></span>
+                            @Resources.Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    }
+                    <a class="dropdown-item" href="@Url.Action("Logout", "Account", new { area = "" })">
+                        <span data-feather="log-out"></span>
+                        @Resources.Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -16,6 +16,7 @@ namespace ClothesShop.Models
         public ExpensesViewModel Expense { get; set; }
         public double TodayTotalExpensesCost { get; set; }
 
+        public string TodayExpenseSeralized { get; set; }
         public bool IsApproved { get; set; }
     }
     public class ExpensesViewModel

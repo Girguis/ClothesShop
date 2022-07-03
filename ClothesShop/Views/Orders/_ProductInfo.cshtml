@@ -1,0 +1,64 @@
+﻿@using ClothesShop.Languages
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h4 class="m-0">@Resources.Products</h4>
+    </div>
+    <div class="card-body pb-0 pt-0">
+        <hr />
+        <div class="col-md-12 mb-2">
+            <div class="col-md-2 mb-3 d-inline-block">
+                <div class="col-sm-12">
+                    @Resources.Product
+                    <span class="form-label form-label text-danger">*</span>
+                </div>
+                <div class="col-md-12">
+                    <div id="Product"></div>
+                </div>
+            </div>
+
+            <div class="col-md-2 mb-3 d-inline-block">
+                <div class="col-sm-12">
+                    @Resources.Color
+                    <span class="form-label form-label text-danger">*</span>
+                </div>
+                <div class="col-md-12">
+                    <div id="Color"></div>
+                </div>
+            </div>
+            <div class="col-md-2 mb-3 d-inline-block">
+                <div class="col-sm-12">
+                    @Resources.Size
+                    <span class="form-label form-label text-danger">*</span>
+                </div>
+                <div class="col-md-12">
+                    <div id="Size"></div>
+                </div>
+            </div>
+
+            <div class="col-md-2 mb-3 d-inline-block">
+                <div class="col-sm-12">
+                    @Resources.NumberOfPieces
+                    <span class="form-label form-label text-danger">*</span>
+                </div>
+                <div class="col-md-12">
+                    <div id="NumberOfPieces"></div>
+                </div>
+            </div>
+
+            <div class="col-md-2 mb-3 d-inline-block">
+                <div class="col-sm-12">
+                    @Resources.SellingPrice
+                    <span class="form-label form-label text-danger">*</span>
+                </div>
+                <div class="col-md-12">
+                    <div id="SellingPrice"></div>
+                </div>
+            </div>
+            <button id="AddProduct" type="button" class="btn btn-success">+</button>
+        </div>
+
+        <div id="ProductsGrid"></div>
+    </div>
+</div>
+

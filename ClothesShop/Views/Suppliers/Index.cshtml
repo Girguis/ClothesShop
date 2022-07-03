@@ -1,81 +1,53 @@
 ﻿@model ClothesShop.Models.SupplierViewModel
-
+@using ClothesShop.Languages
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.Suppliers;
 }
-<div class="container tableContainer">
-    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Suppliers", ClothesShop.Enums.RoleType.Add))
-    {
-        <p class="f-left">
-            <a href="@Url.Action("Create", "Suppliers", new { area = "" })" class="btn btn-lg btn-outline-success">
-                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddSupplier
-            </a>
-        </p>
-    }
-    <table id="SuppliersGrid" class="table table-striped table-bordered table-hover table-responsive GeneralTable" width="100%" cellspacing="0">
-        <thead>
-            <tr class="theadData">
-                <th data-headerid="Name" data-dir="desc" onclick="TableManager.prototype.Sort(this);" class="width30"><i class="fa fa-arrow-down searchArrow"></i> @Html.DisplayNameFor(model => model.Name)</th>
-                <th data-headerid="MobileNumber1" data-dir="" onclick="TableManager.prototype.Sort(this);" class="width25"> @Html.DisplayNameFor(model => model.MobileNumber1)</th>
-                <th data-headerid="MobileNumber2" data-dir="" onclick="TableManager.prototype.Sort(this);" class="width25"> @Html.DisplayNameFor(model => model.MobileNumber2)</th>
-                <th class="width10">&nbsp;</th>
-                <th class="width10">&nbsp;</th>
-            </tr>
-            <tr class="searchRow">
-                <th class="padding0">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="Name" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
-                    </div>
-                </th>
-                <th class="padding0">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="MobileNumber1" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
-                    </div>
-                </th>
-                <th class="padding0">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="MobileNumber2" value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search" />
-                    </div>
-                </th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
-<div class="container text-center">
-    <ul id="Pager" class="pagination-sm"></ul>
-</div>
-@section scripts{
-    <script>
-        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteSupplier)";
-        function ConfirmDeleteSupplier(id) {
-            var url = '@Url.Action("Delete", "Suppliers")';
-            var data = JSON.stringify({ id: id });
-            CommonManager.prototype.ConfirmDelete(url, data);
-        }
 
-        var orderBy = {
-            ColumnName: "Name",
-            Direction: "desc",
-        }
-        var isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Suppliers", ClothesShop.Enums.RoleType.Edit)" == "True";
-        var isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Suppliers", ClothesShop.Enums.RoleType.Delete)" == "True";
-        var updateURL = "@Url.Action("Edit", "Suppliers")/";
-        var dataURL = '@Url.Action("GetAll", "Suppliers")';
-        var columns = [{ Name: "Name", Class: "width30" }, { Name: "MobileNumber1", Class: "width25" }, { Name: "MobileNumber2", Class: "width25" }, { Name: "EDIT", Class: "width10" }, { Name: "DELETE", Class: "width10" }];
-        var searchColumns = [{ Name: "Name", Type: "input" }, { Name: "MobileNumber1", Type: "input" }, { Name: "MobileNumber2", Type: "input" }];
-        var deleteURL = "ConfirmDeleteSupplier";
-        var gridId = "SuppliersGrid";
-        $(document).ready(function () {
-            var tableManager = new TableManager();
-            TableManager.prototype.Init();
-        })
+@section scripts{
+    @Scripts.Render("~/bundles/suppliers")
+    <script>
+    $(document).ready(function () {
+        
+        SuppliersManager.Instance.Init({
+            "grid_id": "#SuppliersGrid",
+                "grid_height": "calc(100vh - 200px)",
+                "url": "@Url.Action("GetAll","Suppliers")",
+                "grid_captions": {
+                    "name": "@Resources.FullName",
+                    "mobileNumber1": "@Resources.MobileNumber1",
+                    "mobileNumber2": "@Resources.MobileNumber2",
+               },
+                "view_update": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Suppliers", ClothesShop.Enums.RoleType.Edit)" == "True",
+                "update_url": "@Url.Action("Edit", "Suppliers")/",
+                "update_text": "<i class='dx dx-icon-edit'/> @Resources.Edit",
+
+                "view_delete": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Suppliers", ClothesShop.Enums.RoleType.Delete)" == "True",
+                "delete_url": "@Url.Action("Delete", "Suppliers")",
+                "delete_text": "<i class='dx dx-icon-trash'/> @Resources.Delete",
+
+                "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteSupplier)",
+                "confirm_title": "@Html.Raw(Resources.Delete)",
+                "yes_text": "@Html.Raw(Resources.YesText)",
+                "no_text": "@Html.Raw(Resources.NoText)",
+                "success_delete": "@Html.Raw(Resources.DeletedSuccessfully)",
+                "error_delete": "@Html.Raw(Resources.ErrorWhileDeleting)",
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All"
+            });
+        });
     </script>
 }
+<div class="container-fluid">
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Suppliers", ClothesShop.Enums.RoleType.Add))
+    {
+    <a href="@Url.Action("Create","Suppliers", new { area = "" })" class="btn btn-success mb-2">
+        @Resources.AddSupplier  <i class="dx dx-icon-add"></i>
+    </a>
+    }
+
+    <div id="SuppliersGrid">
+    </div>
+</div>

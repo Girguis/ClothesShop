@@ -778,4 +778,25 @@
   <data name="ExcelSheet" xml:space="preserve">
     <value>شيت Excel</value>
   </data>
+  <data name="PageInfo" xml:space="preserve">
+    <value>صفحة {0} من {1} ({2})</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>تم حذف البيانات بنجاح</value>
+  </data>
+  <data name="AreYouSureDeleteTodaySales" xml:space="preserve">
+    <value>هل أنت متأكد من حذف المبيعات ؟</value>
+  </data>
+  <data name="MustHaveSales" xml:space="preserve">
+    <value>يجب ان تحتوى المبيعات اليومية على معاملة واحدة على الاقل</value>
+  </data>
+  <data name="MustHaveExpenses" xml:space="preserve">
+    <value>يجب ان تحتوى  المصروفات على مصروف واحدة على الاقل</value>
+  </data>
+  <data name="SelectAtLeastOneOrder" xml:space="preserve">
+    <value>يجب اختيار طلب واحد على الاقل</value>
+  </data>
+  <data name="EditedSuccessfully" xml:space="preserve">
+    <value>تم التعديل</value>
+  </data>
 </root>

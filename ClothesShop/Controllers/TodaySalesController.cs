@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -9,6 +11,7 @@ using ClothesShop.Helpers;
 using ClothesShop.Infrastructure;
 using ClothesShop.Models;
 using DAL;
+using Newtonsoft.Json;
 using Authorization = ClothesShop.Infrastructure.Authorization;
 
 namespace ClothesShop.Controllers
@@ -68,8 +71,8 @@ namespace ClothesShop.Controllers
         [Authorization("TodaySales", (RoleType.Add))]
         public ActionResult Create(TodayTransactionsViewModel todayTransactions)
         {
-            if (todayTransactions.Transactions == null || todayTransactions.Transactions.Count() <= 0)
-                return View(todayTransactions);
+            //if (todayTransactions.Transactions == null || todayTransactions.Transactions.Count() <= 0)
+            //    return View(todayTransactions);
 
             ModelState.Remove("Transaction.EmployeeID");
             ModelState.Remove("Transaction.ProductID");
@@ -115,8 +118,8 @@ namespace ClothesShop.Controllers
         [Authorization("TodaySales", (RoleType.Edit))]
         public ActionResult Edit(TodayTransactionsViewModel todayTransactions)
         {
-            if (todayTransactions.Transactions == null || todayTransactions.Transactions.Count() <= 0)
-                return View(todayTransactions);
+            //if (todayTransactions.Transactions == null || todayTransactions.Transactions.Count() <= 0)
+            //    return View(todayTransactions);
             ModelState.Remove("Transaction.EmployeeID");
             ModelState.Remove("Transaction.ProductID");
             ModelState.Remove("Transaction.NumberOfPieces");
@@ -142,7 +145,8 @@ namespace ClothesShop.Controllers
 
         private TodayTransactionsViewModel GetTodayTransactionsViewModel(TodayTransaction t)
         {
-            return new TodayTransactionsViewModel()
+
+            var obj = new TodayTransactionsViewModel()
             {
                 ID = t.ID,
                 CreatedBy = t.CreatedBy,
@@ -160,17 +164,21 @@ namespace ClothesShop.Controllers
                     ProductName = tt.Product.Name,
                     SellingPrice = tt.SellingPrice.Value,
                     TodayTransactionID = tt.TodayTransactionID.Value,
-                }).ToList()
+                }).ToList(),
             };
+            obj.TodaySalesSeralized = JsonConvert.SerializeObject(obj.Transactions);
+            return obj;
         }
         private TodayTransaction GetTodayTransactionModel(TodayTransactionsViewModel t , bool isNew = false)
         {
+            t.Transactions = JsonConvert.DeserializeObject<List<TransactionViewModel>>(t.TodaySalesSeralized)?.ToList();
             return new TodayTransaction()
             {
                 ID = t.ID,
                 CreatedBy = isNew ? Session["UserName"].ToString() : t.CreatedBy,
                 CreatedOn = isNew ? DateTime.Now : t.CreatedOn,
                 IsApproved = t.IsApproved,
+                
                 Transactions = t.Transactions.Select(tt => new Transaction()
                 {
                     //EmployeeID = tt.EmployeeID,
@@ -199,6 +207,8 @@ namespace ClothesShop.Controllers
                 var transactions = _TodayTransactionsRepo.GetAll();
                 var result = transactions.Select(n => GetTodayTransactionsViewModel(n));
                 Filtering<TodayTransactionsViewModel> filtering = new Filtering<TodayTransactionsViewModel>();
+                if (obj.FilteredColumns.Count() > 0 && obj.FilteredColumns[0].ColumnName == "CreatedOn")
+                    obj.FilteredColumns[0].SearchValue = DateTime.ParseExact(obj.FilteredColumns[0].SearchValue, "yyyy/MM/dd", CultureInfo.CurrentCulture).ToString("dd/MM/yyyy");
                 filtering.Columns = obj.FilteredColumns;
 
                 //Sorting    
@@ -208,14 +218,13 @@ namespace ClothesShop.Controllers
                 totalRecords = result.Count();
 
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords *1.0/ obj.PageSize));
 
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
 

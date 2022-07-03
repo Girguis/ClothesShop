@@ -32,7 +32,8 @@ namespace ClothesShop.Controllers
         [Authorization("Products", (RoleType.Add))]
         public ActionResult Create()
         {
-            return View();
+            var model = new ProductViewModel();
+            return View(model);
         }
 
         // POST: Products/Create
@@ -179,15 +180,14 @@ namespace ClothesShop.Controllers
 
                 int totalRecords = result.Count();
 
-                int numberOfPages = (int)(Math.Ceiling(totalRecords *1.0 / obj.PageSize));
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
 
-                return Json(new { NumberOfPages = numberOfPages, data = data });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty });
+                return Json(new { TotalCount = 0, Data = string.Empty });
             }
         }
     }

@@ -1,0 +1,38 @@
+﻿@model ClothesShop.Models.TodayTransactionsViewModel
+@using ClothesShop.Languages
+<div class="col-md-3 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        <label>@Resources.Product</label>
+        <span class="text-danger">*</span>
+    </div>
+    <div class="col-md-12">
+        @Html.HiddenFor(model => model.Transaction.ProductID)
+        <div id="ProductsList"></div>
+        @Html.ValidationMessageFor(m => m.Transaction.ProductID, "", new { @class = "text-danger col-xs-12 padding0" })
+    </div>
+</div>
+<div class="col-md-2 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        <label>@Resources.NumberOfPieces</label>
+        <span class="text-danger">*</span>
+    </div>
+    <div class="col-md-12">
+        <div id="NumberOfPieces"></div>
+    </div>
+</div>
+<div class="col-md-2 mb-3 d-inline-block">
+    <div class="col-sm-12">
+        <label>@Resources.SellingPrice</label>
+        <span class="text-danger">*</span>
+    </div>
+    <div class="col-md-12">
+        <div id="SellingPrice"></div>
+    </div>
+</div>
+<div class="col-md-1 mb-3 d-inline-block">
+    <button type="button" id="addNew" class="btn btn-md btn-primary">
+        <i class="dx-icon-add"></i>
+    </button>
+</div>
+<div id="TodaySalesGrid"></div>
+

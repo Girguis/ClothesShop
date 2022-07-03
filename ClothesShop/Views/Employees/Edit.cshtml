@@ -1,291 +1,54 @@
 ﻿@model  ClothesShop.Models.EmployeeViewModel
-
+@using ClothesShop.Languages
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.UpdateEmployee;
 }
-@Styles.Render("~/Styles/EmployeeAdd")
-@Scripts.Render("~/Scripts/Employee")
-<div class="container">
-    @using (Html.BeginForm(actionName: "Edit", controllerName: "Employees", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
+
+
+<div class="container-fluid dir-rtl col-md-8 offset-md-2">
+    @using (Html.BeginForm("Edit","Employees",FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.FrontLicenceURL)
+        @Html.HiddenFor(model => model.FrontSSNURL)
+        @Html.HiddenFor(model => model.BackLicenceURL)
+        @Html.HiddenFor(model => model.BackSSNURL)
 
-        <div class="form-horizontal col-xs-12 col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>@ClothesShop.Languages.Resources.UpdateEmployee</h4>
-                </div>
-                <div class="panel-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.ID)
-                    @Html.HiddenFor(model => model.FrontLicenceURL)
-                    @Html.HiddenFor(model => model.FrontSSNURL)
-                    @Html.HiddenFor(model => model.BackLicenceURL)
-                    @Html.HiddenFor(model => model.BackSSNURL)
-
-                    <div class=" col-xs-12">
-                        <div class="col-xs-12 padding0 headerStyle">
-                            <h4>@ClothesShop.Languages.Resources.PersonalInformation</h4>
-                        </div>
-                        <div class="col-xs-12 padding0">
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @value = Model.BirthDate } })
-                                    @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.GenderID, htmlAttributes: new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.DropDownListFor(model => model.GenderID, new SelectList(ClothesShop.Helpers.Helper.EnumToList<ClothesShop.Enums.Gender>(), "ID", "Name"), new { @class = "form-control col-xs-12 f-right", @rows = "2" })
-                                    @Html.ValidationMessageFor(model => model.GenderID, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.SSN, htmlAttributes: new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.SSN, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.SSN, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.MobileNumber1, htmlAttributes: new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.MobileNumber1, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.MobileNumber1, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.MobileNumber2, htmlAttributes: new { @class = "control-label" })
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.MobileNumber2, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.MobileNumber2, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 padding0">
-                                <div class="col-xs-6 padding0 f-right txt-right">
-                                    <div class="col-xs-12 margin5">
-                                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })
-                                        <span class="text-danger">*</span>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control col-xs-12 f-right", @rows = "2" })
-                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger col-xs-12 padding0" })
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 padding0 f-right txt-right">
-                                    <div class="col-xs-12 margin5">
-                                        @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label" })
-                                        <span class="text-danger">*</span>
-                                    </div>
-                                    <div class="col-xs-12 col-md-10 f-right">
-                                        @Html.DropDownListFor(model => model.CityID, new SelectList(ClothesShop.Helpers.Helper.GetCities(), "ID", "Name"), new { @class = "form-control col-xs-12 f-right SelectDropDownList" })
-                                        @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger col-xs-12 padding0" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0">
-                                <div class="col-xs-12 padding0 f-right txt-right">
-                                    <div class="col-xs-12 margin5">
-                                        @Html.LabelFor(model => model.BackSSN, htmlAttributes: new { @class = "control-label" })
-                                        <span class="text-danger">*</span>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <img src="@ViewBag.BackSSN" style="width:100px;" id="backSSNImage" onerror="this.error = null; this.src='/Images/id-card.png'" />
-                                        <input type="file" name="BackSSN" id="BackSSN" accept="image/*" />
-                                        @Html.ValidationMessageFor(model => model.BackSSN, "", new { @class = "text-danger col-xs-12 padding0" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0">
-                                <div class="col-xs-12 padding0 f-right txt-right">
-                                    <div class="col-xs-12 margin5">
-                                        @Html.LabelFor(model => model.FrontSSN, htmlAttributes: new { @class = "control-label" })
-                                        <span class="text-danger">*</span>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <img src="@ViewBag.FrontSSN" style="width:100px;" id="frontSSNImage" onerror="this.error = null; this.src='/Images/id-card.png'" />
-                                        <input type="file" name="FrontSSN" id="FrontSSN" accept="image/*" />
-                                        @Html.ValidationMessageFor(model => model.FrontSSN, "", new { @class = "text-danger col-xs-12 padding0" })
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class=" col-xs-12">
-                        <div class="col-xs-12 padding0 headerStyle">
-                            <h4>@ClothesShop.Languages.Resources.WorkInformation</h4>
-                        </div>
-                        <div class="col-xs-12 padding0">
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.JobTypeID, htmlAttributes: new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    @{ 
-                                        var jobTypes = ClothesShop.Helpers.Helper.EnumToList<ClothesShop.Enums.JobTypes>();
-                                    }
-                                    @Html.DropDownListFor(model => model.JobTypeID, new SelectList(jobTypes, "ID", "Name"), new { @class = "form-control col-xs-12 f-right", @onchange = "EmployeesManager.prototype.OnChangeJob();" })
-                                    @Html.ValidationMessageFor(model => model.JobTypeID, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.StartWorkingDate, htmlAttributes: new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.StartWorkingDate, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right" } })
-                                    @Html.ValidationMessageFor(model => model.StartWorkingDate, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right" id="JobNameDiv">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.JobName, htmlAttributes: new { @class = "control-label" })
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.JobName, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right" } })
-                                    @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label" })
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control col-xs-12 f-right" } })
-                                    @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-                            <div class="col-xs-6 padding0 f-right txt-right">
-                                <div class="col-xs-12 margin5">
-                                    @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label" })
-                                </div>
-
-                                <div class="col-md-12">
-                                    @Html.TextAreaFor(model => model.AdditionalInfo, new { @class = "form-control col-xs-12 f-right", @rows = "2" })
-                                    @Html.ValidationMessageFor(model => model.AdditionalInfo, "", new { @class = "text-danger col-xs-12 padding0" })
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 padding0" id="LicenceDiv">
-
-
-                                <div class="col-xs-6 padding0">
-                                    <div class="col-xs-12 padding0 f-right txt-right">
-                                        <div class="col-xs-12 margin5">
-                                            @Html.LabelFor(model => model.BackLicence, htmlAttributes: new { @class = "control-label" })
-                                            <span class="text-danger">*</span>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <img src="@ViewBag.BackLicence" style="width:100px;" id="backLicenceImage" onerror="this.error = null; this.src='/Images/id-card.png'" />
-                                            <input type="file" name="BackLicence" id="BackLicence" accept="image/*" />
-                                            @Html.ValidationMessageFor(model => model.BackLicence, "", new { @class = "text-danger col-xs-12 padding0" })
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-6 padding0">
-                                    <div class="col-xs-12 padding0 f-right txt-right">
-                                        <div class="col-xs-12 margin5">
-                                            @Html.LabelFor(model => model.FrontLicence, htmlAttributes: new { @class = "control-label" })
-                                            <span class="text-danger">*</span>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <img src="@ViewBag.FrontLicence" style="width:100px;" id="frontLicenceImage" onerror="this.error = null; this.src='/Images/id-card.png'" />
-                                            <input type="file" name="FrontLicence" id="FrontLicence" accept="image/*" />
-                                            @Html.ValidationMessageFor(model => model.FrontLicence, "", new { @class = "text-danger col-xs-12 padding0" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-                <div class="panel-footer">
-                    <div class="form-group">
-                        <div class="col-xs-12 col-md-6 f-right txt-right">
-                            <button type="submit" class="btn btn-lg btn-success">
-                                @ClothesShop.Languages.Resources.Save
-                            </button>
-                        </div>
-                        <div class="col-xs-12 col-md-6 f-left txt-left">
-                            <a type="button" class="btn btn-lg btn-primary" href="@Url.Action("Index", "Employees")">
-                                @ClothesShop.Languages.Resources.BackToList
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="card m-0">
+            <div class="card-header pb-0">
+                <h3 class="m-0">@Resources.UpdateEmployee</h3>
+            </div>
+            <div class="card-body custom-card-body pt-2 m-0">
+                @Html.Partial("_PersonalInfomation", Model)
+                <hr />
+                @Html.Partial("_WorkInformation", Model)
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-success" id="submit">
+                     @Resources.Save
+                </button>
+                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "Employees")">
+                    @Resources.BackToList
+                </a>
             </div>
         </div>
     }
 </div>
 @section scripts{
-    <script>
-         var deliveryMan = "@Html.Raw(ClothesShop.Languages.Resources.DeliveryMan)";
+    @Scripts.Render("~/bundles/employeesInfo")
+<script>
+        var deliveryMan = "@Html.Raw(ClothesShop.Languages.Resources.DeliveryMan)";
         var employee = "@Html.Raw(ClothesShop.Languages.Resources.Employee)";
         $(document).ready(function () {
             var _EmployeesManager = new EmployeesManager();
             EmployeesManager.prototype.OnChangeJob();
             EmployeesManager.prototype.Load();
-
-            @{
-                var birthdate = Model.BirthDate.HasValue ? Model.BirthDate.Value.ToString(ClothesShop.Helpers.DateTimeFormatter.ViewingDateFormat) : "";
-             }
+            @{var birthdate = Model.BirthDate.HasValue ? Model.BirthDate.Value.ToString(ClothesShop.Helpers.DateTimeFormatter.ViewingDateFormat) : "";}
             $("#BirthDate").val("@birthdate");
-
-            @{
-                var startWorkingDate = Model.StartWorkingDate.HasValue ? Model.StartWorkingDate.Value.ToString(ClothesShop.Helpers.DateTimeFormatter.ViewingDateFormat) : "";
-            }
+            @{var startWorkingDate = Model.StartWorkingDate.HasValue ? Model.StartWorkingDate.Value.ToString(ClothesShop.Helpers.DateTimeFormatter.ViewingDateFormat) : "";}
             $("#StartWorkingDate").val("@startWorkingDate");
         });
-    </script>
+</script>
 }

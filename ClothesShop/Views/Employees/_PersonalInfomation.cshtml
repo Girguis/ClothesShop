@@ -1,0 +1,115 @@
+﻿@model  ClothesShop.Models.EmployeeViewModel
+@using ClothesShop.Languages
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h4 class="m-0">@Resources.PersonalInformation</h4>
+    </div>
+    <div class="card-body pb-0 pt-0">
+        <hr />
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label" })
+                <span class="form-label form-label text-danger">*</span>
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+            <div class="col-sm-12">
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12 ">
+                @Html.LabelFor(model => model.GenderID, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+
+            <div class="col-md-12">
+                @Html.DropDownListFor(model => model.GenderID, new SelectList(ClothesShop.Helpers.Helper.EnumToList<ClothesShop.Enums.Gender>(), "ID", "Name"), new { @class = "form-select col-xs-12" } )
+                @Html.ValidationMessageFor(model => model.GenderID, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.SSN, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.SSN, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.SSN, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.MobileNumber1, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.MobileNumber1, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.MobileNumber1, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.MobileNumber2, htmlAttributes: new { @class = "form-label" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.MobileNumber2, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.MobileNumber2, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div> 
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "form-label" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12 ">
+                @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+            <div class="col-sm-12 f-right">
+                @{
+                    var cities = ClothesShop.Helpers.Helper.GetCities();
+                }
+                @Html.DropDownListFor(model => model.CityID, new SelectList(cities, "ID", "Name"), new { @class = "form-select col-xs-12 "})
+                @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger col-xs-12 p-0" })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12 ">
+                @Html.LabelFor(model => model.BackSSN, htmlAttributes: new { @class = "control-label" })
+                <span class="text-danger">*</span>
+            </div>
+            <div class="col-md-12">
+                <img src="~/Images/id-card.png" style="width:100px;" id="backSSNImage" />
+                <input type="file" name="BackSSN" id="BackSSN" accept="image/*" />
+                @Html.ValidationMessageFor(model => model.BackSSN, "", new { @class = "text-danger col-sm-12 p-0" })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12 ">
+                @Html.LabelFor(model => model.FrontSSN, htmlAttributes: new { @class = "control-label" })
+                <span class="text-danger">*</span>
+            </div>
+            <div class="col-md-12">
+                <img src="~/Images/id-card.png" style="width:100px;" id="frontSSNImage" />
+                <input type="file" name="FrontSSN" id="FrontSSN" accept="image/*" />
+                @Html.ValidationMessageFor(model => model.FrontSSN, "", new { @class = "text-danger col-sm-12 p-0" })
+            </div>
+        </div>
+    </div>
+</div>

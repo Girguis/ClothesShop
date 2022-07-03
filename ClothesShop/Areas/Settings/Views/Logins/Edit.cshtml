@@ -1,86 +1,72 @@
 ﻿@model ClothesShop.Areas.Settings.Models.LoginViewModel
-
+@using ClothesShop.Languages
 @{
     Layout = "~/Areas/Settings/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.UpdateLogin;
 }
-@section styles{
-    <style>
-        input[id='UserName'] {
-            padding: 6px 12px !important;
-        }
-    </style>
-}
-<div class="container">
-    @using (Html.BeginForm())
+<div class="container-fluid dir-rtl col-md-8 offset-md-2">
+    @using (Html.BeginForm("Edit", "Logins", FormMethod.Post, new { @id = "LoginsUpdateForm" }))
     {
         @Html.AntiForgeryToken()
         var employees = ClothesShop.Helpers.Helper.GetEmployees();
-
-        <div class="form-horizontal col-xs-12 col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>@ClothesShop.Languages.Resources.UpdateLogin</h4>
-                </div>
-                <div class="panel-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.ID)
-                    @Html.HiddenFor(model => model.EmployeeID)
-                    @Html.HiddenFor(model => model.FullName)
-                    <div class="form-group">
-                        <div class="col-xs-12 margin5">
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.EmployeeID)
+        @Html.HiddenFor(model => model.FullName)
+        <div class="card m-0">
+            <div class="card-header pb-0">
+                <h3 class="m-0">@Resources.UpdateLogin</h3>
+            </div>
+                <div class="card-body custom-card-body pt-2 m-0">
+                    <div class="col-md-5 mb-3 d-inline-block">
+                        <div class="col-sm-12 ">
                             @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label" }) :
                             @Html.DisplayFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-12 margin5">
-                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
-                            <span class="text-danger">*</span>
+                    <div class="col-md-5 mb-3 d-inline-block">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "form-label" })
+                            <span class="form-label form-label text-danger">*</span>
                         </div>
-
                         <div class="col-md-12">
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "form-label text-danger col-sm-12 " })
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-12 margin5">
-                            @Html.LabelFor(model => model.NewPassword, htmlAttributes: new { @class = "control-label" })
-                            <span class="text-danger">*</span>
+                    <div class="col-md-5 mb-3 d-inline-block">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.NewPassword, htmlAttributes: new { @class = "form-label" })
+                            <span class="form-label form-label text-danger">*</span>
                         </div>
-
                         <div class="col-md-12">
-                            @Html.EditorFor(model => model.NewPassword, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NewPassword, "", new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                            @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "form-label text-danger col-sm-12 " })
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-12 margin5">
-                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
-                            <span class="text-danger">*</span>
+                    <div class="col-md-5 mb-3 d-inline-block">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "form-label" })
+                            <span class="form-label form-label text-danger">*</span>
                         </div>
-
                         <div class="col-md-12">
-                            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.ConfirmPassword, "", new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "form-label text-danger col-sm-12 " })
                         </div>
                     </div>
-
-                </div>
-                <div class="panel-footer">
-                    <div class="form-group">
-                        <div class="col-xs-12 col-md-6 f-right txt-right">
-                            <button type="submit" class="btn btn-lg btn-success">
-                                @ClothesShop.Languages.Resources.Save
-                            </button>
-                        </div>
-                        <div class="col-xs-12 col-md-6 f-left txt-left">
-                            @Html.ActionLink(ClothesShop.Languages.Resources.BackToList, "Index", "", htmlAttributes: new { @class = "btn btn-lg btn-primary" })
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-success" id="submit">
+                     @Resources.Save
+                </button>
+                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "Logins", new { area = "Settings" })">
+                    @Resources.BackToList
+                </a>
             </div>
         </div>
     }
-</div>
+    </div>
+<script>
+    $(document).ready(function () {
+        $("#LoginsUpdateForm").unbind("submit").bind("submit");
+    });
+</script>

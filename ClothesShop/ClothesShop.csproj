@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -60,11 +59,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bold.Licensing, Version=3.1460.33.0, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bold.Licensing.3.1.33\lib\net46\Bold.Licensing.dll</HintPath>
+    <Reference Include="Bold.Licensing, Version=4.1460.83.0, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bold.Licensing.4.1.83\lib\net46\Bold.Licensing.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -72,19 +71,24 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.5.0\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.20.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.20.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.5.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.20.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.20.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.20.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.20.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -99,38 +103,41 @@
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.WebForms.10.0.40219.1\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Spire.License, Version=1.4.0.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.XLS.11.8.6\lib\net40\Spire.License.dll</HintPath>
+      <HintPath>..\packages\FreeSpire.XLS.12.2.0\lib\net40\Spire.License.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Pdf, Version=7.8.9.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.XLS.11.8.6\lib\net40\Spire.Pdf.dll</HintPath>
+    <Reference Include="Spire.Pdf, Version=8.2.2.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.12.2.0\lib\net40\Spire.Pdf.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.XLS, Version=11.8.6.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.XLS.11.8.6\lib\net40\Spire.XLS.dll</HintPath>
+    <Reference Include="Spire.XLS, Version=12.2.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.12.2.0\lib\net40\Spire.XLS.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Compression.Base, Version=18.3460.0.35, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Compression.Base.18.3.0.35\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Compression.Base, Version=20.1460.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.20.1.0.61\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.DocIO.Base, Version=18.3460.0.35, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.DocIO.AspNet.18.3.0.35\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
+    <Reference Include="Syncfusion.DocIO.Base, Version=20.1460.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.DocIO.AspNet.20.1.0.61\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=18.3460.0.35, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Licensing.18.3.0.35\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Licensing, Version=20.1460.0.61, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.20.1.0.61\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.OfficeChart.Base, Version=18.3460.0.35, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.OfficeChart.Base.18.3.0.35\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=20.1460.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.OfficeChart.Base.20.1.0.61\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Pdf.Base, Version=18.3460.0.35, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Pdf.AspNet.18.3.0.35\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Pdf.Base, Version=20.1460.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.AspNet.20.1.0.61\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Presentation.Base, Version=18.3460.0.35, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Presentation.AspNet.18.3.0.35\lib\net46\Syncfusion.Presentation.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Presentation.Base, Version=20.1460.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Presentation.AspNet.20.1.0.61\lib\net46\Syncfusion.Presentation.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.XlsIO.Base, Version=18.3460.0.35, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.XlsIO.AspNet.18.3.0.35\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=20.1460.0.61, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.AspNet.20.1.0.61\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -142,6 +149,24 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -151,40 +176,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -193,11 +190,6 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -296,44 +288,60 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Account\login.css" />
-    <Content Include="Content\bootstrap-datetimepicker.min.css" />
-    <Content Include="Content\bootstrap-responsive.css" />
-    <Content Include="Content\bootstrap-responsive.min.css" />
-    <Content Include="Content\bootstrap-select.css" />
-    <Content Include="Content\bootstrap-select.min.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Chart.css" />
-    <Content Include="Content\Chart.min.css" />
-    <Content Include="Content\css\select2.css" />
-    <Content Include="Content\css\select2.png" />
-    <Content Include="Content\css\select2x2.png" />
-    <Content Include="Content\css\spinner.gif" />
-    <Content Include="Content\Employee\Add.css" />
-    <Content Include="Content\farbtastic.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\css\app.css" />
+    <Content Include="Content\css\font.css" />
+    <Content Include="Content\dx-diagram.css" />
+    <Content Include="Content\dx-diagram.min.css" />
+    <Content Include="Content\dx-gantt.css" />
+    <Content Include="Content\dx-gantt.min.css" />
+    <Content Include="Content\dx.carmine.compact.css" />
+    <Content Include="Content\dx.carmine.css" />
+    <Content Include="Content\dx.common.css" />
+    <Content Include="Content\dx.contrast.compact.css" />
+    <Content Include="Content\dx.contrast.css" />
+    <Content Include="Content\dx.dark.compact.css" />
+    <Content Include="Content\dx.dark.css" />
+    <Content Include="Content\dx.darkmoon.compact.css" />
+    <Content Include="Content\dx.darkmoon.css" />
+    <Content Include="Content\dx.darkviolet.compact.css" />
+    <Content Include="Content\dx.darkviolet.css" />
+    <Content Include="Content\dx.greenmist.compact.css" />
+    <Content Include="Content\dx.greenmist.css" />
+    <Content Include="Content\dx.light.compact.css" />
+    <Content Include="Content\dx.light.css" />
+    <Content Include="Content\dx.material.blue.dark.compact.css" />
+    <Content Include="Content\dx.material.blue.dark.css" />
+    <Content Include="Content\dx.material.blue.light.compact.css" />
+    <Content Include="Content\dx.material.blue.light.css" />
+    <Content Include="Content\dx.material.lime.dark.compact.css" />
+    <Content Include="Content\dx.material.lime.dark.css" />
+    <Content Include="Content\dx.material.lime.light.compact.css" />
+    <Content Include="Content\dx.material.lime.light.css" />
+    <Content Include="Content\dx.material.orange.dark.compact.css" />
+    <Content Include="Content\dx.material.orange.dark.css" />
+    <Content Include="Content\dx.material.orange.light.compact.css" />
+    <Content Include="Content\dx.material.orange.light.css" />
+    <Content Include="Content\dx.material.purple.dark.compact.css" />
+    <Content Include="Content\dx.material.purple.dark.css" />
+    <Content Include="Content\dx.material.purple.light.compact.css" />
+    <Content Include="Content\dx.material.purple.light.css" />
+    <Content Include="Content\dx.material.teal.dark.compact.css" />
+    <Content Include="Content\dx.material.teal.dark.css" />
+    <Content Include="Content\dx.material.teal.light.compact.css" />
+    <Content Include="Content\dx.material.teal.light.css" />
+    <Content Include="Content\dx.softblue.compact.css" />
+    <Content Include="Content\dx.softblue.css" />
     <Content Include="Content\General\CommonStyle.css" />
-    <Content Include="Content\General\select-ar.css" />
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
-    <Content Include="Content\Layout\Layout-ar.css" />
-    <Content Include="Content\Layout\Layout.css" />
     <Content Include="Content\marker.png" />
     <Content Include="Content\mask.png" />
-    <Content Include="Content\select2-bootstrap.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\wheel.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\accountant.png" />
     <Content Include="Images\background.jpeg" />
+    <Content Include="Images\bar-chart.png" />
     <Content Include="Images\close.png" />
     <Content Include="Images\colors.png" />
     <Content Include="Images\dashboard.png" />
@@ -359,20 +367,34 @@
     <Content Include="Images\transactions.png" />
     <Content Include="Images\users.png" />
     <Content Include="Images\warning.png" />
-    <Content Include="Scripts\bootbox.js" />
-    <Content Include="Scripts\bootbox.min.js" />
-    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
-    <Content Include="Scripts\bootstrap-select.js" />
-    <Content Include="Scripts\bootstrap-select.min.js" />
-    <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Chart.js" />
-    <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Js\Accounts\AccountsManager.js" />
+    <Content Include="Js\Colors\ColorsManager.js" />
+    <Content Include="Js\Const.js" />
+    <Content Include="Js\Deliveries\DeliveriesInfoManager.js" />
+    <Content Include="Js\Deliveries\DeliveriesManager.js" />
+    <Content Include="Js\Employees\EmployeesManager.js" />
+    <Content Include="Js\Orders\OrderInfoManager.js" />
+    <Content Include="Js\Orders\OrdersManager.js" />
+    <Content Include="Js\ProductsSummary\ProductsSummaryManager.js" />
+    <Content Include="Js\ProductSuppliers\ProductSupplierInfoManager.js" />
+    <Content Include="Js\ProductSuppliers\ProductSuppliersManager.js" />
+    <Content Include="Js\Products\ProductsManager.js" />
+    <Content Include="Js\SalesRates\SalesRatesManager.js" />
+    <Content Include="Js\ShipmentCompanies\ShipmentCompaniesManager.js" />
+    <Content Include="Js\Sizes\SizesManager.js" />
+    <Content Include="Js\Statistics\MonthlyStatisticsManager.js" />
+    <Content Include="Js\Statistics\StatisticsManager.js" />
+    <Content Include="Js\Suppliers\SuppliersManager.js" />
+    <Content Include="Js\SystemData\SystemDataManager.js" />
+    <Content Include="Js\TodayExpens\TodayExpensInfoManager.js" />
+    <Content Include="Js\TodayExpens\TodayExpensManager.js" />
+    <Content Include="Js\TodaySales\TodaySalesInfoManager.js" />
+    <Content Include="Js\TodaySales\TodaySalesManager.js" />
+    <Content Include="Js\TodayTransactions\TodayTransactionsManager.js" />
+    <Content Include="Scripts\cldr.js" />
+    <Content Include="Scripts\cldr\event.js" />
+    <Content Include="Scripts\cldr\supplemental.js" />
+    <Content Include="Scripts\cldr\unresolved.js" />
     <Content Include="Scripts\CodeMirror\addon\comment\comment.js" />
     <Content Include="Scripts\CodeMirror\addon\comment\continuecomment.js" />
     <Content Include="Scripts\CodeMirror\addon\dialog\dialog.css" />
@@ -779,154 +801,41 @@
     <Content Include="Scripts\CodeMirror\theme\xq-light.css" />
     <Content Include="Scripts\CodeMirror\theme\yeti.css" />
     <Content Include="Scripts\CodeMirror\theme\zenburn.css" />
-    <Content Include="Scripts\Employees\EmployeesManager.js" />
+    <Content Include="Scripts\devextreme-localization\dx.messages.de.js" />
+    <Content Include="Scripts\devextreme-localization\dx.messages.en.js" />
+    <Content Include="Scripts\devextreme-localization\dx.messages.ja.js" />
+    <Content Include="Scripts\devextreme-localization\dx.messages.ru.js" />
+    <Content Include="Scripts\dx-diagram.js" />
+    <Content Include="Scripts\dx-diagram.min.js" />
+    <Content Include="Scripts\dx-gantt.js" />
+    <Content Include="Scripts\dx-gantt.min.js" />
+    <Content Include="Scripts\dx.all.debug.js" />
+    <Content Include="Scripts\dx.all.js" />
+    <Content Include="Scripts\dx.aspnet.mvc.js" />
+    <Content Include="Scripts\dx.viz.debug.js" />
+    <Content Include="Scripts\dx.viz.js" />
+    <Content Include="Scripts\dx.web.debug.js" />
+    <Content Include="Scripts\dx.web.js" />
+    <Content Include="Js\Employees\EmployeesInfoManager.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\farbtastic.js" />
-    <Content Include="Scripts\General\CommonManager.js" />
-    <Content Include="Scripts\General\TableManager.js" />
-    <Content Include="Scripts\i18n\defaults-am_ET.js" />
-    <Content Include="Scripts\i18n\defaults-am_ET.min.js" />
-    <Content Include="Scripts\i18n\defaults-ar_AR.js" />
-    <Content Include="Scripts\i18n\defaults-ar_AR.min.js" />
-    <Content Include="Scripts\i18n\defaults-bg_BG.js" />
-    <Content Include="Scripts\i18n\defaults-bg_BG.min.js" />
-    <Content Include="Scripts\i18n\defaults-cs_CZ.js" />
-    <Content Include="Scripts\i18n\defaults-cs_CZ.min.js" />
-    <Content Include="Scripts\i18n\defaults-da_DK.js" />
-    <Content Include="Scripts\i18n\defaults-da_DK.min.js" />
-    <Content Include="Scripts\i18n\defaults-de_DE.js" />
-    <Content Include="Scripts\i18n\defaults-de_DE.min.js" />
-    <Content Include="Scripts\i18n\defaults-en_US.js" />
-    <Content Include="Scripts\i18n\defaults-en_US.min.js" />
-    <Content Include="Scripts\i18n\defaults-es_CL.js" />
-    <Content Include="Scripts\i18n\defaults-es_CL.min.js" />
-    <Content Include="Scripts\i18n\defaults-es_ES.js" />
-    <Content Include="Scripts\i18n\defaults-es_ES.min.js" />
-    <Content Include="Scripts\i18n\defaults-et_EE.js" />
-    <Content Include="Scripts\i18n\defaults-et_EE.min.js" />
-    <Content Include="Scripts\i18n\defaults-eu.js" />
-    <Content Include="Scripts\i18n\defaults-eu.min.js" />
-    <Content Include="Scripts\i18n\defaults-fa_IR.js" />
-    <Content Include="Scripts\i18n\defaults-fa_IR.min.js" />
-    <Content Include="Scripts\i18n\defaults-fi_FI.js" />
-    <Content Include="Scripts\i18n\defaults-fi_FI.min.js" />
-    <Content Include="Scripts\i18n\defaults-fr_FR.js" />
-    <Content Include="Scripts\i18n\defaults-fr_FR.min.js" />
-    <Content Include="Scripts\i18n\defaults-hr_HR.js" />
-    <Content Include="Scripts\i18n\defaults-hr_HR.min.js" />
-    <Content Include="Scripts\i18n\defaults-hu_HU.js" />
-    <Content Include="Scripts\i18n\defaults-hu_HU.min.js" />
-    <Content Include="Scripts\i18n\defaults-id_ID.js" />
-    <Content Include="Scripts\i18n\defaults-id_ID.min.js" />
-    <Content Include="Scripts\i18n\defaults-it_IT.js" />
-    <Content Include="Scripts\i18n\defaults-it_IT.min.js" />
-    <Content Include="Scripts\i18n\defaults-ja_JP.js" />
-    <Content Include="Scripts\i18n\defaults-ja_JP.min.js" />
-    <Content Include="Scripts\i18n\defaults-kh_KM.js" />
-    <Content Include="Scripts\i18n\defaults-kh_KM.min.js" />
-    <Content Include="Scripts\i18n\defaults-ko_KR.js" />
-    <Content Include="Scripts\i18n\defaults-ko_KR.min.js" />
-    <Content Include="Scripts\i18n\defaults-lt_LT.js" />
-    <Content Include="Scripts\i18n\defaults-lt_LT.min.js" />
-    <Content Include="Scripts\i18n\defaults-lv_LV.js" />
-    <Content Include="Scripts\i18n\defaults-lv_LV.min.js" />
-    <Content Include="Scripts\i18n\defaults-nb_NO.js" />
-    <Content Include="Scripts\i18n\defaults-nb_NO.min.js" />
-    <Content Include="Scripts\i18n\defaults-nl_NL.js" />
-    <Content Include="Scripts\i18n\defaults-nl_NL.min.js" />
-    <Content Include="Scripts\i18n\defaults-pl_PL.js" />
-    <Content Include="Scripts\i18n\defaults-pl_PL.min.js" />
-    <Content Include="Scripts\i18n\defaults-pt_BR.js" />
-    <Content Include="Scripts\i18n\defaults-pt_BR.min.js" />
-    <Content Include="Scripts\i18n\defaults-pt_PT.js" />
-    <Content Include="Scripts\i18n\defaults-pt_PT.min.js" />
-    <Content Include="Scripts\i18n\defaults-ro_RO.js" />
-    <Content Include="Scripts\i18n\defaults-ro_RO.min.js" />
-    <Content Include="Scripts\i18n\defaults-ru_RU.js" />
-    <Content Include="Scripts\i18n\defaults-ru_RU.min.js" />
-    <Content Include="Scripts\i18n\defaults-sk_SK.js" />
-    <Content Include="Scripts\i18n\defaults-sk_SK.min.js" />
-    <Content Include="Scripts\i18n\defaults-sl_SI.js" />
-    <Content Include="Scripts\i18n\defaults-sl_SI.min.js" />
-    <Content Include="Scripts\i18n\defaults-sr_SP.js" />
-    <Content Include="Scripts\i18n\defaults-sr_SP.min.js" />
-    <Content Include="Scripts\i18n\defaults-sv_SE.js" />
-    <Content Include="Scripts\i18n\defaults-sv_SE.min.js" />
-    <Content Include="Scripts\i18n\defaults-th_TH.js" />
-    <Content Include="Scripts\i18n\defaults-th_TH.min.js" />
-    <Content Include="Scripts\i18n\defaults-tr_TR.js" />
-    <Content Include="Scripts\i18n\defaults-tr_TR.min.js" />
-    <Content Include="Scripts\i18n\defaults-ua_UA.js" />
-    <Content Include="Scripts\i18n\defaults-ua_UA.min.js" />
-    <Content Include="Scripts\i18n\defaults-vi_VN.js" />
-    <Content Include="Scripts\i18n\defaults-vi_VN.min.js" />
-    <Content Include="Scripts\i18n\defaults-zh_CN.js" />
-    <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
-    <Content Include="Scripts\i18n\defaults-zh_TW.js" />
-    <Content Include="Scripts\i18n\defaults-zh_TW.js.map" />
-    <Content Include="Scripts\i18n\defaults-zh_CN.js.map" />
-    <Content Include="Scripts\i18n\defaults-vi_VN.js.map" />
-    <Content Include="Scripts\i18n\defaults-ua_UA.js.map" />
-    <Content Include="Scripts\i18n\defaults-tr_TR.js.map" />
-    <Content Include="Scripts\i18n\defaults-th_TH.js.map" />
-    <Content Include="Scripts\i18n\defaults-sv_SE.js.map" />
-    <Content Include="Scripts\i18n\defaults-sr_SP.js.map" />
-    <Content Include="Scripts\i18n\defaults-sl_SI.js.map" />
-    <Content Include="Scripts\i18n\defaults-sk_SK.js.map" />
-    <Content Include="Scripts\i18n\defaults-ru_RU.js.map" />
-    <Content Include="Scripts\i18n\defaults-ro_RO.js.map" />
-    <Content Include="Scripts\i18n\defaults-pt_PT.js.map" />
-    <Content Include="Scripts\i18n\defaults-pt_BR.js.map" />
-    <Content Include="Scripts\i18n\defaults-pl_PL.js.map" />
-    <Content Include="Scripts\i18n\defaults-nl_NL.js.map" />
-    <Content Include="Scripts\i18n\defaults-nb_NO.js.map" />
-    <Content Include="Scripts\i18n\defaults-lv_LV.js.map" />
-    <Content Include="Scripts\i18n\defaults-lt_LT.js.map" />
-    <Content Include="Scripts\i18n\defaults-ko_KR.js.map" />
-    <Content Include="Scripts\i18n\defaults-kh_KM.js.map" />
-    <Content Include="Scripts\i18n\defaults-ja_JP.js.map" />
-    <Content Include="Scripts\i18n\defaults-it_IT.js.map" />
-    <Content Include="Scripts\i18n\defaults-id_ID.js.map" />
-    <Content Include="Scripts\i18n\defaults-hu_HU.js.map" />
-    <Content Include="Scripts\i18n\defaults-hr_HR.js.map" />
-    <Content Include="Scripts\i18n\defaults-fr_FR.js.map" />
-    <Content Include="Scripts\i18n\defaults-fi_FI.js.map" />
-    <Content Include="Scripts\i18n\defaults-fa_IR.js.map" />
-    <Content Include="Scripts\i18n\defaults-eu.js.map" />
-    <Content Include="Scripts\i18n\defaults-et_EE.js.map" />
-    <Content Include="Scripts\i18n\defaults-es_ES.js.map" />
-    <Content Include="Scripts\i18n\defaults-es_CL.js.map" />
-    <Content Include="Scripts\i18n\defaults-en_US.js.map" />
-    <Content Include="Scripts\i18n\defaults-de_DE.js.map" />
-    <Content Include="Scripts\i18n\defaults-da_DK.js.map" />
-    <Content Include="Scripts\i18n\defaults-cs_CZ.js.map" />
-    <Content Include="Scripts\i18n\defaults-bg_BG.js.map" />
-    <Content Include="Scripts\i18n\defaults-ar_AR.js.map" />
-    <Content Include="Scripts\i18n\defaults-am_ET.js.map" />
-    <Content Include="Scripts\bootstrap-select.min.js.map" />
-    <Content Include="Scripts\bootstrap-select.js.map" />
-    <Content Include="Content\bootstrap-select.css.map" />
+    <Content Include="Js\CommonManager.js" />
+    <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\globalize\currency.js" />
+    <Content Include="Scripts\globalize\date.js" />
+    <Content Include="Scripts\globalize\message.js" />
+    <Content Include="Scripts\globalize\number.js" />
+    <Content Include="Scripts\globalize\plural.js" />
+    <Content Include="Scripts\globalize\relative-time.js" />
+    <Content Include="Scripts\globalize\unit.js" />
     <Content Include="fonts\Numans.woff2" />
     <Content Include="Scripts\index.js.flow" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\select2-bootstrap.scss" />
-    <Content Include="Content\select2-bootstrap.less" />
-    <Content Include="Content\select2-bootstrap-build.scss" />
-    <Content Include="Content\select2-bootstrap-build.less" />
     <Content Include="Areas\Settings\Views\web.config" />
     <Content Include="Areas\Settings\Views\Roles\Edit.cshtml" />
     <Content Include="Areas\Settings\Views\Shared\_Layout.cshtml" />
@@ -941,6 +850,33 @@
       <DependentUpon>DeliveryDataSet.xsd</DependentUpon>
     </Content>
     <Content Include="Areas\Settings\Views\SystemData\Index.cshtml" />
+    <Content Include="Content\icons\dxiconsmaterial.woff2" />
+    <Content Include="Content\icons\dxiconsmaterial.woff" />
+    <Content Include="Content\icons\dxiconsmaterial.ttf" />
+    <Content Include="Content\icons\dxicons.woff2" />
+    <Content Include="Content\icons\dxicons.woff" />
+    <Content Include="Content\icons\dxicons.ttf" />
+    <Content Include="Content\fonts\Roboto-700.woff2" />
+    <Content Include="Content\fonts\Roboto-700.woff" />
+    <Content Include="Content\fonts\Roboto-700.ttf" />
+    <Content Include="Content\fonts\Roboto-500.woff2" />
+    <Content Include="Content\fonts\Roboto-500.woff" />
+    <Content Include="Content\fonts\Roboto-500.ttf" />
+    <Content Include="Content\fonts\Roboto-400.woff2" />
+    <Content Include="Content\fonts\Roboto-400.woff" />
+    <Content Include="Content\fonts\Roboto-400.ttf" />
+    <Content Include="Content\fonts\Roboto-300.woff2" />
+    <Content Include="Content\fonts\Roboto-300.woff" />
+    <Content Include="Content\fonts\Roboto-300.ttf" />
+    <Content Include="Content\css\app.css.map" />
+    <Content Include="Content\fonts\UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7SUc.woff2" />
+    <Content Include="Content\fonts\UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7SUc.woff2" />
+    <Content Include="Content\fonts\UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2" />
+    <Content Include="Content\fonts\UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7SUc.woff2" />
+    <Content Include="Content\fonts\UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7SUc.woff2" />
+    <Content Include="Content\fonts\UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7SUc.woff2" />
+    <Content Include="Content\fonts\UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7SUc.woff2" />
+    <Content Include="Areas\Settings\Views\Shared\_Sidebar.cshtml" />
     <None Include="DataSets\DeliveryDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -979,31 +915,30 @@
     <Content Include="DataSets\OrderDetailsDataSet.xss">
       <DependentUpon>OrderDetailsDataSet.xsd</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.0.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Scripts\jquery.twbsPagination-1.3.1.js" />
     <Content Include="Scripts\jquery.twbsPagination-1.3.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\Layout\LayoutManager.js" />
+    <Content Include="Scripts\jszip.js" />
+    <Content Include="Scripts\jszip.min.js" />
+    <Content Include="Scripts\js\app.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\Orders\OrdersManager.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\Print\PrintManager.js" />
     <Content Include="Scripts\src\index.js" />
     <Content Include="Scripts\src\methods\defaults.js" />
     <Content Include="Scripts\src\methods\destroy.js" />
@@ -1067,13 +1002,19 @@
     <Content Include="Scripts\src\utils\setAttributes.js" />
     <Content Include="Scripts\src\utils\setStyles.js" />
     <Content Include="Scripts\src\utils\setupEventListeners.js" />
-    <Content Include="Scripts\Statistics\StatisticsManager.js" />
-    <Content Include="Scripts\TodayExpenses\TodayExpensesManager.js" />
-    <Content Include="Scripts\TodaySales\TodaySalesManager.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\vectormap-data\africa.js" />
+    <Content Include="Scripts\vectormap-data\canada.js" />
+    <Content Include="Scripts\vectormap-data\eurasia.js" />
+    <Content Include="Scripts\vectormap-data\europe.js" />
+    <Content Include="Scripts\vectormap-data\usa.js" />
+    <Content Include="Scripts\vectormap-data\world.js" />
+    <Content Include="Scripts\vectormap-utils\dx.vectormaputils.debug.js" />
+    <Content Include="Scripts\vectormap-utils\dx.vectormaputils.js" />
+    <Content Include="Scripts\vectormap-utils\dx.vectormaputils.node.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1142,16 +1083,31 @@
     <Content Include="Views\SalesRates\Create.cshtml" />
     <Content Include="Views\SalesRates\Edit.cshtml" />
     <Content Include="Views\SalesRates\Index.cshtml" />
-    <Content Include="Views\Statistics\Weekly.cshtml" />
     <Content Include="Views\Statistics\Monthly.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalError.cshtml" />
     <Content Include="Views\Error\Layout.cshtml" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Scripts\moment.min.js.map" />
     <Content Include="Scripts\moment-with-locales.min.js.map" />
-    <Content Include="Scripts\Scripts\bootstrap-select.min.js.map" />
-    <Content Include="Scripts\Scripts\bootstrap-select.js.map" />
+    <Content Include="Scripts\js\app.js.map" />
+    <Content Include="Views\Shared\_TopNavbar.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\Shared\_footer.cshtml" />
+    <Content Include="Views\Orders\_CustomerInfo.cshtml" />
+    <Content Include="Views\Orders\_OrderDetails.cshtml" />
+    <Content Include="Views\Orders\_ProductInfo.cshtml" />
+    <Content Include="Views\Products\_CreateEdit.cshtml" />
+    <Content Include="Views\ProductSuppliers\_CreateEdit.cshtml" />
+    <Content Include="Views\TodaySales\_CreateEdit.cshtml" />
+    <Content Include="Views\TodayExpens\_CreateEdit.cshtml" />
+    <Content Include="Views\SalesRates\_CreateEdit.cshtml" />
+    <Content Include="Views\Statistics\Weekly.cshtml" />
+    <Content Include="Views\Delivery\_CreateEdit.cshtml" />
+    <Content Include="Views\Employees\_PersonalInfomation.cshtml" />
+    <Content Include="Views\Employees\_WorkInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1159,8 +1115,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
@@ -1180,6 +1134,7 @@
     <EmbeddedResource Include="Languages\Resources.ar-EG.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.ar-EG.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Resources.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1231,10 +1186,11 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
   <Import Project="..\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets" Condition="Exists('..\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

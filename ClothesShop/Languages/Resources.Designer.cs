@@ -340,6 +340,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete today sales?.
+        /// </summary>
+        public static string AreYouSureDeleteTodaySales {
+            get {
+                return ResourceManager.GetString("AreYouSureDeleteTodaySales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are You Sure You Want To Delete All Data.
         /// </summary>
         public static string AreYouSureToDeleteAllData {
@@ -583,6 +592,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data has been deleted successfully.
+        /// </summary>
+        public static string DeletedSuccessfully {
+            get {
+                return ResourceManager.GetString("DeletedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete System Data.
         /// </summary>
         public static string DeleteSystemData {
@@ -633,6 +651,15 @@ namespace ClothesShop.Languages {
         public static string EditColor {
             get {
                 return ResourceManager.GetString("EditColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edited Successfully.
+        /// </summary>
+        public static string EditedSuccessfully {
+            get {
+                return ResourceManager.GetString("EditedSuccessfully", resourceCulture);
             }
         }
         
@@ -736,7 +763,7 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ErrorWhileDeleting.
+        ///   Looks up a localized string similar to Error While Deleting.
         /// </summary>
         public static string ErrorWhileDeleting {
             get {
@@ -1078,11 +1105,29 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Today Expenses must have at least one expen info.
+        /// </summary>
+        public static string MustHaveExpenses {
+            get {
+                return ResourceManager.GetString("MustHaveExpenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Products must be greater than or equal 1.
         /// </summary>
         public static string MustHaveProducts {
             get {
                 return ResourceManager.GetString("MustHaveProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today sales must have at least one sale info.
+        /// </summary>
+        public static string MustHaveSales {
+            get {
+                return ResourceManager.GetString("MustHaveSales", resourceCulture);
             }
         }
         
@@ -1339,6 +1384,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page {0} Of {1} ({2}).
+        /// </summary>
+        public static string PageInfo {
+            get {
+                return ResourceManager.GetString("PageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The page you requested is not found.
         /// </summary>
         public static string PageNotFound {
@@ -1569,6 +1623,15 @@ namespace ClothesShop.Languages {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please Select At Least One Order.
+        /// </summary>
+        public static string SelectAtLeastOneOrder {
+            get {
+                return ResourceManager.GetString("SelectAtLeastOneOrder", resourceCulture);
             }
         }
         

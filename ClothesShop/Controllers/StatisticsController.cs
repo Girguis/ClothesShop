@@ -40,7 +40,6 @@ namespace ClothesShop.Controllers
             {
                 double days = (end - start).TotalDays + 1;
                 var data = _TodayTransactionsRepo.GetAll().Where(c => c.CreatedOn >= start && c.CreatedOn < end.AddDays(1));
-
                 var result = data.GroupBy(c => c.CreatedOn.Value.ToString(DateTimeFormatter.DateFormat) ,
                     (key , value) => new 
                     { 

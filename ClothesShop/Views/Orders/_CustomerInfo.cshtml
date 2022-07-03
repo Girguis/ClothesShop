@@ -1,0 +1,64 @@
+﻿@model  ClothesShop.Models.OrdersViewModel
+@using ClothesShop.Languages
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h4 class="m-0">@Resources.CustomerInformation</h4>
+    </div>
+    <div class="card-body pb-0 pt-0">
+        <hr />
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.Customer.Name, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label form-label text-danger">*</span>
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Customer.Name, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.Customer.Name, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(model => model.Customer.MobileNumber1, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Customer.MobileNumber1, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.Customer.MobileNumber1, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12 ">
+                @Html.LabelFor(model => model.Customer.MobileNumber2, htmlAttributes: new { @class = "form-label" })
+            </div>
+
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Customer.MobileNumber2, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                @Html.ValidationMessageFor(model => model.Customer.MobileNumber2, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-5 mb-3 d-inline-block">
+            <div class="col-sm-12 ">
+                @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+            <div class="col-sm-12 f-right">
+                @Html.HiddenFor(m => m.CityID)
+                <div id="City"></div>
+                @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+        <div class="col-md-10 mb-3 d-inline-block">
+            <div class="col-sm-12 ">
+                @Html.LabelFor(model => model.Customer.Address, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
+            </div>
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.Customer.Address, new { @class = "form-control form-control-md  col-sm-12 f-right", @rows = "2" })
+                @Html.ValidationMessageFor(model => model.Customer.Address, "", new { @class = "form-label text-danger col-sm-12 " })
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,9 +1,0 @@
-﻿.headerStyle {
-    border-bottom: 2px solid #9295b8;
-    color: #366e9e;
-    margin-bottom:10px;
-}
-.panel-body {
-    height: calc(100vh - 270px);
-    overflow: auto;
-}

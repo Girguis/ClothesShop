@@ -3,13 +3,12 @@
     ViewBag.Title = ClothesShop.Languages.Resources.Error;
 }
 <hgroup>
-    <h1 class="text-center"><img src="~/Images/warning.png" /></h1>
-    <h1 class="text-center">@ClothesShop.Languages.Resources.Error</h1>
-    <h2 class="text-center">@ClothesShop.Languages.Resources.ErrorWhileProcessRequest</h2>
+    <h1><img src="~/Images/warning.png" /></h1>
+    <h1>@ClothesShop.Languages.Resources.Error</h1>
+    <h2>@ClothesShop.Languages.Resources.ErrorWhileProcessRequest</h2>
     <h5>
-        <a href="@Url.Action("Index","Home", new { area = "" })" class="btn btn-lg btn-primary">
+        <a href="@Url.Action("Index","Home", new { area = "" })" class="btn btn-primary">
             @ClothesShop.Languages.Resources.BackToHome
-            <i class="fa fa-home"></i>
         </a>
     </h5>
 </hgroup>

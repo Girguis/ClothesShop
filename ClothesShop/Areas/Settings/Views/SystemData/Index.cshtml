@@ -4,17 +4,27 @@
 }
 <div class="container text-center paddingTop10">
 
-    <button class="btn btn-danger btn-lg" onclick="ConfirmDelete();">
+    <button class="btn btn-danger btn-lg" id="deleteBtn">
         @ClothesShop.Languages.Resources.DeleteSystemData
     </button>
 </div>
 @section Scripts{
+    @Scripts.Render("~/bundles/SystemData")
     <script>
-        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureToDeleteAllData)";
-    function ConfirmDelete() {
+        $(document).ready(function (e) {
+            SystemDataManager.Instance.Init(
+                {
+                    "delete_url": "@Url.Action("DeleteSystemData","SystemData" , new { area = "Settings"}) ",
+                    "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureToDeleteAllData)",
+                    "confirm_title": "@Html.Raw(ClothesShop.Languages.Resources.Delete)",
+                    "btn_id": "#deleteBtn",
+                    "success_delete": "@Html.Raw(ClothesShop.Languages.Resources.DeletedSuccessfully)",
+                    "error_delete": "@Html.Raw(ClothesShop.Languages.Resources.ErrorWhileDeleting)",
+                    "no_text": "@Html.Raw(ClothesShop.Languages.Resources.NoText)",
+                    "yes_text": "@Html.Raw(ClothesShop.Languages.Resources.YesText)",
 
-        var url = "@Url.Action("DeleteSystemData","SystemData" , new { area = "Settings"}) ";
-        CommonManager.prototype.ConfirmDelete(url, "");
-    }
+                }
+            )
+        });
     </script>
 } 

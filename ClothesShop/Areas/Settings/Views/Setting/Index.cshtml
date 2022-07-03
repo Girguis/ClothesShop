@@ -3,4 +3,32 @@
     ViewBag.Title = ClothesShop.Languages.Resources.Home;
     Layout = "~/Areas/Settings/Views/Shared/_Layout.cshtml";
 }
+<div class="card col-sm-12 col-md-6 offset-md-3" style="margin-top:15%;direction:rtl">
+    <div class="card-body pb-0 pt-0">
+        <div style="text-align:center;">
+            <h1>مرحبًا @Session["UserName"]</h1>
+            <hr>
+        </div>
+        <div class="mt-2 text-center">
+            @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Add))
+            {
+                <a href="@Url.Action("Create", "Orders", new { area = "" })" class="btn btn-success m-2">
+                    @ClothesShop.Languages.Resources.AddOrder
+                </a>
+            }
+            @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales", ClothesShop.Enums.RoleType.Add))
+            {
+                <a href="@Url.Action("Create", "TodaySales", new { area = "" })" class="btn btn-success m-2">
+                    @ClothesShop.Languages.Resources.AddTransaction
+                </a>
+            }
+            @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodayExpens", ClothesShop.Enums.RoleType.Add))
+            {
+                <a href="@Url.Action("Create", "TodayExpens", new { area = "" })" class="btn btn-success m-2">
+                    @ClothesShop.Languages.Resources.AddExpenses
+                </a>
+            }
 
+        </div>
+    </div>
+</div>

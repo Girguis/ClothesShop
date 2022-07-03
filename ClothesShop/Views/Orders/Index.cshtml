@@ -1,143 +1,81 @@
 ﻿@model ClothesShop.Models.OrdersViewModel
-
+@using ClothesShop.Languages
+@using ClothesShop.Helpers
+@using ClothesShop.Enums
 @{
     ViewBag.Title = ClothesShop.Languages.Resources.Orders;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section scripts{
-    @Scripts.Render("~/Scripts/print")
+    @Scripts.Render("~/bundles/orders")
+
 <script>
-        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteOrder)";
-        var totallyDeliveredStatus = "@((int)ClothesShop.Enums.OrderStatuses.TotallyDelivered)";
+    $(document).ready(function () {
+        OrdersManager.Instance.Init({
+            "grid_id": "#OrdersGrid",
+            "grid_height": "calc(100vh - 200px)",
+            "url": "@Url.Action("GetAll", "Orders")",
+            "grid_captions": {
+                "id": "@Resources.Code",
+                "request_date": "@Resources.RequestDate",
+                "customer_name": "@Resources.CustomerName",
+                "mobile_number_1": "@Resources.MobileNumber1",
+                "order_status": "@Resources.OrderStatus",
+                "address": "@Resources.Address",
+                "total": "@Resources.Total",
+                "shipment_price": "@Resources.ShipmentPrice",
+                "employee_name": "@Resources.DeliveryMan",
+                "seller_name": "@Resources.Seller"
+            },
 
-        function ConfirmDeleteOrder(id) {
-            var url = '@Url.Action("Delete", "Orders")';
-            var data = JSON.stringify({ id: id });
-            CommonManager.prototype.ConfirmDelete(url, data);
-        }
-var orderBy = {
-            ColumnName: "ID",
-            Direction: "desc",
-        }
-        var isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Edit)" == "True";
-        var isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Delete)" == "True";
-        var isDetails = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Details)" == "True";
-        var updateURL = "@Url.Action("Edit", "Orders")/";
-        var detailsURL = "@Url.Action("Details", "Orders")/";
-        var dataURL = '@Url.Action("GetAll", "Orders")';
-        var columns = [];
-        var searchColumns = [{ Name: "ID", Type: "input" }, { Name: "RequestDate", Type: "date" }, { Name: "Customer_Name", Type: "input" },
-            { Name: "Customer_MobileNumber1", Type: "input" }, { Name: "OrderStatusID", Type: "select" }
-            , { Name: "EmployeeName", Type: "input" }, { Name: "SellerName", Type: "input" }];
-        var deleteURL = "ConfirmDeleteOrder";
-        var printURL = '@Url.Action("ExportToPDF", "Orders")';
-        var gridId = "OrdersGrid";
-        var viewName = "Orders";
-         var rootURL = "@Url.Content("/")";
-        $(document).ready(function () {
-            var tableManager = new TableManager();
-            TableManager.prototype.Init();
-            var printManager = new PrintManager();
-        })
+            "view_details": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Details)" == "True",
+            "details_url": "@Url.Action("Details", "Orders")/",
+            "details_text": "<i class='dx dx-icon-detailslayout'/> @Resources.Details",
+
+                "view_update": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Edit)" == "True",
+                "update_url": "@Url.Action("Edit", "Orders")/",
+            "update_text": "<i class='dx dx-icon-edit'/> @Resources.Edit",
+
+                "view_print": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Details)" == "True",
+                "print_url": "@Url.Action("ExportToPDF", "Orders")/",
+            "print_text": "<i class='dx dx-icon-print'/> @Resources.Print",
+
+                "view_delete": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Delete)" == "True",
+                "delete_url": "@Url.Action("Delete", "Orders")/",
+            "delete_text": "<i class='dx dx-icon-trash'/> @Resources.Delete",
+                "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteOrder)",
+                "confirm_title": "@Html.Raw(Resources.Delete)",
+                "yes_text": "@Html.Raw(Resources.YesText)",
+                "no_text": "@Html.Raw(Resources.NoText)",
+                "success_delete": "@Html.Raw(Resources.DeletedSuccessfully)",
+                "error_delete": "@Html.Raw(Resources.ErrorWhileDeleting)",
+                "order_statuses": '@(Newtonsoft.Json.JsonConvert.SerializeObject(Helper.EnumToList<OrderStatuses>()))',
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All",
+                "print_multiple_btn": "#PrintMultipleBtn",
+                "not_valid_msg": "@Resources.SelectAtLeastOneOrder",
+                "print_multiple_url": "@Url.Action("ExportMultipleBills", "Orders")/",
+                "root_url":"@Url.Content("/")"
+            });
+        });
 </script>
-
 }
-<div class="container tableContainer">
+<div class="container-fluid">
     @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Add))
     {
-        <p class="f-left">
-            <a href="@Url.Action("Create", "Orders", new { area = "" })" class="btn btn-lg btn-outline-success">
-                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.AddOrder
-            </a>
-        </p>
+
+        <a href="@Url.Action("Create", "Orders", new { area = "" })" class="btn btn-success mb-2">
+            @ClothesShop.Languages.Resources.AddOrder <i class="dx dx-icon-add"></i>
+        </a>
+    }
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Details))
+    {
+        <a href="#" id="PrintMultipleBtn" class="btn btn-secondary mb-2">
+            @ClothesShop.Languages.Resources.Print <i class="dx dx-icon-print"></i>
+        </a>
     }
 
-    <table id="OrdersGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
-        <thead>
-            <tr class="theadData">
-                <th class="width15" data-headerid="ID" data-dir="desc" onclick="TableManager.prototype.Sort(this);">
-                    <i class="fa fa-arrow-down searchArrow"></i> @Html.DisplayNameFor(model => model.ID)
-                </th>
-                <th class="width30" data-headerid="RequestDate" data-dir="" onclick="TableManager.prototype.Sort(this);">
-                    @Html.DisplayNameFor(model => model.RequestDate)
-                </th>
-                <th class="width30">@Html.DisplayNameFor(model => model.Customer.Name)</th>
-                <th class="width30">@Html.DisplayNameFor(model => model.Customer.MobileNumber1)</th>
-                <th class="width30">@Html.DisplayNameFor(model => model.Customer.Address)</th>
-                <th class="width15" data-headerid="OrderTotalPrice" data-dir="" onclick="TableManager.prototype.Sort(this);">
-                    @Html.DisplayNameFor(model => model.OrderTotalPrice)
-                </th>
-                <th class="width15" data-headerid="ShipmentPrice" data-dir="" onclick="TableManager.prototype.Sort(this);">
-                    @Html.DisplayNameFor(model => model.ShipmentPrice)
-                </th>
-                <th class="width30">@Html.DisplayNameFor(model => model.OrderStatusID)</th>
-                <th class="width30">@Html.DisplayNameFor(model => model.EmployeeID)</th>
-                <th class="width30">@Html.DisplayNameFor(model => model.SellerID)</th>
-                <th class="width15"></th>
-                <th class="width15"></th>
-                <th class="width15"></th>
-                <th class="width15"></th>
-            </tr>
-            <tr class="searchRow">
-                <th class="padding0 width15">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @id = "ID", @class = "form-control setMaxWidth", @type = "text", placeholder = @ClothesShop.Languages.Resources.Search } })
-                    </div>
-                </th>
-                <th class="padding0 width30">
-                    @Html.EditorFor(model => model.RequestDate, new { htmlAttributes = new { @id = "RequestDate", @class = "form-control setMaxWidth", placeholder = @ClothesShop.Languages.Resources.Search } })
-
-
-                </th>
-                <th class="padding0 width30">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        @Html.EditorFor(model => model.Customer.Name, new { htmlAttributes = new { @id = "Customer_Name", @class = "form-control setMaxWidth", placeholder = @ClothesShop.Languages.Resources.Search } })
-                    </div>
-                </th>
-                <th class="padding0 width30">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        @Html.EditorFor(model => model.Customer.MobileNumber1, new { htmlAttributes = new { @id = "Customer_MobileNumber1", @class = "form-control setMaxWidth", placeholder = @ClothesShop.Languages.Resources.Search } })
-                    </div>
-                </th>
-                <th class="width30"></th>
-                <th class="width15"></th>
-                <th class="width15"></th>
-                @{
-                    var orderStatuses = ClothesShop.Helpers.Helper.EnumToList<ClothesShop.Enums.OrderStatuses>();
-
-                    if (orderStatuses != null && orderStatuses.Count > 0)
-                    {
-                        orderStatuses.Insert(0, new ClothesShop.Helpers.General() { ID = -1, Name = ClothesShop.Languages.Resources.All });
-                    }
-                }
-                <th class="padding0 width30">
-                    @Html.DropDownListFor(model => model.OrderStatusID, new SelectList(orderStatuses, "ID", "Name"), new { @id = "OrderStatusID", @class = "form-control setMaxWidth" })
-                </th>
-                <th class="padding0 width30">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        @Html.EditorFor(model => model.EmployeeName, new { htmlAttributes = new { @id = "EmployeeName", @class = "form-control setMaxWidth", placeholder = @ClothesShop.Languages.Resources.Search } })
-                    </div>
-                </th>
-                <th class="padding0 width30">
-                    <div class="searchInput">
-                        <i class="fa fa-search"></i>
-                        @Html.EditorFor(model => model.SellerName, new { htmlAttributes = new { @id = "SellerName", @class = "form-control setMaxWidth", placeholder = @ClothesShop.Languages.Resources.Search } })
-                    </div>
-                </th>
-                <th class="width15"></th>
-                <th class="width15"></th>
-                <th class="width15"></th>
-                <th class="width15"></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
-<div class="container text-center">
-    <ul id="Pager" class="pagination-sm"></ul>
+    <div id="OrdersGrid">
+    </div>
 </div>

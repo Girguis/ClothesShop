@@ -2,186 +2,58 @@
 @{
     bool isRTL = Helper.IsRtl();
 }
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/Images/logo.png" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/Layout")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/Layout")
-    @Styles.Render("~/Content/fontAwesome")
-    @Scripts.Render("~/Scripts/moment")
+    <link href="~/Content/css/app.css" rel="stylesheet" />
+    @Styles.Render("~/Content/common")
+    @Styles.Render("~/Content/style")
 
     @RenderSection("styles", required: false)
-    @Styles.Render("~/Styles/select")
-    @Scripts.Render("~/Scripts/select")
-    @if (isRTL)
-    {
-        @Styles.Render("~/Content/Layout-ar")
-        @Styles.Render("~/Styles/select-ar")
-    }
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/common")
     <script>
-        var xPosition = "@(Html.Raw((isRTL == true) ? "left" : "right"))";
-        var lang = "@Html.Raw(isRTL?"ar":"en")";
-    </script>
-</head>
-<body>
-    @{
-        var userName = "";
-        if (Session["UserName"] != null)
-        {
-            userName = Session["UserName"].ToString();
-        }
-    }
-    <div class="navbar navbar-inverse navbar-fixed-top" id="navbar">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <img src="~/Images/logo.png" class="floatRight" style="height:50px;" />
-                @Html.ActionLink(ClothesShop.Languages.Resources.Elba4a, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink(ClothesShop.Languages.Resources.Home, "Index", "Home", new { area = "" }, null)</li>
-                </ul>
-                <div class="dropdown" id="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdown-toggle">
-                        <span class="fa fa-user" id="UserIcon"></span>
-                        @ClothesShop.Languages.Resources.Welcome
-                        <span id="UserName">@userName</span>
-                        <span class="fa fa-chevron-down"></span>
-                    </a>
-                    <ul class="dropdown-menu" id="dropdown-menu">
-                        @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Roles") || ClothesShop.Helpers.RolesHelper.CheckRoleRight("Logins"))
-                        {
-                            <li>
-                                <a href="@Url.Action("Index", "Setting", new { area = "Settings" })">
-                                    <span class="fa fa-gears"></span>
-                                    @ClothesShop.Languages.Resources.Settings
-                                </a>
-                            </li>
-                        }
-                        <li>
-                            <a href="@Url.Action("Logout","Account",new { area="" })">
-                                <span class="fa fa-sign-out"></span>
-                                @ClothesShop.Languages.Resources.Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 body-content" style="padding:0px">
-        <div class="col-md-2" style="padding:0px;" id="wrapperContainer">
-            <div class="d-flex" id="wrapper">
-                <div class="bg-light border-right" id="sidebar-wrapper">
-                    <div class="list-group list-group-flush">
-                        <a class="list-group-item list-group-item-action" href="#" onclick="LayoutManager.prototype.CollapseMenu();" id="collapseLeftMenu">
-                            <i class="glyphicon glyphicon-align-justify	"></i>
-                        </a>
-                        @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Roles"))
-                        {
-                            <!-- Start First Menu Item and Sub item-->
-                            <a data-toggle="collapse" href="#SettingsMenu" role="button" aria-expanded="false" aria-controls="SettingsMenu" class="list-group-item list-group-item-action" id="SettingsMenuItem">
-                                <img class="sidebarImage" src="~/Images/management.png" />
-                                <span class="sidebarSpan"> @ClothesShop.Languages.Resources.Rights</span>
-                                <span class="fa fa-chevron-down caretMenuDown"></span>
-                            </a>
-                            <div id="SettingsMenu" class="collapse list-group list-group-flush subMenu">
-                                <a id="ManagerRoles" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)ClothesShop.Enums.JobTypes.Manager })" class="list-group-item list-group-item-action">
-                                    <img class="sidebarImage" src="~/Images/manager.png" />
-                                    <span class="sidebarSpan">@ClothesShop.Languages.Resources.Manager</span>
-                                </a>
-                                <a id="EmployeeRoles" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)ClothesShop.Enums.JobTypes.Employee })" class="list-group-item list-group-item-action">
-                                    <img class="sidebarImage" src="~/Images/employee.png" />
-                                    <span class="sidebarSpan">@ClothesShop.Languages.Resources.Employee</span>
-                                </a>
-                                <a id="WorkerRoles" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)ClothesShop.Enums.JobTypes.Worker })" class="list-group-item list-group-item-action">
-                                    <img class="sidebarImage" src="~/Images/employee.png" />
-                                    <span class="sidebarSpan"> @ClothesShop.Languages.Resources.Worker</span>
-                                </a>
-                                <a id="DeliveryManRoles" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)ClothesShop.Enums.JobTypes.DeliveryMan })" class="list-group-item list-group-item-action">
-                                    <img class="sidebarImage" src="~/Images/motorcycle.png" />
-                                    <span class="sidebarSpan"> @ClothesShop.Languages.Resources.DeliveryMan</span>
-                                </a>
-                            </div>
-                        }
-                        <!-- End First Menu Item and Sub item-->
-                        @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Logins"))
-                        {
-
-                            <!-- Start First Menu Item and Sub item-->
-                            <a id="Employees" href="@Url.Action("Index", "Logins", new { area = "Settings" })" class="list-group-item list-group-item-action">
-                                <img class="sidebarImage" src="~/Images/accountant.png" />
-                                <span class="sidebarSpan"> @ClothesShop.Languages.Resources.Accounts</span>
-                            </a>
-                            <a id="SystemData" href="@Url.Action("Index", "SystemData", new { area = "Settings" })" class="list-group-item list-group-item-action">
-                                <img class="sidebarImage" src="~/Images/repair.png" />
-                                <span class="sidebarSpan"> @ClothesShop.Languages.Resources.DeleteSystemData</span>
-                            </a>
-                            <!-- End First Menu Item and Sub item-->
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-10" id="bodyContainer">
-            <div id="loading">
-                <img src="~/Images/loading.gif" />
-            </div>
-            @RenderBody()
-        </div>
-        <footer id="footer">
-            <p>Copyrights &copy; @DateTime.Now.Year Heaven Team. All Rights Reserved</p>
-        </footer>
-    </div>
-    <script>
-         var yesText = '@Html.Raw(ClothesShop.Languages.Resources.YesText)';
-        var noText = '@Html.Raw(ClothesShop.Languages.Resources.NoText)';
-
-        var noData = "@Html.Raw(ClothesShop.Languages.Resources.NoData)";
-        var previous = "@Html.Raw(ClothesShop.Languages.Resources.Previous)";
-        var next = "@Html.Raw(ClothesShop.Languages.Resources.Next)";
-        var processing = "@Html.Raw(ClothesShop.Languages.Resources.Processing)";
-        var info = "@string.Format(ClothesShop.Languages.Resources.ShowingRecords , "_PAGE_","_PAGES_")";
-        var searchTitle = "@Html.Raw(ClothesShop.Languages.Resources.Search)";
-        var currencyLE = " @Html.Raw(ClothesShop.Languages.Resources.LE) ";
-
-        var first = "@ClothesShop.Languages.Resources.First";
-        var previous = "@ClothesShop.Languages.Resources.Previous";
-        var next = "@ClothesShop.Languages.Resources.Next";
-        var last = "@ClothesShop.Languages.Resources.Last";
-
-        var noDataText = "@ClothesShop.Languages.Resources.NoData";
-        var updateText = "@ClothesShop.Languages.Resources.Update";
-        var deleteText = "@ClothesShop.Languages.Resources.Delete";
-        var printText = "@ClothesShop.Languages.Resources.Print";
-        var detailsText = "@ClothesShop.Languages.Resources.Details";
-
-        var deleteError = "@Html.Raw(ClothesShop.Languages.Resources.ErrorWhileDeleting)";
-
-        var viewName = "";
-        var addText = "";
-        var uniqueID = "ID";
-        $(document).ready(function () {
-            var layoutManager = new LayoutManager();
-            var commonManager = new CommonManager();
-            LayoutManager.prototype.ShowHideLoading(false);
-            $(".SelectDropDownList").attr("data-live-search", "true");
-            $(".SelectDropDownList").addClass("selectpicker show-tick");
+        $(function () {
+            if (CommonManager.Instance.IsMobileDevice()) {
+                $("#sidebar").removeClass("collapsed");
+                $("#sidebar").addClass("collapsed");
+                $("#sidebar").css("display", "block");
+            }
         });
     </script>
+</head>
 
+<body class="overflow-auto" dir="rtl">
+    <div class="wrapper">
+
+        @Html.Partial("_Sidebar")
+
+        <div class="main">
+            @Html.Partial("~/Views/Shared/_TopNavbar.cshtml")
+
+            <main class="content pb-0">
+                <div class="container-fluid p-0">
+                    <div id="loading">
+                        <img src="~/Images/loading.gif" />
+                    </div>
+                    @RenderBody()
+                </div>
+            </main>
+
+            @Html.Partial("~/Views/Shared/_footer.cshtml")
+        </div>
+    </div>
+    <script src="~/Scripts/js/app.js"></script>
     @RenderSection("scripts", required: false)
 </body>
+
 </html>

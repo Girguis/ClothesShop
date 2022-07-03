@@ -1,174 +1,73 @@
 ﻿@model ClothesShop.Models.TodayTransactionsViewModel
-
+@using ClothesShop.Languages
 @{
     ViewBag.Title = ClothesShop.Languages.Resources.EditTransaction;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(m => m.ID)
-        @Html.HiddenFor(m => m.IsApproved)
-        @Html.HiddenFor(m => m.CreatedBy)
-        @Html.HiddenFor(m => m.CreatedOn)
 
-        <div class="form-horizontal col-xs-12 col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>@ClothesShop.Languages.Resources.EditTransaction</h4>
-                </div>
-                <div class="panel-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @{
-                        var products = ClothesShop.Helpers.Helper.GetProducts();
-                        var employees = ClothesShop.Helpers.Helper.GetEmployees();
-                    }
-                    <table id="TodaysSales">
-                        <thead>
-                            <tr>
-                                <td>
-                                    <div class="col-xs-12 f-right txt-right">
-                                        @Html.HiddenFor(model => model.Transaction.ID)
-                                        <div class="form-group col-xs-12 col-md-5 f-right">
-                                            <div class="col-xs-12 col-md-12 f-right headerLabel">
-                                                <label>@ClothesShop.Languages.Resources.Product</label>
-                                                <span class="text-danger">*</span>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12 f-right">
-                                                @Html.DropDownListFor(model => model.Transaction.ProductID, new SelectList(products, "ID", "Name"), new { @class = "form-control col-xs-12 f-right SelectDropDownList" })
-                                                @Html.ValidationMessageFor(m => m.Transaction.ProductID, "", new { @class = "text-danger col-xs-12 padding0" })
-                                            </div>
-                                        </div>
-                                        @*<div class="form-group col-xs-12 col-md-3 f-right">
-                                            <div class="col-xs-12 col-md-12 f-right headerLabel">
-                                                <label>@ClothesShop.Languages.Resources.Employee</label>
-                                                <span class="text-danger">*</span>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12 f-right">
-                                                @Html.DropDownListFor(model => model.Transaction.EmployeeID, new SelectList(employees, "ID", "Name"), new { @class = "form-control col-xs-12 f-right SelectDropDownList" })
-                                                @Html.ValidationMessageFor(m => m.Transaction.EmployeeID, "", new { @class = "text-danger col-xs-12 padding0" })
-                                            </div>
-                                        </div>*@
-                                        <div class="form-group col-xs-12 col-md-3 f-right">
-                                            <div class="col-xs-12 col-md-12 f-right headerLabel">
-                                                <label>@ClothesShop.Languages.Resources.NumberOfPieces</label>
-                                                <span class="text-danger">*</span>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12 f-right">
-                                                @Html.EditorFor(m => m.Transaction.NumberOfPieces, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(m => m.Transaction.NumberOfPieces, "", new { @class = "text-danger col-xs-12 padding0" })
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-md-3 f-right">
-                                            <div class="col-xs-12 col-md-12 f-right headerLabel">
-                                                <label>@ClothesShop.Languages.Resources.SellingPrice</label>
-                                                <span class="text-danger">*</span>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12 f-right">
-                                                @Html.EditorFor(m => m.Transaction.SellingPrice, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(m => m.Transaction.SellingPrice, "", new { @class = "text-danger col-xs-12 padding0" })
-                                            </div>
-                                        </div>
-                                        @*<div class="form-group col-xs-12 col-md-3 f-right">
-                                            <div class="col-xs-12 col-md-12 f-right headerLabel">
-                                                <label>@ClothesShop.Languages.Resources.Notes</label>
-                                            </div>
-                                            <div class="col-xs-12 col-md-12 f-right">
-                                                @Html.TextAreaFor(m => m.Transaction.Notes, new { @class = "form-control col-xs-12", @rows = "2" })
-                                                @Html.ValidationMessageFor(m => m.Transaction.Notes, "", new { @class = "text-danger col-xs-12 padding0" })
-                                            </div>
-                                        </div>*@
-                                        <div>
-                                            <label style="display:block">&nbsp;</label>
-                                            <a href="#" id="addNew" class="btn btn-lg btn-primary">
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody">
-                            @if (Model != null && Model.Transactions != null && Model.Transactions.Count > 0)
-                            {
-                                for (var i = 0; i < Model.Transactions.Count; i++)
-                                {
-                                    <tr>
-                                        <td>
-                                            <div class="col-xs-12 f-right txt-right">
-                                                @Html.HiddenFor(model => model.Transactions[i].ID)
-                                                @Html.HiddenFor(model => model.Transactions[i].ProductID)
-                                                @*@Html.HiddenFor(model => model.Transactions[i].EmployeeID)*@
-                                                <div class="form-group col-xs-12 col-md-5 f-right">
-                                                    <div class="col-xs-12 col-md-12 f-right">
-                                                        @Html.TextBoxFor(model => model.Transactions[i].ProductName , new { @class="form-control" , @readonly="readonly" })
-                                                        @Html.ValidationMessageFor(m => m.Transactions[i].ProductID, "", new { @class = "text-danger col-xs-12 padding0" })
-                                                    </div>
-                                                </div>
-                                                @*<div class="form-group col-xs-12 col-md-3 f-right">
-                                                    <div class="col-xs-12 col-md-12 f-right">
-                                                        @Html.TextBoxFor(model => model.Transactions[i].EmployeeName, new { @class = "form-control", @readonly = "readonly" })
-                                                        @Html.ValidationMessageFor(m => m.Transactions[i].EmployeeID, "", new { @class = "text-danger col-xs-12 padding0" })
-                                                    </div>
-                                                </div>*@
-                                                <div class="form-group col-xs-12 col-md-3 f-right">
-                                                    <div class="col-xs-12 col-md-12 f-right">
-                                                        @Html.EditorFor(m => m.Transactions[i].NumberOfPieces, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(m => m.Transactions[i].NumberOfPieces, "", new { @class = "text-danger col-xs-12 padding0" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-xs-12 col-md-3 f-right">
-                                                    <div class="col-xs-12 col-md-12 f-right">
-                                                        @Html.EditorFor(m => m.Transactions[i].SellingPrice, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(m => m.Transactions[i].SellingPrice, "", new { @class = "text-danger col-xs-12 padding0" })
-                                                    </div>
-                                                </div>
-                                                @*<div class="form-group col-xs-12 col-md-3 f-right">
-                                                    <div class="col-xs-12 col-md-12 f-right">
-                                                        @Html.TextAreaFor(m => m.Transactions[i].Notes, new { @class = "form-control col-xs-12", @rows = "2" })
-                                                        @Html.ValidationMessageFor(m => m.Transactions[i].Notes, "", new { @class = "text-danger col-xs-12 padding0" })
-                                                    </div>
-                                                </div>*@
-                                                <div onclick="TodaySalesManager.prototype.DeleteRow(this);">
-                                                    <button type="button" class="btn btn-lg btn-danger">
-                                                        <i class="fa fa-remove"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="panel-footer">
-                    <div class="form-group">
-                        <div class="col-xs-12 col-md-6 f-right txt-right">
-                            <button type="submit" class="btn btn-lg btn-success" onclick="$('#IsApproved').val(false);">
-                                @ClothesShop.Languages.Resources.Save
-                            </button>
-                            <button type="submit" class="btn btn-lg btn-success" onclick="$('#IsApproved').val(true);">
-                                @ClothesShop.Languages.Resources.AddAndApprove
-                            </button>
-                        </div>
-                        <div class="col-xs-12 col-md-6 f-left txt-left">
-                            @Html.ActionLink(ClothesShop.Languages.Resources.BackToList, "Index", "", htmlAttributes: new { @class = "btn btn-lg btn-primary" })
-                        </div>
-                    </div>
-                </div>
+@using (Html.BeginForm("Edit", "TodaySales", FormMethod.Post, new { @id = "TodaySalesForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ID)
+    @Html.HiddenFor(m => m.IsApproved)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.CreatedOn)
+    @Html.HiddenFor(m => m.TodaySalesSeralized)
+    @Html.HiddenFor(m => m.Transaction.ID)
+    <div class="container-fluid dir-rtl col-md-8 offset-md-2">
+        <div class="card m-0">
+            <div class="card-header pb-0">
+                <h4>@Resources.EditTransaction</h4>
+            </div>
+            <div class="card-body custom-card-body pt-2 m-0">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.Partial("_CreateEdit", Model)
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-success" onclick="$('#IsApproved').val(false);">
+                     @Resources.Save
+                </button>
+                <button type="submit" class="btn btn-md btn-success" onclick="$('#IsApproved').val(true);">
+                    @Resources.AddAndApprove
+                </button>
+                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "TodaySales")">
+                    @Resources.BackToList
+                </a>
             </div>
         </div>
-    }
-</div>
-@section scripts{
-    @Scripts.Render("~/Scripts/TodaySales")
-    <script>
-        $(document).ready(function () {
-            var _TodaySalesManager = new TodaySalesManager();
-            TodaySalesManager.prototype.Init();
-
-        });
-    </script>
+    </div>
 }
+
+@section scripts{
+    @Scripts.Render("~/bundles/todaySalesInfo")
+}
+<script>
+    $(document).ready(function () {
+        var lst = CommonManager.Instance.NeowtonsoftDesealize('@Newtonsoft.Json.JsonConvert.SerializeObject(ClothesShop.Helpers.Helper.GetProducts())');
+        var oldSales = '@Model.TodaySalesSeralized';
+        console.log(oldSales);
+        CommonManager.Instance.InitDefaultSelectList("#ProductsList", lst, "@Resources.Search", "@Resources.NoData");
+        TodaySalesInfoManager.Instance.Init({
+            "no_data": "@Html.Raw(Resources.NoData)",
+            "lst": CommonManager.Instance.NeowtonsoftDesealize(oldSales),
+            "grid_captions": {
+                "product": "@Html.Raw(Resources.Product)",
+                "numberOfPieces": "@Html.Raw(Resources.NumberOfPieces)",
+                "sellingPrice": "@Html.Raw(Resources.SellingPrice)",
+                "total": "@Html.Raw(Resources.Total)",
+                "delete": "@Html.Raw(Resources.Delete)"
+            },
+            "product_id":"#ProductsList",
+            "sellingPrice_id":"#SellingPrice",
+            "numberOfPieces_id":"#NumberOfPieces",
+            "add_id": "#addNew",
+            "grid_id": "#TodaySalesGrid",
+            "is_details": false,
+            "page_info": "@Resources.PageInfo",
+            "currency": "@Resources.LE",
+            "todaySalesSeralized_id": "#TodaySalesSeralized",
+            "form_id": "#TodaySalesForm",
+            "must_sales_msg": "@Resources.MustHaveSales"
+        })
+    });
+</script>

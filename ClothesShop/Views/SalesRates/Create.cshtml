@@ -1,96 +1,44 @@
 ﻿@model ClothesShop.Models.SalesRateViewModel
-
+@using ClothesShop.Languages
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.Add;
 }
-<div class="container">
+
+<div class="container-fluid dir-rtl col-md-8 offset-md-2">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
-        <div class="form-horizontal col-xs-12 col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>@ClothesShop.Languages.Resources.Add</h4>
-                </div>
-                <div class="panel-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <div class="col-xs-12 margin5">
-                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-                            <span class="text-danger">*</span>
-                        </div>
-
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12 margin5">
-                            @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label" })
-                            <span class="text-danger">*</span>
-                        </div>
-
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12 margin5">
-                            @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label" })
-                            <span class="text-danger">*</span>
-                        </div>
-
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.To, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group f-right">
-                        <div class="col-xs-12 margin5">
-                            @Html.LabelFor(model => model.RateColor, htmlAttributes: new { @class = "control-label" })
-                            <span class="text-danger">*</span>
-                        </div>
-
-                        <div class="col-md-6 f-right">
-                            @Html.EditorFor(model => model.RateColor, new { htmlAttributes = new { @class = "form-control" ,@value="",@readonly="readonly" } })
-                            @Html.ValidationMessageFor(model => model.RateColor, "", new { @class = "text-danger" })
-                        </div>
-                        <div id="picker" class="col-md-6"></div>
-                    </div>
-
-                </div>
-                <div class="panel-footer">
-                    <div class="form-group">
-                        <div class="col-xs-12 col-md-6 f-right txt-right">
-                            <button type="submit" class="btn btn-lg btn-success">
-                                @ClothesShop.Languages.Resources.Save
-                            </button>
-                        </div>
-                        <div class="col-xs-12 col-md-6 f-left txt-left">
-                            @Html.ActionLink(ClothesShop.Languages.Resources.BackToList, "Index", "", htmlAttributes: new { @class = "btn btn-lg btn-primary" })
-                        </div>
-                    </div>
-                </div>
+        @Html.ValidationSummary(true, "", new { @class = "form-label text-danger" })
+        <div class="card m-0">
+            <div class="card-header pb-0">
+                <h3 class="m-0">@Resources.Add</h3>
+            </div>
+            <div class="card-body custom-card-body pt-2 m-0">
+                @Html.Partial("_CreateEdit",Model)
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-success" id="submit">
+                     @Resources.Save
+                </button>
+                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "SalesRates")">
+                    @Resources.BackToList
+                </a>
             </div>
         </div>
     }
 </div>
-@section styles{
-    @Styles.Render("~/Styles/farbtastic")
-}
+
 @section scripts{
-    @Scripts.Render("~/Scripts/farbtastic")
     <script>
         $(document).ready(function () {
-            $(".color").css("background-color", "#f00000");
-            $("#RateColor").css("background-color", "#f00000");
-            $("#RateColor").val("#f00000");
-            $('#picker').farbtastic('#RateColor');
+            $("#RateColor").val('#f05b41')
+            $("#RateColorID").dxColorBox({
+                value: '#f05b41',
+                onValueChanged: function (e) {
+                    $("#RateColor").val(e.value)
+                }
+            });
         });
     </script>
-     
 }

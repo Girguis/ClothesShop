@@ -1,59 +1,51 @@
 ﻿@model ClothesShop.Models.SalesRateViewModel
-
+@using ClothesShop.Languages
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.SalesRate;
 }
-<div class="container tableContainer">
-    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("SalesRates", ClothesShop.Enums.RoleType.Add))
-    {
-        <p class="f-left">
-            <a href="@Url.Action("Create", "SalesRates", new { area = "" })" class="btn btn-lg btn-outline-success">
-                <i class="fa fa-plus"></i> @ClothesShop.Languages.Resources.Add
-            </a>
-        </p>
-     }
-    <table id="SalesRateGrid" class="table table-striped table-hover table-bordered table-responsive GeneralTable" width="100%" cellspacing="0">
-        <thead>
-            <tr class="theadData">
-                <th class="width30"> @Html.DisplayNameFor(model => model.Name)</th>
-                <th class="width25"> @Html.DisplayNameFor(model => model.From)</th>
-                <th class="width25"> @Html.DisplayNameFor(model => model.To)</th>
-                <th class="width10"></th>
-                <th class="width10"></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container text-center">
-    <ul id="Pager" class="pagination-sm"></ul>
-</div>
 @section scripts{
+    @Scripts.Render("~/bundles/salesRates")
     <script>
-        var msg = "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteSalesRate)";
-        function ConfirmDeleteSalesRate(id) {
-            var url ='@Url.Action("Delete", "SalesRates")';
-            var data = JSON.stringify({ id: id });
-            CommonManager.prototype.ConfirmDelete(url, data);
-        }
+    $(document).ready(function () {
+            SalesRatesManager.Instance.Init({
+                "grid_id": "#SalesRatesGrid",
+                "grid_height": "calc(100vh - 200px)",
+                "url": "@Url.Action("GetAll", "SalesRates")",
+                "grid_captions": {
+                    "name": "@Resources.Name",
+                    "from": "@Resources.From",
+                    "to": "@Resources.To"
+                },
+                "view_update": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("SalesRates", ClothesShop.Enums.RoleType.Edit)" == "True",
+                "update_url": "@Url.Action("Edit", "SalesRates")/",
+                "update_text": "<i class='dx dx-icon-edit'/> @Resources.Edit",
 
-      var orderBy = {
-            ColumnName: "ID",
-            Direction: "desc",
-        }
-        isUpdate = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("SalesRates", ClothesShop.Enums.RoleType.Edit)" == "True";
-        isDelete = "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("SalesRates", ClothesShop.Enums.RoleType.Delete)" == "True";
-        updateURL = "@Url.Action("Edit", "SalesRates")/";
-        dataURL ='@Url.Action("GetAll", "SalesRates")';
-        columns = [{ Name: "Name", Class: "width30" }, { Name: "From", Class: "width25" },
-        { Name: "To", Class: "width25" }, { Name: "EDIT", Class: "10" }, { Name: "DELETE", Class: "10" }];
-        searchColumns = [];
-        deleteURL = "ConfirmDeleteSalesRate";
-        gridId = "SalesRateGrid";
-        $(document).ready(function () {
-            var tableManager = new TableManager();
-            TableManager.prototype.Init();
-        })
+                "view_delete": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("SalesRates", ClothesShop.Enums.RoleType.Delete)" == "True",
+                "delete_url": "@Url.Action("Delete", "SalesRates")",
+                "delete_text": "<i class='dx dx-icon-trash'/> @Resources.Delete",
+
+                "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteSalesRate)",
+                "confirm_title": "@Html.Raw(Resources.Delete)",
+                "yes_text": "@Html.Raw(Resources.YesText)",
+                "no_text": "@Html.Raw(Resources.NoText)",
+                "success_delete": "@Html.Raw(Resources.DeletedSuccessfully)",
+                "error_delete": "@Html.Raw(Resources.ErrorWhileDeleting)",
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All"
+            });
+        });
     </script>
 }
+<div class="container-fluid">
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("SalesRates", ClothesShop.Enums.RoleType.Add))
+    {
+            <a href="@Url.Action("Create","SalesRates", new { area = "" })" class="btn btn-success mb-2">
+                @Resources.Add <i class="dx dx-icon-add"></i>
+            </a>
+    }
+
+    <div id="SalesRatesGrid">
+    </div>
+</div>

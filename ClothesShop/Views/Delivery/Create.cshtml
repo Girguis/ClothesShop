@@ -1,175 +1,62 @@
-﻿@{
+﻿@using ClothesShop.Languages
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ClothesShop.Languages.Resources.AddOrders;
 }
-<div class="container">
-    <div class="form-horizontal col-xs-12 col-md-12 col-md-offset-0">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>@ClothesShop.Languages.Resources.AddOrders</h4>
-            </div>
-            <div class="panel-body">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @{
-                    var id = ViewBag.ID;
-                }
-                <input type="hidden" value="@id" id="EmployeeID" name="EmployeeID" />
-                <div class="form-group">
-                    <div class="col-xs-12 col-md-12 padding0">
-                        <div class="col-xs-12 col-md-6 padding0 f-right">
-                            <div class="col-xs-12 col-md-3 margin5 f-right">
-                                <label>@ClothesShop.Languages.Resources.DeliveryMan</label>
-                            </div>
-                            <div class="col-xs-12 col-md-9">
-                                <span>@ViewBag.EmployeeName</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-6 padding0 f-right">
-                            <div class="col-xs-12 col-md-3 margin5 f-right">
-                                <label>@ClothesShop.Languages.Resources.MobileNumber</label>
-                            </div>
-                            <div class="col-xs-12 col-md-9">
-                                <span>@ViewBag.EmployeeMobileNumber</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 padding0">
-                    <div class="col-xs-12 padding0 headerStyle">
-                        <h4>@ClothesShop.Languages.Resources.Orders</h4>
-                    </div>
-                    <div class="col-xs-12 padding0 tableContainer">
-                        <table id="OrdersGrid" class="table table-striped table-bordered dt-responsive nowrap GeneralTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr class="theadData">
-                                    <th class="width5"></th>
-                                    <th class="width10" data-headerid="ID" data-dir="desc" onclick="TableManager.prototype.Sort(this);">
-                                        <i class="fa fa-arrow-down searchArrow"></i>  @ClothesShop.Languages.Resources.Code
-                                    </th>
-                                    <th class="width20">@ClothesShop.Languages.Resources.CustomerName</th>
-                                    <th class="width20">@ClothesShop.Languages.Resources.Address</th>
-                                    <th class="width10">@ClothesShop.Languages.Resources.MobileNumber</th>
-                                    <th class="width10">@ClothesShop.Languages.Resources.TotalOrdersCash</th>
-                                    <th class="width10">@ClothesShop.Languages.Resources.ShipmentPrice</th>
-                                    <th class="width15">@ClothesShop.Languages.Resources.OrderStatus</th>
-                                </tr>
-
-                                <tr class="searchRow">
-                                    <th class="padding0 width25">
-                                    </th>
-                                    <th class="padding0 width20">
-                                        <div class="searchInput">
-                                            <i class="fa fa-search"></i>
-                                            <input type="number" id="ID"  value="" class="form-control setMaxWidth" placeholder="@ClothesShop.Languages.Resources.Search"/>
-                                        </div>
-                                    </th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="container text-center">
-                        <ul id="Pager" class="pagination-sm"></ul>
-                    </div>
-                </div>
-
-            </div>
-            <div class="panel-footer">
-                <div class="form-group">
-                    <div class="col-xs-12 col-md-6 f-right txt-right">
-                        <button type="submit" class="btn btn-lg btn-success" id="Submit">
-                            @ClothesShop.Languages.Resources.Save
-                        </button>
-                    </div>
-                    <div class="col-xs-12 col-md-6 f-left txt-left">
-                        @Html.ActionLink(ClothesShop.Languages.Resources.BackToList, "Index", "", htmlAttributes: new { @class = "btn btn-lg btn-primary" })
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid dir-rtl col-md-12">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @{
+        var id = ViewBag.ID;
+    }
+    <input type="hidden" value="@id" id="EmployeeID" name="EmployeeID" />
+    <div class="card m-0">
+        <div class="card-header pb-0">
+            <h3 class="m-0">@Resources.AddOrders</h3>
+        </div>
+        <div class="card-body">
+            @Html.Partial("_CreateEdit")
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-md btn-success" id="submit">
+                 @Resources.Save
+            </button>
+            <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "Delivery")">
+                @Resources.BackToList
+            </a>
         </div>
     </div>
 </div>
-@section styles{
-    @Styles.Render("~/Styles/EmployeeAdd")
-<style>
-    .GeneralTable tbody {
-        max-height: calc(40vh) !important;
-    }
-    .tableContainer {
-        height: calc(50vh - 25px);
-    }
-    </style>
-}
-@section scripts{
-    <script>
-        viewName = "DeliveryAddUpdate";
-        var IdsList = [];
-        gridId = "OrdersGrid";
-        var dataURL = "@Url.Action("GetAllUnAssignedOrders", "Orders")";
-        var orderBy = {
-            ColumnName: "ID",
-            Direction: "desc",
-        };
-        var columns = [{ Name: "ID", Class: "width20" }];
-
-        var searchColumns = [{ Name: "ID", Type: "input" }];
-
+@section scripts
+{
+    @Scripts.Render("~/bundles/deliveriesInfo")
+<script>
         $(document).ready(function () {
-            var tableManager = new TableManager();
-            TableManager.prototype.Init();
-            $("#Submit").on("click", function (e) {
-                e.preventDefault();
-                var employeeId = $("#EmployeeID").val();
-
-                if (!IdsList || IdsList.length <= 0) {
-                    CommonManager.prototype.Alert("@ClothesShop.Languages.Resources.NoAddedOrders");
-                }
-                else {
-                    $.ajax({
-                        url: '@Url.Action("Create","Delivery")',
-                        dataType: "JSON",
-                        type: "POST",
-                        data: { employeeId: employeeId, orderIds: IdsList },
-                        success: function (result) {
-                            if (result == true)
-                                location.href = '@Url.Action("Index","Delivery")';
-                        }
-                    });
-                }
+            DeliveriesInfoManager.Instance.Init({
+                "url": "@Url.Action("GetAllUnAssignedOrders", "Orders")",
+                "lst":"",
+                "create_url": "@Url.Action("Create", "Delivery")",
+                "index_url":"@Url.Action("Index", "Delivery")",
+                "grid_id":"#OrdersGrid",
+                "grid_height": "calc(100vh - 350px)",
+                "employee_id": parseInt($("#EmployeeID").val()),
+                "save_btn": "#submit",
+                "page_info": "@Resources.PageInfo",
+                "grid_captions": {
+                "id": "@Resources.Code",
+                "customer_name": "@Resources.CustomerName",
+                "address": "@Resources.Address",
+                "mobile_number": "@Resources.MobileNumber",
+                "total": "@Resources.TotalOrdersCash",
+                "shipment_price": "@Resources.ShipmentPrice",
+                "order_status": "@Resources.OrderStatus",
+                "paid_amount": "@Resources.PaidAmount"
+                },
+                "is_create_view": true,
+                "no_added_orders_msg": "@Resources.NoAddedOrders",
+                "no_data": "@Resources.NoData",
+                "error_occured": "@Resources.Error"
             });
         });
-        function OnChangeSelection(element) {
-            var isChecked = $(element).is(":checked");
-            var orderId = $(element).attr("data-id");
-            if (isChecked == true) {
-                if (IdsList.indexOf(orderId) == -1)
-                    IdsList.push(orderId);
-            }
-            else {
-                var index = IdsList.indexOf(orderId);
-                if (index != -1)
-                    IdsList.splice(index,1);
-            }
-        }
-        function OnLoadSelection(element) {
-            debugger;
-            var orderId = $(element).attr("data-id");
-            var checked = IdsList.indexOf(orderId);
-            if (checked != -1 && !$(element).is(":checked"))
-            {
-                $(element).prop("checked", true);
-            }
-        }
-        function RefillSelection() {
-            $("#" + gridId + " tbody tr td:first-child input").each(function (index, element) {
-                OnLoadSelection(element);
-            })
-        }
-    </script>
+//data: { employeeId: employeeId, orderIds: IdsList },
+</script>
 }

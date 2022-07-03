@@ -35,7 +35,6 @@ namespace ClothesShop.Controllers
 
                 var products = _ProductsRepo.GetAll().GroupBy(b => b.ID).Select(p => p.FirstOrDefault());
                 var result = products.Select(n => GetProductSummaryViewModel(n));
-                var total = result.Sum(r => r.TotalProductPrice);
                 Filtering<ProductsSummaryViewModel> filtering = new Filtering<ProductsSummaryViewModel>();
                 filtering.Columns = obj.FilteredColumns;
 
@@ -47,14 +46,13 @@ namespace ClothesShop.Controllers
                 int totalRecords = result.Count();
 
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-                int numberOfPages = (int)(Math.Ceiling(totalRecords * 1.0 / pageSize));
 
-                return Json(new { NumberOfPages = numberOfPages, data = data , Total = total });
+                return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
             {
                 Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { NumberOfPages = 0, data = string.Empty , Total = 0});
+                return Json(new { TotalCount = 0, Data = string.Empty});
             }
         }
         private ProductsSummaryViewModel GetProductSummaryViewModel(Product p)

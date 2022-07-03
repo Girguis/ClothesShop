@@ -41,6 +41,7 @@ namespace ClothesShop.Models
         public TransactionViewModel Transaction { get; set; }
         public double TodayTotalTransactionsSellingPrice { get; set; }
 
+        public string TodaySalesSeralized { get; set; }
         public bool IsApproved { get; set; }
     }
     public class TransactionViewModel
