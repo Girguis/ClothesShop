@@ -505,6 +505,7 @@
           <Parameter Name="OrderDirection" Type="varchar" Mode="In" />
           <Parameter Name="PageNumber" Type="int" Mode="In" />
           <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="EmployeeID" Type="int" Mode="In" />
           <Parameter Name="TotalCount" Type="int" Mode="InOut" />
         </Function>
         <Function Name="GetOrdersCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -515,6 +516,7 @@
           <Parameter Name="OrderStatus" Type="int" Mode="In" />
           <Parameter Name="SellerName" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="DeliveryName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="EmployeeID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ClothesShopModelStoreContainer">
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
@@ -763,6 +765,7 @@
             <Parameter Name="OrderDirection" Mode="In" Type="String" />
             <Parameter Name="PageNumber" Mode="In" Type="Int32" />
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
             <Parameter Name="TotalCount" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetOrdersCount" ReturnType="Collection(Int32)">
@@ -773,6 +776,7 @@
             <Parameter Name="OrderStatus" Mode="In" Type="Int32" />
             <Parameter Name="SellerName" Mode="In" Type="String" />
             <Parameter Name="DeliveryName" Mode="In" Type="String" />
+            <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="City">

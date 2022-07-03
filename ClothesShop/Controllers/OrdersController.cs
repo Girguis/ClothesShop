@@ -286,7 +286,7 @@ namespace ClothesShop.Controllers
                 string orderBy = obj.OrderBy?.ColumnName;
                 string orderDirection = obj.OrderBy?.Direction;
 
-                List<OrderViewModel> data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, out totalRecords).ToList();
+                List<OrderViewModel> data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize,null,out totalRecords).ToList();
                 if (data != null && data.Count() > 0)
                     data = data.Select(c => { c.OrderStatusName = Helper.EnumToList<OrderStatuses>().Where(x => x.ID == c.OrderStatusID).First().Name; return c; }).ToList();
                 //totalRecords = result.Count();

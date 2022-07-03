@@ -80,7 +80,7 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSystemData");
         }
     
-        public virtual ObjectResult<OrderViewModel> GetOrders(Nullable<int> orderID, string requestDate, string customerName, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName, string orderBy, string orderDirection, Nullable<int> pageNumber, Nullable<int> pageSize, ObjectParameter totalCount)
+        public virtual ObjectResult<OrderViewModel> GetOrders(Nullable<int> orderID, string requestDate, string customerName, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName, string orderBy, string orderDirection, Nullable<int> pageNumber, Nullable<int> pageSize, Nullable<int> employeeID, ObjectParameter totalCount)
         {
             var orderIDParameter = orderID.HasValue ?
                 new ObjectParameter("OrderID", orderID) :
@@ -126,10 +126,14 @@ namespace DAL
                 new ObjectParameter("PageSize", pageSize) :
                 new ObjectParameter("PageSize", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<OrderViewModel>("GetOrders", orderIDParameter, requestDateParameter, customerNameParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter, orderByParameter, orderDirectionParameter, pageNumberParameter, pageSizeParameter, totalCount);
+            var employeeIDParameter = employeeID.HasValue ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<OrderViewModel>("GetOrders", orderIDParameter, requestDateParameter, customerNameParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter, orderByParameter, orderDirectionParameter, pageNumberParameter, pageSizeParameter, employeeIDParameter, totalCount);
         }
     
-        public virtual ObjectResult<Nullable<int>> GetOrdersCount(Nullable<int> orderID, string requestDate, string customerName, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName)
+        public virtual ObjectResult<Nullable<int>> GetOrdersCount(Nullable<int> orderID, string requestDate, string customerName, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName, Nullable<int> employeeID)
         {
             var orderIDParameter = orderID.HasValue ?
                 new ObjectParameter("OrderID", orderID) :
@@ -159,7 +163,11 @@ namespace DAL
                 new ObjectParameter("DeliveryName", deliveryName) :
                 new ObjectParameter("DeliveryName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetOrdersCount", orderIDParameter, requestDateParameter, customerNameParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter);
+            var employeeIDParameter = employeeID.HasValue ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetOrdersCount", orderIDParameter, requestDateParameter, customerNameParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter, employeeIDParameter);
         }
     }
 }
