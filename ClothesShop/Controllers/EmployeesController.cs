@@ -308,9 +308,9 @@ namespace ClothesShop.Controllers
                 if (string.IsNullOrEmpty(directory))
                     directory = "UploadedFiles";
 
-                if (!Directory.Exists(directory))
+                if (!Directory.Exists(path))
                 {
-                    Directory.CreateDirectory(directory);
+                    Directory.CreateDirectory(path);
                 }
                 path += "\\" + employeeId;
                 if (!Directory.Exists(path))
