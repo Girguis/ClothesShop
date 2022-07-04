@@ -66,6 +66,7 @@ namespace ClothesShop.Controllers
                     ResourcesManager.SetLanguage(lang);
                     Session["UserName"] = model.UserName;
                     Session["UserID"] = login.EmployeeID;
+                    Session["JobID"] = login.Employee.JobTypeID;
                     JobRolesRepo _JobTypesRepo = new JobRolesRepo();
                     List<JobRole>jobRoles = _JobTypesRepo.GetByJobID(login.Employee.JobTypeID).ToList();
                     Session["Roles"] = jobRoles;

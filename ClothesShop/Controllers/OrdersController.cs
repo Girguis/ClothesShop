@@ -33,7 +33,28 @@ namespace ClothesShop.Controllers
         {
             return View();
         }
+        private int getUserID()
+        {
+            int empID = 0;
+            if (Session["UserID"] != null && !string.IsNullOrEmpty(Session["UserID"].ToString()))
+                int.TryParse(Session["UserID"].ToString(), out empID);
+            return empID;
+        }
+        private int getJobID()
+        {
+            int jobId = 4;
+            if (Session["JobID"] != null && !string.IsNullOrEmpty(Session["JobID"].ToString()))
+                int.TryParse(Session["JobID"].ToString(), out jobId);
+            return jobId;
 
+        }
+        private bool checkEmpOrder(long? empSellerId, long? deliveryId)
+        {
+            int empId = getUserID();
+            if (getJobID() == (int)Enums.JobTypes.Manager)
+                return true;
+            return empId == empSellerId || empId == deliveryId;
+        }
         [Authorization("Orders", (RoleType.Details))]
         public ActionResult Details(long? id)
         {
@@ -47,7 +68,10 @@ namespace ClothesShop.Controllers
                 return HttpNotFound();
             }
             var ex = GetOrdersViewModel(order);
-            return View(ex);
+            if (checkEmpOrder(ex.SellerID, ex.EmployeeID))
+                return View(ex);
+            else
+                return RedirectToAction("Index", "Orders");
         }
         [Authorization("Orders", (RoleType.Add))]
         public ActionResult Create()
@@ -57,11 +81,11 @@ namespace ClothesShop.Controllers
                 Product = new ProductsViewModel()
                 {
                     ID = 0,
-                    NumberOfPieces=1,
-                    SellingPrice=285
+                    NumberOfPieces = 1,
+                    SellingPrice = 285
                 }
             };
-            
+
             return View(model);
         }
 
@@ -101,9 +125,15 @@ namespace ClothesShop.Controllers
             }
 
             var model = GetOrdersViewModel(order);
-            if (order.OrderStatusID == (int)OrderStatuses.TotallyDelivered)
-                return View("Details", model);
-            return View(model);
+            if (checkEmpOrder(model.SellerID, model.EmployeeID))
+            {
+                if (order.OrderStatusID == (int)OrderStatuses.TotallyDelivered)
+                    return View("Details", model);
+                else
+                    return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Orders");
         }
 
         [HttpPost]
@@ -138,6 +168,9 @@ namespace ClothesShop.Controllers
         public JsonResult Delete(long? id)
         {
             if (!id.HasValue)
+                return Json(false);
+            var order = _OrdersRepo.GetByID(id.Value);
+            if (!checkEmpOrder(order.SellerID, order.EmployeeID))
                 return Json(false);
             return Json(_OrdersRepo.Delete(id.Value));
         }
@@ -255,6 +288,70 @@ namespace ClothesShop.Controllers
 
         [HttpPost]
         [Authorization("Orders", (RoleType.View))]
+        public ActionResult GetAllUnAssignedOrders(SearchViewModel obj)
+        {
+            try
+            {
+                var pageIndex = obj.PageNumber > 0 ? obj.PageNumber - 1 : 0;
+                var pageSize = obj.PageSize;
+
+                int totalRecords = 0;
+                var orderStatuses = Helper.EnumToList<Enums.OrderStatuses>();
+                var orders = _OrdersRepo.GetAll().Where(o =>
+                                                          (
+                                                            o.OrderStatusID == (int)OrderStatuses.New ||
+                                                            o.OrderStatusID == (int)OrderStatuses.Delayed ||
+                                                            o.OrderStatusID == (int)OrderStatuses.NotDelivered
+                                                           )
+                                                           && !o.EmployeeID.HasValue);
+                var result = orders.Select(n => {
+                    var sum = n.ProductOrders?.Sum(p => p.Quantity * p.SellingPrice);
+                    return new OrdersViewModel
+                    {
+
+                        ID = n.ID,
+                        RequestDate = n.RequestDate,
+                        Customer = new CustomerViewModel()
+                        {
+                            Address = n.Customer != null ? n.Customer.Address : "",
+                            Name = n.Customer != null ? n.Customer.Name : "",
+                            MobileNumber1 = n.Customer != null ? n.Customer.MobileNumber1 : "",
+                            MobileNumber2 = n.Customer != null ? n.Customer.MobileNumber2 : "",
+                        },
+                        OrderTotalPrice = sum ?? 0,
+                        ShipmentPrice = n.ShipmentPrice,
+                        OrderStatusName = orderStatuses?.Where(x => x.ID == n.OrderStatusID).FirstOrDefault()?.Name
+                    };
+                } );
+                Filtering<OrdersViewModel> filtering = new Filtering<OrdersViewModel>();
+                filtering.Columns = obj.FilteredColumns;
+
+                result = filtering.Search("ID", result);
+                string name = filtering.GetValue("Customer.Name");
+                if (!string.IsNullOrEmpty(name))
+                    result = result.Where(c => c.Customer.Name != null && c.Customer.Name.ToLower().Contains(name.ToLower()));
+
+                string address = filtering.GetValue("Customer.Address");
+                if (!string.IsNullOrEmpty(address))
+                    result = result.Where(c => c.Customer.Address != null && c.Customer.Address.ToLower().Contains(address.ToLower()));
+
+                result = filtering.OrderBy(obj.OrderBy, result);
+
+                totalRecords = result.Count();
+                var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+                //Returning Json Data    
+                return Json(new { TotalCount = totalRecords, Data = data });
+            }
+            catch (Exception ex)
+            {
+                Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
+                return Json(new { TotalCount = 0, Data = string.Empty });
+            }
+        }
+
+
+        [HttpPost]
+        [Authorization("Orders", (RoleType.View))]
         public ActionResult GetAll(SearchViewModel obj)
         {
             try
@@ -285,11 +382,16 @@ namespace ClothesShop.Controllers
                 string sellerName = filtering.GetValue("SellerName");
                 string orderBy = obj.OrderBy?.ColumnName;
                 string orderDirection = obj.OrderBy?.Direction;
+                List<OrderViewModel> data = null;
+                if (getJobID() == (int)Enums.JobTypes.Manager)
+                    data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, null, out totalRecords).ToList();
+                else
+                    data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, getUserID(), out totalRecords).ToList();
 
-                List<OrderViewModel> data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize,null,out totalRecords).ToList();
                 if (data != null && data.Count() > 0)
                     data = data.Select(c => { c.OrderStatusName = Helper.EnumToList<OrderStatuses>().Where(x => x.ID == c.OrderStatusID).First().Name; return c; }).ToList();
                 //totalRecords = result.Count();
+
                 return Json(new { TotalCount = totalRecords, Data = data });
             }
             catch (Exception ex)
@@ -299,79 +401,20 @@ namespace ClothesShop.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorization("Orders", (RoleType.View))]
-        public ActionResult GetAllUnAssignedOrders(SearchViewModel obj)
-        {
-            try
-            {
-                var pageIndex = obj.PageNumber > 0 ? obj.PageNumber - 1 : 0;
-                var pageSize = obj.PageSize;
-
-                int totalRecords = 0;
-                var orderStatuses = Helper.EnumToList<Enums.OrderStatuses>();
-                var orders = _OrdersRepo.GetAll().Where(o =>
-                                                          (
-                                                            o.OrderStatusID == (int)OrderStatuses.New ||
-                                                            o.OrderStatusID == (int)OrderStatuses.Delayed ||
-                                                            o.OrderStatusID == (int)OrderStatuses.NotDelivered
-                                                           )
-                                                           && !o.EmployeeID.HasValue);
-                var result = orders.Select(n => new OrdersViewModel
-                {
-                    ID = n.ID,
-                    RequestDate = n.RequestDate,
-                    Customer = new CustomerViewModel()
-                    {
-                        Address = n.Customer != null ? n.Customer.Address : "",
-                        Name = n.Customer != null ? n.Customer.Name : "",
-                        MobileNumber1 = n.Customer != null ? n.Customer.MobileNumber1 : "",
-                        MobileNumber2 = n.Customer != null ? n.Customer.MobileNumber2 : "",
-                    },
-                    OrderTotalPrice = n.ProductOrders.Sum(p => p.Quantity * p.SellingPrice).Value,
-                    ShipmentPrice = n.ShipmentPrice,
-                    OrderStatusName = orderStatuses.Where(x => x.ID == n.OrderStatusID).First().Name
-                });
-                Filtering<OrdersViewModel> filtering = new Filtering<OrdersViewModel>();
-                filtering.Columns = obj.FilteredColumns;
-
-                result = filtering.Search("ID", result);
-                string name = filtering.GetValue("Customer.Name");
-                if (!string.IsNullOrEmpty(name))
-                    result = result.Where(c => c.Customer.Name != null && c.Customer.Name.ToLower().Contains(name.ToLower()));
-
-                string address = filtering.GetValue("Customer.Address");
-                if (!string.IsNullOrEmpty(address))
-                    result = result.Where(c => c.Customer.Address != null && c.Customer.Address.ToLower().Contains(address.ToLower()));
-
-                result = filtering.OrderBy(obj.OrderBy, result);
-
-                totalRecords = result.Count();
-                var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-                //Returning Json Data    
-                return Json(new { TotalCount = totalRecords, Data = data });
-            }
-            catch (Exception ex)
-            {
-                Logging.Services.LogErrorService.Write(Logging.Enums.AppTypes.PresentationLayer, ex);
-                return Json(new { TotalCount = 0, Data = string.Empty });
-            }
-        }
         [Authorization("Orders", (RoleType.Details))]
         public ActionResult ExportMultipleBills(string ids)
         {
-            try 
-            { 
-                //new List<int>{3542,3541,3540}
-                List<int> orderIDs = ids.Split(new String[] { "," },StringSplitOptions.None).Select(x=>int.Parse(x)).ToList();
+            try
+            {
+                List<int> orderIDs = ids.Split(new String[] { "," }, StringSplitOptions.None).Select(x => int.Parse(x)).ToList();
                 string SourcePdfPath = HttpContext.Server.MapPath("~/Images/SourcePdfFiles/");
                 string DestinationPdfPath = HttpContext.Server.MapPath("~/Images/DestPdfFile/");
 
                 if (Directory.Exists(SourcePdfPath))
-                    Directory.Delete(SourcePdfPath,true);
-            
+                    Directory.Delete(SourcePdfPath, true);
+
                 Directory.CreateDirectory(SourcePdfPath);
-            
+
                 if (Directory.Exists(DestinationPdfPath))
                     Directory.Delete(DestinationPdfPath, true);
 
@@ -380,14 +423,14 @@ namespace ClothesShop.Controllers
                 foreach (var orderID in orderIDs)
                 {
                     string path = CreatePDF(orderID);
-                    System.IO.File.Copy(path, SourcePdfPath + orderID+".pdf",true);
+                    System.IO.File.Copy(path, SourcePdfPath + orderID + ".pdf", true);
                 }
                 string tempFileDir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
                 if (Directory.Exists(tempFileDir))
-                    Directory.Delete(tempFileDir,true);
+                    Directory.Delete(tempFileDir, true);
 
                 string[] filenames = Directory.GetFiles(SourcePdfPath);
-                string outputFileName = "Orders_"+DateTime.Now.ToString("MMddyyyyhhmmss")+".pdf";
+                string outputFileName = "Orders_" + DateTime.Now.ToString("MMddyyyyhhmmss") + ".pdf";
                 string outputPath = HttpContext.Server.MapPath("~/Images/DestPdfFile/" + outputFileName);
 
                 Document doc = new Document();
@@ -560,7 +603,7 @@ namespace ClothesShop.Controllers
                 string FileName = "Order_" + DateTime.Now.Ticks.ToString() + ".pdf";
                 string dir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
                 if (Directory.Exists(dir))
-                    Directory.Delete(dir,true);
+                    Directory.Delete(dir, true);
                 Directory.CreateDirectory(dir);
                 string FilePath = dir + FileName;
 
