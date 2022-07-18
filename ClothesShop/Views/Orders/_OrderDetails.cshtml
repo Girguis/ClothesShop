@@ -7,65 +7,77 @@
     </div>
     <div class="card-body pb-0 pt-0">
         <hr />
-        <div class="col-md-5 mb-3 d-inline-block">
-            <div class="col-sm-12">
-                @Html.LabelFor(model => model.OrderStatusID, htmlAttributes: new { @class = "form-label" })
-                <span class="form-label text-danger">*</span>
+        @if (HttpContext.Current.Request.Url.AbsoluteUri.ToLower().Contains("edit"))
+        {
+            <div class="col-md-5 mb-3 d-inline-block">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.OrderStatusID, htmlAttributes: new { @class = "form-label" })
+                    <span class="form-label text-danger">*</span>
+                </div>
+
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.OrderStatusID)
+                    <div id="OrderStatus"></div>
+                    @Html.ValidationMessageFor(model => model.OrderStatusID, "", new { @class = "form-label text-danger col-sm-12 " })
+                </div>
             </div>
 
-            <div class="col-md-12">
-                @Html.HiddenFor(model => model.OrderStatusID)
-                <div id="OrderStatus"></div>
-                @Html.ValidationMessageFor(model => model.OrderStatusID, "", new { @class = "form-label text-danger col-sm-12 " })
-            </div>
-        </div>
-        <div class="col-md-5 mb-3 d-inline-block">
-            <div class="col-sm-12">
-                @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "form-label" })
-            </div>
+            <div class="col-md-5 mb-3 d-inline-block">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "form-label" })
+                </div>
 
-            <div class="col-md-12">
-                @Html.HiddenFor(model => model.DeliveryDate)
-                <div id="Delivery_Date"></div>
-                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "form-label text-danger col-sm-12 " })
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.DeliveryDate)
+                    <div id="Delivery_Date"></div>
+                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "form-label text-danger col-sm-12 " })
+                </div>
             </div>
-        </div>
-        <div class="col-md-5 mb-3 d-inline-block">
-            <div class="col-sm-12 ">
-                @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "form-label" })
-            </div>
+            <div class="col-md-5 mb-3 d-inline-block">
+                <div class="col-sm-12 ">
+                    @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "form-label" })
+                </div>
 
-            <div class="col-md-12">
-                @Html.HiddenFor(model => model.EmployeeID)
-                <div id="Employee"></div>
-                @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "form-label text-danger col-sm-12 " })
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.EmployeeID)
+                    <div id="Employee"></div>
+                    @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "form-label text-danger col-sm-12 " })
+                </div>
             </div>
-        </div>
-        <div class="col-md-5 mb-3 d-inline-block">
-            <div class="col-sm-12 ">
-                @Html.LabelFor(model => model.SellerID, htmlAttributes: new { @class = "form-label" })
-            </div>
+        }
 
-            <div class="col-md-12">
-                @Html.HiddenFor(model => model.SellerID)
-                <div id="Seller"></div>
-                @Html.ValidationMessageFor(model => model.SellerID, "", new { @class = "form-label text-danger col-sm-12 " })
-            </div>
-        </div>
-        <div class="col-md-5 mb-3 d-inline-block">
-            <div class="col-sm-12 ">
-                @Html.LabelFor(model => model.ShipmentCompanyID, htmlAttributes: new { @class = "form-label" })
-            </div>
+        @if ((int)Session["JobID"] == (int)ClothesShop.Enums.JobTypes.Manager)
+        {
+            <div class="col-md-5 mb-3 d-inline-block">
+                <div class="col-sm-12 ">
+                    @Html.LabelFor(model => model.SellerID, htmlAttributes: new { @class = "form-label" })
+                </div>
 
-            <div class="col-md-12">
-                @Html.HiddenFor(model => model.ShipmentCompanyID)
-                <div id="ShipmentCompany"></div>
-                @Html.ValidationMessageFor(model => model.ShipmentCompanyID, "", new { @class = "form-label text-danger col-sm-12 " })
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.SellerID)
+                    <div id="Seller"></div>
+                    @Html.ValidationMessageFor(model => model.SellerID, "", new { @class = "form-label text-danger col-sm-12 " })
+                </div>
             </div>
-        </div>
+        }
+        @if (HttpContext.Current.Request.Url.AbsoluteUri.ToLower().Contains("edit"))
+        {
+            <div class="col-md-5 mb-3 d-inline-block">
+                <div class="col-sm-12 ">
+                    @Html.LabelFor(model => model.ShipmentCompanyID, htmlAttributes: new { @class = "form-label" })
+                </div>
+
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.ShipmentCompanyID)
+                    <div id="ShipmentCompany"></div>
+                    @Html.ValidationMessageFor(model => model.ShipmentCompanyID, "", new { @class = "form-label text-danger col-sm-12 " })
+                </div>
+            </div>
+        }
         <div class="col-md-5 mb-3 d-inline-block">
             <div class="col-sm-12 ">
                 @Html.LabelFor(model => model.ShipmentPrice, htmlAttributes: new { @class = "form-label" })
+                <span class="form-label text-danger">*</span>
             </div>
 
             <div class="col-md-12">
@@ -73,16 +85,19 @@
                 @Html.ValidationMessageFor(model => model.ShipmentPrice, "", new { @class = "form-label text-danger col-sm-12 " })
             </div>
         </div>
-        <div class="col-md-5 mb-3 d-inline-block">
-            <div class="col-sm-12 ">
-                @Html.LabelFor(model => model.PaidAmount, htmlAttributes: new { @class = "form-label" })
-            </div>
+        @if (HttpContext.Current.Request.Url.AbsoluteUri.ToLower().Contains("edit"))
+        {
+            <div class="col-md-5 mb-3 d-inline-block">
+                <div class="col-sm-12 ">
+                    @Html.LabelFor(model => model.PaidAmount, htmlAttributes: new { @class = "form-label" })
+                </div>
 
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.PaidAmount, new { htmlAttributes = new { @class = "form-control form-control-md " } })
-                @Html.ValidationMessageFor(model => model.PaidAmount, "", new { @class = "form-label text-danger col-sm-12 " })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.PaidAmount, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                    @Html.ValidationMessageFor(model => model.PaidAmount, "", new { @class = "form-label text-danger col-sm-12 " })
+                </div>
             </div>
-        </div>
+        }
         <div class="col-md-10 mb-3 d-inline-block">
             <div class="col-sm-12 ">
                 @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "form-label" })

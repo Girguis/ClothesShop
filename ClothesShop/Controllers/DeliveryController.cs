@@ -143,7 +143,7 @@ namespace ClothesShop.Controllers
             if (!orderId.HasValue)
                 return Json(false);
             var order = _OrdersRepo.GetByID(orderId.Value);
-            if (orderStatusId == OrderStatuses.New || orderStatusId == OrderStatuses.Delayed || orderStatusId == OrderStatuses.NotDelivered || orderStatusId == OrderStatuses.CanceledByAgent)
+            if (orderStatusId == OrderStatuses.New || orderStatusId == OrderStatuses.Delayed || orderStatusId == OrderStatuses.NotDelivered)
                 order.EmployeeID = null;
 
             order.OrderStatusID = (int)orderStatusId;
@@ -159,7 +159,7 @@ namespace ClothesShop.Controllers
             foreach (long orderId in orderIds)
             {
                 var order = _OrdersRepo.GetByID(orderId);
-                if (orderStatusId == OrderStatuses.New || orderStatusId == OrderStatuses.Delayed || orderStatusId == OrderStatuses.NotDelivered || orderStatusId == OrderStatuses.CanceledByAgent)
+                if (orderStatusId == OrderStatuses.New || orderStatusId == OrderStatuses.Delayed || orderStatusId == OrderStatuses.NotDelivered)
                     order.EmployeeID = null;
                 order.OrderStatusID = (int)orderStatusId;
                 if (!_OrdersRepo.ChangeOrderStatus(order))

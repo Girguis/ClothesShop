@@ -27,7 +27,7 @@ namespace ClothesShop.Models
 
         [Display(ResourceType = typeof(Languages.Resources), Name = nameof(Languages.Resources.City))]
         public int CityID { get; set; }
-
+        [Required(ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.RequiredField))]
         [Display(ResourceType = typeof(Languages.Resources), Name = nameof(Languages.Resources.ShipmentPrice))]
         public double? ShipmentPrice { get; set; }
 

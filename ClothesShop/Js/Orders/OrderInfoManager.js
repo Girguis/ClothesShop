@@ -1,6 +1,7 @@
 ﻿var OrderInfoManager = (function () {
 
     function OrderInfoManagerInner() {
+        
         var self = this;
         var Options = null;
         this.Init = function (options) {
@@ -162,12 +163,12 @@
                 dataSource: lst,
                 columns: [
                     { dataField: "Name", caption: captions["product"], width: 150 },
-                    { dataField: "ColorName", caption: captions["color"], width: 100 },
-                    { dataField: "SizeName", caption: captions["size"], width: 100 },
-                    { dataField: "NumberOfPieces", caption: captions["quantity"], width: 90 },
+                    { dataField: "ColorName", caption: captions["color"], width: 80 },
+                    { dataField: "SizeName", caption: captions["size"], width: 80 },
+                    { dataField: "NumberOfPieces", caption: captions["quantity"], width: 100 },
                     { dataField: "SellingPrice", caption: captions["price"], width: 90 },
                     {
-                        dataField: "TotalSellingPrice", caption: captions["total"], width: 160,
+                        dataField: "TotalSellingPrice", caption: captions["total"], width: 125,
                         calculateDisplayValue: function (row) {
                             return row.NumberOfPieces * row.SellingPrice;
                         }

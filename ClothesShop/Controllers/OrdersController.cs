@@ -33,14 +33,14 @@ namespace ClothesShop.Controllers
         {
             return View();
         }
-        private int getUserID()
+        private int GetUserID()
         {
             int empID = 0;
             if (Session["UserID"] != null && !string.IsNullOrEmpty(Session["UserID"].ToString()))
                 int.TryParse(Session["UserID"].ToString(), out empID);
             return empID;
         }
-        private int getJobID()
+        private int GetJobID()
         {
             int jobId = 4;
             if (Session["JobID"] != null && !string.IsNullOrEmpty(Session["JobID"].ToString()))
@@ -48,10 +48,10 @@ namespace ClothesShop.Controllers
             return jobId;
 
         }
-        private bool checkEmpOrder(long? empSellerId, long? deliveryId)
+        private bool CheckEmpOrder(long? empSellerId, long? deliveryId)
         {
-            int empId = getUserID();
-            if (getJobID() == (int)Enums.JobTypes.Manager)
+            int empId = GetUserID();
+            if (GetJobID() == (int)Enums.JobTypes.Manager)
                 return true;
             return empId == empSellerId || empId == deliveryId;
         }
@@ -68,7 +68,7 @@ namespace ClothesShop.Controllers
                 return HttpNotFound();
             }
             var ex = GetOrdersViewModel(order);
-            if (checkEmpOrder(ex.SellerID, ex.EmployeeID))
+            if (CheckEmpOrder(ex.SellerID, ex.EmployeeID))
                 return View(ex);
             else
                 return RedirectToAction("Index", "Orders");
@@ -85,7 +85,9 @@ namespace ClothesShop.Controllers
                     SellingPrice = 285
                 }
             };
-
+            model.OrderStatusID = (int)Enums.OrderStatuses.New;
+            if (GetJobID() == (int)Enums.JobTypes.Worker)
+                model.SellerID = GetUserID();
             return View(model);
         }
 
@@ -125,7 +127,7 @@ namespace ClothesShop.Controllers
             }
 
             var model = GetOrdersViewModel(order);
-            if (checkEmpOrder(model.SellerID, model.EmployeeID))
+            if (CheckEmpOrder(model.SellerID, model.EmployeeID))
             {
                 if (order.OrderStatusID == (int)OrderStatuses.TotallyDelivered)
                     return View("Details", model);
@@ -170,7 +172,7 @@ namespace ClothesShop.Controllers
             if (!id.HasValue)
                 return Json(false);
             var order = _OrdersRepo.GetByID(id.Value);
-            if (!checkEmpOrder(order.SellerID, order.EmployeeID))
+            if (!CheckEmpOrder(order.SellerID, order.EmployeeID))
                 return Json(false);
             return Json(_OrdersRepo.Delete(id.Value));
         }
@@ -383,10 +385,10 @@ namespace ClothesShop.Controllers
                 string orderBy = obj.OrderBy?.ColumnName;
                 string orderDirection = obj.OrderBy?.Direction;
                 List<OrderViewModel> data = null;
-                if (getJobID() == (int)Enums.JobTypes.Manager)
+                if (GetJobID() == (int)Enums.JobTypes.Manager)
                     data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, null, out totalRecords).ToList();
                 else
-                    data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, getUserID(), out totalRecords).ToList();
+                    data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, GetUserID(), out totalRecords).ToList();
 
                 if (data != null && data.Count() > 0)
                     data = data.Select(c => { c.OrderStatusName = Helper.EnumToList<OrderStatuses>().Where(x => x.ID == c.OrderStatusID).First().Name; return c; }).ToList();
@@ -485,7 +487,8 @@ namespace ClothesShop.Controllers
             }
             return null;
         }
-
+        
+        [Authorization("Orders", (RoleType.Details))]
         public String CreatePDF(long id)
         {
             try

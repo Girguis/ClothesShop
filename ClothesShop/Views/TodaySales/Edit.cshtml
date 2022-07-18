@@ -45,7 +45,6 @@
     $(document).ready(function () {
         var lst = CommonManager.Instance.NeowtonsoftDesealize('@Newtonsoft.Json.JsonConvert.SerializeObject(ClothesShop.Helpers.Helper.GetProducts())');
         var oldSales = '@Model.TodaySalesSeralized';
-        console.log(oldSales);
         CommonManager.Instance.InitDefaultSelectList("#ProductsList", lst, "@Resources.Search", "@Resources.NoData");
         TodaySalesInfoManager.Instance.Init({
             "no_data": "@Html.Raw(Resources.NoData)",

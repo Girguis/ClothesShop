@@ -1,0 +1,98 @@
+﻿@using ClothesShop.Languages
+@using ClothesShop.Helpers
+@using ClothesShop.Enums
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.BalanceDetails;
+}
+
+<div class="container-fluid dir-rtl col-md-9">
+    <div class="card m-0">
+        <div class="card-header pb-0">
+            <div class="col-md-12">
+                <h3 class="m-0 col-sm-4 col-md-10 d-inline-block">@ViewBag.SellerName</h3>
+                @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Balance", ClothesShop.Enums.RoleType.Add))
+                {
+                    <a href="@Url.Action("Create", "EmployeeBalance", new { area = "",sellerID=ViewBag.SellerID })" class="btn btn-success d-inline-block">
+                        @ClothesShop.Languages.Resources.AddBalance <i class="dx dx-icon-add"></i>
+                    </a>
+                }
+            </div>
+            
+            <hr />
+        </div>
+        <div class="card-body mt-0 pt-0">
+            <div class="col-md-12 mb-1">
+                <div class="col-sm-12 col-md-3 d-inline-block">
+                    <label>@Resources.TotalBalance : </label>
+                    <span id="TotalBalance"></span>
+                    <span>@Resources.LE</span>
+                </div>
+                <div class="col-sm-12 col-md-3 d-inline-block">
+                    <label>@Resources.TotalReward : </label>
+                    <span id="TotalReward"></span>
+                    <span>@Resources.LE</span>
+                </div>
+                <div class="col-sm-12 col-md-3 d-inline-block">
+                    <label>@Resources.TotalDeduction : </label>
+                    <span id="TotalDeduction"></span>
+                    <span>@Resources.LE</span>
+                </div>
+                <div class="col-sm-12 col-md-2 d-inline-block">
+                    <label>@Resources.TotalWithdraw : </label>
+                    <span id="TotalWithdraw"></span>
+                    <span>@Resources.LE</span>
+                </div>
+                <div class="col-sm-12 col-md-12 d-inline-block">
+                    <label>@Resources.AvailableBalance : </label>
+                    <span id="AvailableBalance"></span>
+                    <span>@Resources.LE</span>
+                </div>
+
+            </div>
+            <div id="SellerBalance"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/employeeBalanceInfo")
+
+<script>
+    $(document).ready(function () {
+        EmployeeBalanceInfoManager.Instance.Init({
+            "grid_id": "#SellerBalance",
+            "grid_height": "calc(100vh - 290px)",
+            "url": "@Url.Action("GetSellerBalance", "EmployeeBalance")",
+            "seller_id": "@ViewBag.SellerID",
+            "grid_captions": {
+                "amount": "@Resources.Amount",
+                "type": "@Resources.TransactionType",
+                "create_date": "@Resources.CreatedOn",
+                "year": "@Resources.Year",
+                "month": "@Resources.Month"
+            },
+
+            "types": '@(Newtonsoft.Json.JsonConvert.SerializeObject(Helper.EnumToList<BalanceType>()))',
+
+            "view_update": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Balance", ClothesShop.Enums.RoleType.Edit)" == "True",
+            "update_url": "@Url.Action("Edit", "EmployeeBalance")/",
+            "update_text": "<i class='dx dx-icon-edit'/> @Resources.Edit",
+
+            "view_delete": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Balance", ClothesShop.Enums.RoleType.Delete)" == "True",
+            "delete_url": "@Url.Action("Delete", "EmployeeBalance")/",
+            "delete_text": "<i class='dx dx-icon-trash'/> @Resources.Delete",
+
+            "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteThisProcess)",
+            "confirm_title": "@Html.Raw(Resources.Delete)",
+            "yes_text": "@Html.Raw(Resources.YesText)",
+            "no_text": "@Html.Raw(Resources.NoText)",
+            "success_delete": "@Html.Raw(Resources.DeletedSuccessfully)",
+            "error_delete": "@Html.Raw(Resources.ErrorWhileDeleting)",
+            "no_data": "@Resources.NoData",
+            "page_info": "@Resources.PageInfo",
+            "all_text": "@Resources.All",
+            });
+        });
+</script>
+}

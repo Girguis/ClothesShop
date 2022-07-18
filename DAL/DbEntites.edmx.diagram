@@ -48,6 +48,8 @@
         <AssociationConnector Association="ClothesShopModel.FK_ProductSizes_Sizes" />
         <AssociationConnector Association="ClothesShopModel.FK_ProductSuppliers_Suppliers" />
         <AssociationConnector Association="ClothesShopModel.FK_Transactions_TodayTransactions" />
+        <EntityTypeShape EntityType="ClothesShopModel.EmployeesBalance" Width="1.5" PointX="5.875" PointY="10.5" />
+        <AssociationConnector Association="ClothesShopModel.FK_EmployeesBalance_Employees" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

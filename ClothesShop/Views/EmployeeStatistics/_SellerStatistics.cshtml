@@ -1,0 +1,50 @@
+﻿@model ClothesShop.Models.SingleSellerStaticticsViewModel
+@using ClothesShop.Languages
+
+<div class="col-sm-12 col-md-5 d-inline-block">
+    <div class="card m-0">
+        <div class="card-header m-0 pb-0"><h3>@Resources.OrdersStatistics</h3></div>
+        <hr />
+        <div class="card-body pt-2 m-0">
+            <div>
+                @Resources.TotalOrders  : @Model.TotalOrders
+            </div>
+            <div>
+                @Resources.New  : @Model.New
+            </div>
+            <div>
+                @Resources.Waiting  : @Model.Waiting
+            </div>
+            <div>
+                @Resources.TotallyDelivered  : @Model.TotallyDelivered
+            </div>
+            <div>
+                @Resources.PartialyDelivered  : @Model.PartialyDelivered
+            </div>
+            <div>
+                @Resources.CanceledByAgent  : @Model.CanceledByAgent
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-sm-12 col-md-5 d-inline-block">
+        <div class="card m-0">
+
+            <div class="card-header m-0 pb-0"><h3>@Resources.Balance</h3></div>
+            <hr />
+            <div class="card-body pt-2 m-0">
+                <div>
+                    @Resources.TotalBalance  : @Model.TotalBalance
+                </div>
+                <div>
+                    @Resources.TotalWithdraw  : @Model.TotalWithdraw
+                </div>
+                <div>
+                    @Resources.TotalDeduction  : @Model.TotalDeduction
+                </div>
+                <div>
+                    @Resources.TotalReward  : @Model.TotalReward
+                </div>
+            </div>
+        </div>
+    </div>

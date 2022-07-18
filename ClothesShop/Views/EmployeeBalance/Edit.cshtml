@@ -1,0 +1,63 @@
+﻿@model ClothesShop.Models.EmployeeBalanceViewModel
+@using ClothesShop.Languages
+@using ClothesShop.Helpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.EditBalance;
+}
+<div class="container-fluid dir-rtl col-md-8 offset-md-2">
+    @using (Html.BeginForm("Edit", "EmployeeBalance", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.SellerID)
+        @Html.HiddenFor(x => x.ID)
+        @Html.HiddenFor(x => x.CreateDate)
+
+        @Html.ValidationSummary(true, "", new { @class = "form-label text-danger" })
+        <div class="card m-0">
+            <div class="card-header pb-0">
+                <h3 class="m-0">@Resources.EditBalance </h3>
+            </div>
+            <div class="card-body custom-card-body pt-2 m-0">
+                <div class="col-md-5 mb-3 d-inline-block">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "form-label" })
+                        <span class="form-label text-danger">*</span>
+                    </div>
+
+                    <div class="col-md-12">
+                        @Html.HiddenFor(model => model.Type)
+                        <div id="TypeID"></div>
+                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "form-label text-danger col-sm-12 " })
+                    </div>
+                </div>
+
+                <div class="col-md-5 mb-3 d-inline-block">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "form-label" })
+                        <span class="form-label text-danger">*</span>
+                    </div>
+
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control form-control-md " } })
+                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "form-label text-danger col-sm-12 " })
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-success" id="submit">
+                    @Resources.Save
+                </button>
+                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Details", "EmployeeBalance",new {id=Model.SellerID })">
+                    @Resources.BackToList
+                </a>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        var lst = CommonManager.Instance.NeowtonsoftDesealize('@Newtonsoft.Json.JsonConvert.SerializeObject(Helper.EnumToList<ClothesShop.Enums.BalanceType>())');
+        CommonManager.Instance.InitSelectList("#Type", "#TypeID", lst, "@Html.Raw(Resources.Search)", "@Html.Raw(Resources.NoData)");
+    });
+</script>

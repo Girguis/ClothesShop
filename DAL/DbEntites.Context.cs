@@ -48,6 +48,7 @@ namespace DAL
         public virtual DbSet<TodayExpens> TodayExpenses { get; set; }
         public virtual DbSet<TodayTransaction> TodayTransactions { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<EmployeesBalance> EmployeesBalances { get; set; }
     
         public virtual int UpdateProduct(Nullable<int> iD, string name, Nullable<double> originalPrice)
         {

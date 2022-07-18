@@ -206,7 +206,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ColorsController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\EmployeeBalanceController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\EmployeeStatisticsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -241,6 +243,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OrderDetailsDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Enums\BalanceType.cs" />
     <Compile Include="Enums\RoleType.cs" />
     <Compile Include="Enums\TransactionTypes.cs" />
     <Compile Include="Enums\Gender.cs" />
@@ -271,6 +274,8 @@
       <DependentUpon>Resources.en-US.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\ColorViewModel.cs" />
+    <Compile Include="Models\EmployeeBalanceViewModel.cs" />
+    <Compile Include="Models\EmployeeStatisticsViewModel.cs" />
     <Compile Include="Models\EmployeeViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\OrdersViewModel.cs" />
@@ -281,6 +286,7 @@
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\ShipmentCompanyViewModel.cs" />
     <Compile Include="Models\SalesRateViewModel.cs" />
+    <Compile Include="Models\SingleSellerStaticticsViewModel.cs" />
     <Compile Include="Models\SizeViewModel.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
     <Compile Include="Models\TodayExpenseViewModel.cs" />
@@ -354,9 +360,11 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\management.png" />
     <Content Include="Images\manager.png" />
+    <Content Include="Images\money.png" />
     <Content Include="Images\motorcycle.png" />
     <Content Include="Images\orders.png" />
     <Content Include="Images\others.png" />
+    <Content Include="Images\pie-chart.png" />
     <Content Include="Images\products.png" />
     <Content Include="Images\repair.png" />
     <Content Include="Images\settings.png" />
@@ -372,6 +380,10 @@
     <Content Include="Js\Const.js" />
     <Content Include="Js\Deliveries\DeliveriesInfoManager.js" />
     <Content Include="Js\Deliveries\DeliveriesManager.js" />
+    <Content Include="Js\EmployeeBalance\EmployeeBalanceInfoManager.js" />
+    <Content Include="Js\EmployeeBalance\EmployeeBalanceManager.js" />
+    <Content Include="Js\EmployeeStatistics\EmployeeStatisticsManager.js" />
+    <Content Include="Js\EmployeeStatistics\SingleSellerStatisticsManager.js" />
     <Content Include="Js\Employees\EmployeesManager.js" />
     <Content Include="Js\Orders\OrderInfoManager.js" />
     <Content Include="Js\Orders\OrdersManager.js" />
@@ -1108,6 +1120,13 @@
     <Content Include="Views\Delivery\_CreateEdit.cshtml" />
     <Content Include="Views\Employees\_PersonalInfomation.cshtml" />
     <Content Include="Views\Employees\_WorkInformation.cshtml" />
+    <Content Include="Views\EmployeeStatistics\Index.cshtml" />
+    <Content Include="Views\EmployeeBalance\Index.cshtml" />
+    <Content Include="Views\EmployeeBalance\Create.cshtml" />
+    <Content Include="Views\EmployeeBalance\Details.cshtml" />
+    <Content Include="Views\EmployeeBalance\Edit.cshtml" />
+    <Content Include="Views\EmployeeStatistics\SellerStatistics.cshtml" />
+    <Content Include="Views\EmployeeStatistics\_SellerStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,7 +11,9 @@
 
 <script>
     $(document).ready(function () {
+        
         OrdersManager.Instance.Init({
+
             "grid_id": "#OrdersGrid",
             "grid_height": "calc(100vh - 200px)",
             "url": "@Url.Action("GetAll", "Orders")",

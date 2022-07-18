@@ -105,6 +105,7 @@
         }
 
         var getData = function (options) {
+            CommonManager.Instance.ShowHideLoading(true);
             var start_date = options["start_date"];
             var end_date = options["end_date"];
             var start = $(start_date["div_id"]).dxDateBox("instance").option("value");
@@ -124,8 +125,10 @@
                     $(options["chart_id"]).dxChart("instance").option("dataSource",data)
                     $(options["payment_average"]).html(result.PaymentAverage.toFixed(2) +" " + options["currency"]);
                     $(options["payment_rate"]).css("background-color", result.RateColor);
-                    $(options["payment_rate"]).html(result.Rate);   
+                    $(options["payment_rate"]).html(result.Rate);
+                    CommonManager.Instance.ShowHideLoading(false);
                 }
+                CommonManager.Instance.ShowHideLoading(false);
             })
         }
 

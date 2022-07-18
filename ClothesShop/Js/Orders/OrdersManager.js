@@ -1,7 +1,7 @@
 ﻿var OrdersManager = (function () {
 
     function OrdersManagerInner() {
-
+        
         var Options = null;
         var self = this;
         this.Init = function (options) {
@@ -111,21 +111,6 @@
                         allowHeaderFiltering: false,
                     },
                     {
-                        dataField: "OrderStatusID", caption: captions["order_status"], width: 120,
-                        allowSorting: false,
-                        allowFiltering: false,
-                        allowHeaderFiltering: true,
-                        alignment: "right",
-                        dataType: "string",
-                        calculateDisplayValue: function (row) {
-                            var status = orderStatuses.find(function (e) { return e.ID == row.OrderStatusID });
-                            return status ? status.Name : "";
-                        },
-                        headerFilter: {
-                            dataSource: CommonManager.Instance.EnumToDataSourceHeaderFilter("OrderStatusID", "=", orderStatuses, "ID", "Name"),
-                        }
-                    },
-                    {
                         dataField: "CustomerAddress", caption: captions["address"], minWidth: 120,
                         alignment: "right",
                         dataType: "string",
@@ -153,6 +138,21 @@
                         alignment: "right",
                         dataType: "string",
                         allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
+                    },
+                    {
+                        dataField: "OrderStatusID", caption: captions["order_status"], width: 120,
+                        allowSorting: false,
+                        allowFiltering: false,
+                        allowHeaderFiltering: true,
+                        alignment: "right",
+                        dataType: "string",
+                        calculateDisplayValue: function (row) {
+                            var status = orderStatuses.find(function (e) { return e.ID == row.OrderStatusID });
+                            return status ? status.Name : "";
+                        },
+                        headerFilter: {
+                            dataSource: CommonManager.Instance.EnumToDataSourceHeaderFilter("OrderStatusID", "=", orderStatuses, "ID", "Name"),
+                        }
                     },
                     {
                         dataField: "EmployeeName", caption: captions["employee_name"], minWidth: 120,

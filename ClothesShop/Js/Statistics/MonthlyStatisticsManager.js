@@ -34,7 +34,34 @@
                     return true;
                 }
             });
+            $(options["pre_btn"]).unbind("click").bind("click", function () {
+                
+                var start = new Date($(start_date["div_id"]).dxDateBox("instance").option("value"));
+                if (!start)
+                    start = new Date();
 
+                var newStart = new Date(start.getFullYear(), start.getMonth() - 1, 1);
+                var newEnd = new Date(start.getFullYear(), start.getMonth(), 0);
+
+                $(start_date["div_id"]).dxDateBox("instance").option("value", newStart);
+                $(end_date["div_id"]).dxDateBox("instance").option("value", newEnd);
+                getData(options);
+                return true;
+            });
+
+            $(options["next_btn"]).unbind("click").bind("click", function () {
+                var start = $(start_date["div_id"]).dxDateBox("instance").option("value");
+                if (!start)
+                    start = new Date();
+
+                var newStart = new Date(start.getFullYear(), start.getMonth() + 1, 1);
+                var newEnd = new Date(start.getFullYear(), start.getMonth() + 2, 0);
+
+                $(start_date["div_id"]).dxDateBox("instance").option("value", newStart);
+                $(end_date["div_id"]).dxDateBox("instance").option("value", newEnd);
+                getData(options);
+                return true;
+            });
         }
 
         var getFirstDayOfMonth = function (date) {
@@ -71,6 +98,7 @@
 
 
         var getData = function (options) {
+            CommonManager.Instance.ShowHideLoading(true);
             var start_date = options["start_date"];
             var end_date = options["end_date"];
             var start = $(start_date["div_id"]).dxDateBox("instance").option("value");
@@ -89,7 +117,9 @@
                     $(options["payment_average"]).html(result.PaymentAverage.toFixed(2) + " " + options["currency"]);
                     $(options["payment_rate"]).css("background-color", result.RateColor);
                     $(options["payment_rate"]).html(result.Rate);
+                    CommonManager.Instance.ShowHideLoading(false);
                 }
+                CommonManager.Instance.ShowHideLoading(false);
             })
         }
 

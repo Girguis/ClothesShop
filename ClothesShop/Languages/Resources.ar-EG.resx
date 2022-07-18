@@ -799,4 +799,70 @@
   <data name="EditedSuccessfully" xml:space="preserve">
     <value>تم التعديل</value>
   </data>
+  <data name="Balance" xml:space="preserve">
+    <value>رصيد</value>
+  </data>
+  <data name="Withdraw" xml:space="preserve">
+    <value>سحب</value>
+  </data>
+  <data name="Reward" xml:space="preserve">
+    <value>مكافأه</value>
+  </data>
+  <data name="Deduction" xml:space="preserve">
+    <value>خصم</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>القيمة</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>سنة</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="AvailableBalance" xml:space="preserve">
+    <value>الرصيد المتاح</value>
+  </data>
+  <data name="TotalWithdraw" xml:space="preserve">
+    <value>إجمالى المسحوبات</value>
+  </data>
+  <data name="TotalDeduction" xml:space="preserve">
+    <value>إجمالى الخصومات</value>
+  </data>
+  <data name="TotalReward" xml:space="preserve">
+    <value>إجمالى المكافأت</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>إجمالى الرصيد</value>
+  </data>
+  <data name="AddBalance" xml:space="preserve">
+    <value>إضافة رصيد</value>
+  </data>
+  <data name="OrdersStatistics" xml:space="preserve">
+    <value>إحصائيات الطلبات</value>
+  </data>
+  <data name="TotalOrders" xml:space="preserve">
+    <value>إجمالي عدد الطلبات</value>
+  </data>
+  <data name="StatisticsAndBalance" xml:space="preserve">
+    <value>الإحصائيات والمعاملات</value>
+  </data>
+  <data name="EmployeesStatistics" xml:space="preserve">
+    <value>إحصائيات البائعين</value>
+  </data>
+  <data name="MoneyTransactions" xml:space="preserve">
+    <value>المعاملات المالية</value>
+  </data>
+  <data name="BalanceDetails" xml:space="preserve">
+    <value>تفاصيل المعاملات المالية</value>
+  </data>
+  <data name="AreYouSureDeleteThisProcess" xml:space="preserve">
+    <value>هل انت متأكد من حذف هذه العملية؟</value>
+  </data>
+  <data name="EditBalance" xml:space="preserve">
+    <value>تعديل المعاملة المالية</value>
+  </data>
+  <data name="StatisticsDetails" xml:space="preserve">
+    <value>تفاصيل الإحصائيات</value>
+  </data>
 </root>

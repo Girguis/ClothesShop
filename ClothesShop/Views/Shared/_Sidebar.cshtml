@@ -7,6 +7,7 @@
     bool isViewTodayExpens = ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodayExpens", ClothesShop.Enums.RoleType.View);
     bool isViewProductSuppliers = ClothesShop.Helpers.RolesHelper.CheckRoleRight("ProductSuppliers", ClothesShop.Enums.RoleType.View);
     bool isViewProductsSummary = ClothesShop.Helpers.RolesHelper.CheckRoleRight("ProductsSummary", ClothesShop.Enums.RoleType.View);
+    bool isViewBalance = ClothesShop.Helpers.RolesHelper.CheckRoleRight("Balance", ClothesShop.Enums.RoleType.View);
 }
 
 @{
@@ -60,6 +61,23 @@
                     </li>
                 }
             }
+            @if (isViewBalance)
+            {
+                <li class="sidebar-header">
+                    @Resources.StatisticsAndBalance
+                </li>
+                <li class="sidebar-item active" id="EmployeeStatistics">
+                    <a class="sidebar-link" href="@Url.Action("Index", "EmployeeStatistics")">
+                        <img class="sidebarImage align-middle" src="~/Images/pie-chart.png" /> <span class="align-middle">@Resources.EmployeesStatistics</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item active" id="EmployeeBalance">
+                    <a class="sidebar-link" href="@Url.Action("Index", "EmployeeBalance")">
+                        <img class="sidebarImage align-middle" src="~/Images/money.png" /> <span class="align-middle">@Resources.MoneyTransactions</span>
+                    </a>
+                </li>
+            }
 
             @if (isViewTodayTransactions || isViewTodaySales || isViewTodayExpens)
             {
@@ -69,7 +87,7 @@
                 if (isViewTodayTransactions)
                 {
                     <li class="sidebar-item" id="TodayTransactions">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "TodayTransactions")">
                             <img class="sidebarImage align-middle" src="~/Images/dashboard.png" /> <span class="align-middle">@Resources.TodaySummary</span>
                         </a>
@@ -101,7 +119,7 @@
                 if (isViewProductSuppliers)
                 {
                     <li class="sidebar-item" id="ProductSuppliers">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "ProductSuppliers")">
                             <img class="sidebarImage align-middle" src="~/Images/suppliers.png" /> <span class="align-middle">@Resources.ProductSuppliers</span>
                         </a>
@@ -110,7 +128,7 @@
                 if (isViewProductsSummary)
                 {
                     <li class="sidebar-item" id="ProductsSummary">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "ProductsSummary")">
                             <img class="sidebarImage align-middle" src="~/Images/dashboard.png" /> <span class="align-middle">@Resources.ProductSummary</span>
                         </a>
@@ -127,7 +145,7 @@
                 if (isViewEmployees)
                 {
                     <li class="sidebar-item active" id="Employees">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "Employees")">
                             <img class="sidebarImage align-middle" src="~/Images/users.png" /> <span class="align-middle">@Resources.Employees</span>
                         </a>
@@ -137,7 +155,7 @@
                 if (isViewProducts)
                 {
                     <li class="sidebar-item" id="Products">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "Products")">
                             <img class="sidebarImage align-middle" src="~/Images/products.png" /> <span class="align-middle">@Resources.Products</span>
                         </a>
@@ -146,7 +164,7 @@
                 if (isViewShipmentCompanies)
                 {
                     <li class="sidebar-item" id="ShipmentCompanies">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "ShipmentCompanies")">
                             <img class="sidebarImage align-middle" src="~/Images/Shipment-company.png" /><span class="align-middle">@Resources.ShipmentCompanies</span>
                         </a>
@@ -155,7 +173,7 @@
                 if (isViewSuppliers)
                 {
                     <li class="sidebar-item" id="Suppliers">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "Suppliers")">
                             <img class="sidebarImage align-middle" src="~/Images/suppliers.png" /> <span class="align-middle">@Resources.Suppliers</span>
                         </a>
@@ -164,7 +182,7 @@
                 if (isViewColors)
                 {
                     <li class="sidebar-item" id="Colors">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "Colors")">
                             <img class="sidebarImage align-middle" src="~/Images/colors.png" /><span class="align-middle">@Resources.Colors</span>
                         </a>
@@ -173,7 +191,7 @@
                 if (isViewSizes)
                 {
                     <li class="sidebar-item" id="Sizes">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "Sizes")">
                             <img class="sidebarImage align-middle" src="~/Images/sizes.png" /> <span class="align-middle">@Resources.Sizes</span>
                         </a>
@@ -191,7 +209,7 @@
                 if (isViewWeeklyStatistics)
                 {
                     <li class="sidebar-item active" id="WeeklyStatistics">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Weekly", "Statistics")">
                             <img class="sidebarImage align-middle" src="~/Images/bar-chart.png" /> <span class="align-middle">@Resources.WeeklyStatistics</span>
                         </a>
@@ -201,7 +219,7 @@
                 if (isViewMonthlyStatistics)
                 {
                     <li class="sidebar-item" id="MonthlyStatistics">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Monthly", "Statistics")">
                             <img class="sidebarImage align-middle" src="~/Images/bar-chart.png" /> <span class="align-middle">@Resources.MonthlyStatistics</span>
                         </a>
@@ -210,7 +228,7 @@
                 if (isViewSalesRates)
                 {
                     <li class="sidebar-item" id="SalesRates">
-                        
+
                         <a class="sidebar-link" href="@Url.Action("Index", "SalesRates")">
                             <img class="sidebarImage align-middle" src="~/Images/dashboard.png" /> <span class="align-middle">@Resources.SalesRate</span>
                         </a>

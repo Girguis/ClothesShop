@@ -799,4 +799,70 @@
   <data name="EditedSuccessfully" xml:space="preserve">
     <value>Edited Successfully</value>
   </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="Withdraw" xml:space="preserve">
+    <value>Withdraw</value>
+  </data>
+  <data name="Reward" xml:space="preserve">
+    <value>Reward</value>
+  </data>
+  <data name="Deduction" xml:space="preserve">
+    <value>Deduction</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="AvailableBalance" xml:space="preserve">
+    <value>Available Balance</value>
+  </data>
+  <data name="TotalWithdraw" xml:space="preserve">
+    <value>Total Withdraw</value>
+  </data>
+  <data name="TotalDeduction" xml:space="preserve">
+    <value>Total Deduction</value>
+  </data>
+  <data name="TotalReward" xml:space="preserve">
+    <value>Total Reward</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>Total Balance</value>
+  </data>
+  <data name="AddBalance" xml:space="preserve">
+    <value>Add Balance</value>
+  </data>
+  <data name="OrdersStatistics" xml:space="preserve">
+    <value>Orders Statistics</value>
+  </data>
+  <data name="TotalOrders" xml:space="preserve">
+    <value>Total Orders Count</value>
+  </data>
+  <data name="StatisticsAndBalance" xml:space="preserve">
+    <value>Statistics And Balance</value>
+  </data>
+  <data name="EmployeesStatistics" xml:space="preserve">
+    <value>Employees Statistics</value>
+  </data>
+  <data name="MoneyTransactions" xml:space="preserve">
+    <value>Money Transactions</value>
+  </data>
+  <data name="BalanceDetails" xml:space="preserve">
+    <value>Balance Details</value>
+  </data>
+  <data name="AreYouSureDeleteThisProcess" xml:space="preserve">
+    <value>Are You Sure Delete This Process?</value>
+  </data>
+  <data name="EditBalance" xml:space="preserve">
+    <value>Edit Balance</value>
+  </data>
+  <data name="StatisticsDetails" xml:space="preserve">
+    <value>Statistics Details</value>
+  </data>
 </root>

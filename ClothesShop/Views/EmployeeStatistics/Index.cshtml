@@ -1,0 +1,77 @@
+﻿@model ClothesShop.Models.EmployeeStatisticsViewModel
+@using ClothesShop.Languages
+@{
+    ViewBag.Title = Resources.EmployeesStatistics;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid dir-rtl">
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-md-12">
+
+                    <div class="col-md-3 mb-3 d-inline-block">
+                        <div class="col-md-12">
+                            <input hidden id="Date" />
+                            <div id="DateID"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 mb-3 d-inline-block">
+                        <div class="col-md-12">
+                            <a href="#" id="preMonthBtn" type="button" class="btn btn-lg btn-primary">
+                                <i class="dx dx-icon-arrowright"></i> @Resources.Previous
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-1 mb-3 d-inline-block">
+                        <div class="col-md-12">
+                            <a href="#" id="nextMonthBtn" type="button" class="btn btn-lg btn-primary">
+                                @Resources.Next <i class="dx dx-icon-arrowleft"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body custom-card-body">
+                <div id="StatisticsChart" style="text-align: -webkit-center;"></div>
+                <div id="StatisticsGrid" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/employeeStatistics")
+    <script>
+        $(document).ready(function () {
+            EmployeeStatisticsManager.Instance.Init({
+                "grid_id": "#StatisticsGrid",
+                "chart_id":"#StatisticsChart",
+                "grid_height": "calc(100vh - 200px)",
+                "next_btn": "#nextMonthBtn",
+                "pre_btn": "#preMonthBtn",
+                "date": {
+                    "div_id": "#DateID",
+                    "id": "#Date",
+                    "message": "@Resources.Date"
+                },
+                "url": "@Url.Action("GetAll", "EmployeeStatistics")",
+                "grid_captions": {
+                    "seller": "@Resources.Seller",
+                    "totally_delivered": "@Resources.TotallyDelivered",
+                    "partialy_delivered": "@Resources.PartialyDelivered",
+                    "new": "@Resources.New",
+                    "canceled_by_agent": "@Resources.CanceledByAgent",
+                    "total": "@Resources.Total"
+                },
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All"
+
+            });
+        });
+    </script>
+}
+

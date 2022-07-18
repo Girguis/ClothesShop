@@ -86,6 +86,9 @@
     <Compile Include="Employee.cs">
       <DependentUpon>DbEntites.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmployeesBalance.cs">
+      <DependentUpon>DbEntites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Expens.cs">
       <DependentUpon>DbEntites.tt</DependentUpon>
     </Compile>

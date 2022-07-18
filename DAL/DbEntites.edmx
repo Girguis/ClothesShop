@@ -54,6 +54,16 @@
           <Property Name="MobileNumber1" Type="nvarchar" MaxLength="12" />
           <Property Name="MobileNumber2" Type="nvarchar" MaxLength="12" />
         </EntityType>
+        <EntityType Name="EmployeesBalance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="bigint" />
+          <Property Name="CreateDate" Type="date" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="Type" Type="int" />
+        </EntityType>
         <EntityType Name="Expenses">
           <Key>
             <PropertyRef Name="ID" />
@@ -237,6 +247,18 @@
             </Principal>
             <Dependent Role="Employees">
               <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeesBalance_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="EmployeesBalance" Type="Self.EmployeesBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeesBalance">
+              <PropertyRef Name="EmployeeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -523,6 +545,7 @@
           <EntitySet Name="Colors" EntityType="Self.Colors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeesBalance" EntityType="Self.EmployeesBalance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobRoles" EntityType="Self.JobRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
@@ -543,6 +566,10 @@
           <AssociationSet Name="FK_Employee_Cities" Association="Self.FK_Employee_Cities">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeesBalance_Employees" Association="Self.FK_EmployeesBalance_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeesBalance" EntitySet="EmployeesBalance" />
           </AssociationSet>
           <AssociationSet Name="FK_Expenses_TodayExpenses" Association="Self.FK_Expenses_TodayExpenses">
             <End Role="TodayExpenses" EntitySet="TodayExpenses" />
@@ -778,6 +805,11 @@
             <Parameter Name="DeliveryName" Mode="In" Type="String" />
             <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="EmployeesBalances" EntityType="ClothesShopModel.EmployeesBalance" />
+          <AssociationSet Name="FK_EmployeesBalance_Employees" Association="ClothesShopModel.FK_EmployeesBalance_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeesBalance" EntitySet="EmployeesBalances" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="City">
           <Key>
@@ -837,6 +869,7 @@
           <NavigationProperty Name="Orders" Relationship="ClothesShopModel.FK_Orders_Employee" FromRole="Employee" ToRole="Order" />
           <NavigationProperty Name="Orders1" Relationship="ClothesShopModel.FK_Orders_Seller" FromRole="Employee" ToRole="Order" />
           <NavigationProperty Name="Transactions" Relationship="ClothesShopModel.FK_Transactions_Employees" FromRole="Employee" ToRole="Transaction" />
+          <NavigationProperty Name="EmployeesBalances" Relationship="ClothesShopModel.FK_EmployeesBalance_Employees" FromRole="Employee" ToRole="EmployeesBalance" />
         </EntityType>
         <EntityType Name="Expens">
           <Key>
@@ -1323,6 +1356,29 @@
           <Property Type="Double" Name="ShipmentPrice" Nullable="false" />
           <Property Type="String" Name="OrderStatusName" Nullable="false" />
         </ComplexType>
+        <EntityType Name="EmployeesBalance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int64" Nullable="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="Type" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="ClothesShopModel.FK_EmployeesBalance_Employees" FromRole="EmployeesBalance" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_EmployeesBalance_Employees">
+          <End Type="ClothesShopModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ClothesShopModel.EmployeesBalance" Role="EmployeesBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeesBalance">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1591,6 +1647,17 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetOrdersCount" FunctionName="ClothesShopModel.Store.GetOrdersCount" />
+          <EntitySetMapping Name="EmployeesBalances">
+            <EntityTypeMapping TypeName="ClothesShopModel.EmployeesBalance">
+              <MappingFragment StoreEntitySet="EmployeesBalance">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

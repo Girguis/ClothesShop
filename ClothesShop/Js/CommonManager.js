@@ -225,7 +225,7 @@
                         $(id).val(e.value);
                 },
             });
-            if (elem)
+            if (elem && $(divId).data("dxSelectBox"))
                 $(divId).dxSelectBox("instance").option("value", elem.ID);
         }
 
@@ -291,6 +291,7 @@
                     }
                 },
             });
+            if ($(divId).data("dxDateBox"))
                 $(divId).dxDateBox("instance").option("value", defaultValue);
         }
 
@@ -340,6 +341,12 @@
                 }
                 else if (url.includes("/delivery")) {
                     activeItem = "Delivery";
+                }
+                else if (url.includes("/employeestatistics")) {
+                    activeItem = "EmployeeStatistics";
+                }
+                else if (url.includes("/employeebalance")) {
+                    activeItem = "EmployeeBalance";
                 }
                 else if (url.includes("/todaytransactions")) {
                     activeItem = "TodayTransactions";

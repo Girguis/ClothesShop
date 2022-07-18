@@ -21,6 +21,7 @@ namespace DAL
             this.Orders = new HashSet<Order>();
             this.Orders1 = new HashSet<Order>();
             this.Transactions = new HashSet<Transaction>();
+            this.EmployeesBalances = new HashSet<EmployeesBalance>();
         }
     
         public long ID { get; set; }
@@ -53,5 +54,7 @@ namespace DAL
         public virtual ICollection<Order> Orders1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeesBalance> EmployeesBalances { get; set; }
     }
 }

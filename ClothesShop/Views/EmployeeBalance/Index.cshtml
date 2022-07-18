@@ -1,0 +1,38 @@
+﻿@model ClothesShop.Models.EmployeeBalanceViewModel
+@using ClothesShop.Languages
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ClothesShop.Languages.Resources.MoneyTransactions;
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/employeesBalance")
+<script>
+        $(document).ready(function () {
+            EmployeeBalanceManager.Instance.Init({
+                "grid_id": "#EmployeesGrid",
+                "grid_height": "calc(100vh - 150px)",
+                "url": "@Url.Action("GetAll", "EmployeeBalance")",
+                "grid_captions": {
+                    "fullName": "@Resources.FullName",
+                },
+
+                "view_add": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Balance", ClothesShop.Enums.RoleType.Add)" == "True",
+                "add_url": "@Url.Action("Create", "EmployeeBalance",new {area =""})",
+                "add_text": "<i class='dx dx-icon-add'/> @Resources.Add",
+
+                "view_details": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Balance", ClothesShop.Enums.RoleType.Details)" == "True",
+                "details_url": "@Url.Action("Details", "EmployeeBalance",new {area =""})",
+                "details_text": "<i class='dx dx-icon-detailslayout'/> @Resources.BalanceDetails",
+
+                "no_data": "@Resources.NoData",
+                "page_info": "@Resources.PageInfo",
+                "all_text": "@Resources.All"
+            });
+        });
+</script>
+}
+<div class="container-fluid">
+    <div id="EmployeesGrid">
+    </div>
+</div>

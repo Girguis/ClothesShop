@@ -45,6 +45,18 @@ namespace ClothesShop
             bundles.Add(new ScriptBundle("~/bundles/employees")
                 .Include("~/Js/Employees/EmployeesManager.js"));
             
+            bundles.Add(new ScriptBundle("~/bundles/employeeStatistics")
+                .Include("~/Js/EmployeeStatistics/EmployeeStatisticsManager.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/singleSellerStatictics")
+                        .Include("~/Js/EmployeeStatistics/SingleSellerStatisticsManager.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/employeesBalance")
+                .Include("~/Js/EmployeeBalance/EmployeeBalanceManager.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/employeeBalanceInfo")
+                .Include("~/Js/EmployeeBalance/EmployeeBalanceInfoManager.js"));
+            
             bundles.Add(new ScriptBundle("~/bundles/employeesInfo")
                 .Include("~/Js/Employees/EmployeesInfoManager.js"));
 

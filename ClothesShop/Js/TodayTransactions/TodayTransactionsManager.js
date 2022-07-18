@@ -42,6 +42,29 @@
                     return true;
                 }
             });
+            $(options["pre_btn"]).unbind("click").bind("click", function () {
+                var start = new Date($(start_date["div_id"]).dxDateBox("instance").option("value"));
+                if (!start)
+                    start = new Date();
+
+                start.setDate(start.getDate() - 7);
+
+                $(start_date["div_id"]).dxDateBox("instance").option("value", start);
+                getData(options);
+                return true;
+            });
+
+            $(options["next_btn"]).unbind("click").bind("click", function () {
+                var end = $(end_date["div_id"]).dxDateBox("instance").option("value");
+                if (!end)
+                    end = new Date();
+
+                end.setDate(end.getDate() + 1);
+                $(start_date["div_id"]).dxDateBox("instance").option("value", end);
+                getData(options);
+                return true;
+            });
+
         }
 
         var initGrid = function (options) {
@@ -204,6 +227,7 @@
                     $(options["s_total_selled"]).html(sales);
                     $(options["s_total_expenses"]).html(expanses);
                     $(options["s_total_remaining"]).html(remaining);
+                    $(options["grid_id"]).dxDataGrid("instance").refresh();
                 }
             })
         }

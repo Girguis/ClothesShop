@@ -7,13 +7,13 @@
 
 <div class="container-fluid dir-rtl">
     <div class="col-md-12">
-        <div class="card col-sm-12 col-md-5 d-inline-block">
+        <div class="card col-sm-12 col-md-6 d-inline-block">
             <div class="card-header pb-0">
                 @Resources.TodaySummary
             </div>
             <div class="card-body pt-0">
                 <hr />
-                <div class="col-sm-12 col-md-5 d-inline-block">
+                <div class="col-sm-12 col-md-6 d-inline-block">
                     <div class="col-sm-12">
                         <label>@Resources.TotalSelled : </label>
                         <span>@ViewBag.TotalTodaySales  @Resources.LE</span>
@@ -27,7 +27,7 @@
                         <span>@ViewBag.TotalTodayRemaining  @Resources.LE</span>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6 d-inline-block" style="text-align:left;">
+                <div class="col-sm-12 col-md-5 d-inline-block" style="text-align:left;">
                     <div class="col-sm-12 col-md-12">
                         <a href="@Url.Action("Index","TodaySales")" class="btn btn-outline-primary">
                             @Resources.TodaySales
@@ -84,6 +84,22 @@
                 </a>
             </div>
         </div>
+        <div class="col-md-1 mb-3 d-inline-block">
+            <div class="col-md-12">
+                <a href="#" id="preWeekBtn" type="button" class="btn btn-lg btn-primary">
+                    <i class="dx dx-icon-arrowright"></i> @Resources.Previous
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-1 mb-3 d-inline-block">
+            <div class="col-md-12">
+                <a href="#" id="nextWeekBtn" type="button" class="btn btn-lg btn-primary">
+                    @Resources.Next <i class="dx dx-icon-arrowleft"></i>
+                </a>
+            </div>
+        </div>
+
     </div>
     <div id="TodayTransactionsGrid"></div>
 </div>
@@ -117,6 +133,8 @@
                     "total_number_of_pieces": "@Resources.TotalNumberOfPieces"
                 },
                 "search_btn": "#searchBtn",
+                "next_btn": "#nextWeekBtn",
+                "pre_btn": "#preWeekBtn",
                 "total_selled_text": "@Resources.TotalSelled",
                 "days_list": days,
                 "start_date": {

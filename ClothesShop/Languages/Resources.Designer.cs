@@ -88,6 +88,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Balance.
+        /// </summary>
+        public static string AddBalance {
+            get {
+                return ResourceManager.GetString("AddBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Color.
         /// </summary>
         public static string AddColor {
@@ -223,6 +232,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ApplicationName.
         /// </summary>
         public static string ApplicationName {
@@ -331,6 +349,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are You Sure Delete This Process?.
+        /// </summary>
+        public static string AreYouSureDeleteThisProcess {
+            get {
+                return ResourceManager.GetString("AreYouSureDeleteThisProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete today expense?.
         /// </summary>
         public static string AreYouSureDeleteTodayExpense {
@@ -376,6 +403,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available Balance.
+        /// </summary>
+        public static string AvailableBalance {
+            get {
+                return ResourceManager.GetString("AvailableBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back Licence Picture.
         /// </summary>
         public static string BackLicencePicture {
@@ -408,6 +444,24 @@ namespace ClothesShop.Languages {
         public static string BackToList {
             get {
                 return ResourceManager.GetString("BackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        public static string Balance {
+            get {
+                return ResourceManager.GetString("Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance Details.
+        /// </summary>
+        public static string BalanceDetails {
+            get {
+                return ResourceManager.GetString("BalanceDetails", resourceCulture);
             }
         }
         
@@ -574,6 +628,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deduction.
+        /// </summary>
+        public static string Deduction {
+            get {
+                return ResourceManager.GetString("Deduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delayed.
         /// </summary>
         public static string Delayed {
@@ -642,6 +705,15 @@ namespace ClothesShop.Languages {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Balance.
+        /// </summary>
+        public static string EditBalance {
+            get {
+                return ResourceManager.GetString("EditBalance", resourceCulture);
             }
         }
         
@@ -741,6 +813,15 @@ namespace ClothesShop.Languages {
         public static string Employees {
             get {
                 return ResourceManager.GetString("Employees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employees Statistics.
+        /// </summary>
+        public static string EmployeesStatistics {
+            get {
+                return ResourceManager.GetString("EmployeesStatistics", resourceCulture);
             }
         }
         
@@ -1078,6 +1159,24 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Money Transactions.
+        /// </summary>
+        public static string MoneyTransactions {
+            get {
+                return ResourceManager.GetString("MoneyTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Monthly Statistics.
         /// </summary>
         public static string MonthlyStatistics {
@@ -1348,6 +1447,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Orders Statistics.
+        /// </summary>
+        public static string OrdersStatistics {
+            get {
+                return ResourceManager.GetString("OrdersStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Orders Status.
         /// </summary>
         public static string OrdersStatus {
@@ -1573,6 +1681,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reward.
+        /// </summary>
+        public static string Reward {
+            get {
+                return ResourceManager.GetString("Reward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rights.
         /// </summary>
         public static string Rights {
@@ -1744,6 +1861,24 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statistics And Balance.
+        /// </summary>
+        public static string StatisticsAndBalance {
+            get {
+                return ResourceManager.GetString("StatisticsAndBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistics Details.
+        /// </summary>
+        public static string StatisticsDetails {
+            get {
+                return ResourceManager.GetString("StatisticsDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Storing Records.
         /// </summary>
         public static string StoringRecords {
@@ -1843,11 +1978,29 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Balance.
+        /// </summary>
+        public static string TotalBalance {
+            get {
+                return ResourceManager.GetString("TotalBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Cost.
         /// </summary>
         public static string TotalCost {
             get {
                 return ResourceManager.GetString("TotalCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Deduction.
+        /// </summary>
+        public static string TotalDeduction {
+            get {
+                return ResourceManager.GetString("TotalDeduction", resourceCulture);
             }
         }
         
@@ -1888,6 +2041,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Orders Count.
+        /// </summary>
+        public static string TotalOrders {
+            get {
+                return ResourceManager.GetString("TotalOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Orders Cash.
         /// </summary>
         public static string TotalOrdersCash {
@@ -1924,6 +2086,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Reward.
+        /// </summary>
+        public static string TotalReward {
+            get {
+                return ResourceManager.GetString("TotalReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Selled.
         /// </summary>
         public static string TotalSelled {
@@ -1938,6 +2109,15 @@ namespace ClothesShop.Languages {
         public static string TotalSellingPrice {
             get {
                 return ResourceManager.GetString("TotalSellingPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Withdraw.
+        /// </summary>
+        public static string TotalWithdraw {
+            get {
+                return ResourceManager.GetString("TotalWithdraw", resourceCulture);
             }
         }
         
@@ -2131,6 +2311,15 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Withdraw.
+        /// </summary>
+        public static string Withdraw {
+            get {
+                return ResourceManager.GetString("Withdraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Without Shipment Company.
         /// </summary>
         public static string WithoutShipmentCompany {
@@ -2154,6 +2343,15 @@ namespace ClothesShop.Languages {
         public static string WorkInformation {
             get {
                 return ResourceManager.GetString("WorkInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
         
