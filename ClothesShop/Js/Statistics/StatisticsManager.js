@@ -15,6 +15,8 @@
             CommonManager.Instance.InitDateBox(end_date["id"], end_date["div_id"], end_date["message"], noData, StatisticsManager.Instance.SetFromDate);
             $(end_date["div_id"]).dxDateBox("instance").option("value",new Date());
 
+            $(start_date["div_id"]).dxDateBox("instance").option("value", options["start_date_val"]);
+
             $(options["search_btn"]).unbind("click").bind("click", function () {
                 var start = $(start_date["div_id"]).dxDateBox("instance").option("value");
                 var end = $(end_date["div_id"]).dxDateBox("instance").option("value");

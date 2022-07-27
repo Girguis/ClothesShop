@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
-using BLL.Repositories;
+﻿using BLL.Repositories;
 using ClothesShop.Enums;
 using ClothesShop.Helpers;
 using ClothesShop.Infrastructure;
@@ -16,12 +8,20 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.Reporting.WebForms;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
 using Authorization = ClothesShop.Infrastructure.Authorization;
 
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class OrdersController : Controller
+    public class OrdersController : BaseController
     {
         private readonly OrdersRepo _OrdersRepo;
         public OrdersController()
@@ -33,21 +33,7 @@ namespace ClothesShop.Controllers
         {
             return View();
         }
-        private int GetUserID()
-        {
-            int empID = 0;
-            if (Session["UserID"] != null && !string.IsNullOrEmpty(Session["UserID"].ToString()))
-                int.TryParse(Session["UserID"].ToString(), out empID);
-            return empID;
-        }
-        private int GetJobID()
-        {
-            int jobId = 4;
-            if (Session["JobID"] != null && !string.IsNullOrEmpty(Session["JobID"].ToString()))
-                int.TryParse(Session["JobID"].ToString(), out jobId);
-            return jobId;
 
-        }
         private bool CheckEmpOrder(long? empSellerId, long? deliveryId)
         {
             int empId = GetUserID();
@@ -76,18 +62,10 @@ namespace ClothesShop.Controllers
         [Authorization("Orders", (RoleType.Add))]
         public ActionResult Create()
         {
-            OrdersViewModel model = new OrdersViewModel()
-            {
-                Product = new ProductsViewModel()
-                {
-                    ID = 0,
-                    NumberOfPieces = 1,
-                    SellingPrice = 285
-                }
-            };
-            model.OrderStatusID = (int)Enums.OrderStatuses.New;
-            if (GetJobID() == (int)Enums.JobTypes.Worker)
+            OrdersViewModel model = new OrdersViewModel();
+            if (GetJobID() != (int)JobTypes.Manager)
                 model.SellerID = GetUserID();
+            model.OrderStatusID = (int)OrderStatuses.New;
             return View(model);
         }
 
@@ -107,6 +85,8 @@ namespace ClothesShop.Controllers
             if (ModelState.IsValid)
             {
                 Order today = GetOrderModel(order, true);
+                if (GetJobID() != (int)JobTypes.Manager && today.SellerID == null)
+                    today.SellerID = GetUserID();
                 _OrdersRepo.Add(today);
                 return RedirectToAction("Index");
             }
@@ -186,17 +166,17 @@ namespace ClothesShop.Controllers
                 {
                     ID = t.ID,
                     CreatedBy = t.CreatedBy,
-                    CreatedOn = t.CreatedOn.Value,
+                    CreatedOn = t.CreatedOn.Value.AddHours(GetUtcOffset()),
                     ShipmentPrice = t.ShipmentPrice,
                     PaidAmount = t.PaidAmount.HasValue ? t.PaidAmount.Value : 0,
-                    RequestDate = t.RequestDate,
+                    RequestDate = t.RequestDate.Value.AddHours(GetUtcOffset()),
                     DeliveryDate = t.DeliveryDate,
                     CustomerID = t.CustomerID,
                     CityID = t.CityID.HasValue ? t.CityID.Value : 1,
                     EmployeeID = t.EmployeeID.HasValue ? t.EmployeeID : 0,
                     SellerID = t.SellerID.HasValue ? t.SellerID : 0,
                     Notes = t.Notes,
-                    OrderStatusID = t.OrderStatusID.HasValue ? t.OrderStatusID.Value : (int)Enums.OrderStatuses.New,
+                    OrderStatusID = t.OrderStatusID.HasValue ? t.OrderStatusID.Value : (int)OrderStatuses.New,
                     ShipmentCompanyID = t.ShipmentCompanyID.HasValue ? t.ShipmentCompanyID : 0,
                     Customer = new CustomerViewModel()
                     {
@@ -249,25 +229,25 @@ namespace ClothesShop.Controllers
                 {
                     ID = t.ID,
                     CreatedBy = isNew ? Session["UserName"].ToString() : t.CreatedBy,
-                    CreatedOn = isNew ? DateTime.Now : t.CreatedOn,
+                    CreatedOn = isNew ? DateTime.UtcNow : t.CreatedOn,
                     ShipmentPrice = t.ShipmentPrice,
                     PaidAmount = t.PaidAmount,
-                    RequestDate = isNew ? DateTime.Now : t.RequestDate,
+                    RequestDate = isNew ? DateTime.UtcNow : t.RequestDate,
                     DeliveryDate = t.DeliveryDate,
                     CustomerID = t.CustomerID,
                     CityID = t.CityID,
                     EmployeeID = t.EmployeeID.HasValue && t.EmployeeID != 0 ? t.EmployeeID.Value : nullVal,
                     SellerID = t.SellerID.HasValue && t.SellerID != 0 ? t.SellerID.Value : nullVal,
-                    Notes = t.Notes,
+                    Notes = t.Notes?.Replace("\r\n", " ").Trim(),
                     OrderStatusID = t.OrderStatusID,
                     ShipmentCompanyID = t.ShipmentCompanyID.HasValue && t.ShipmentCompanyID != 0 ? t.ShipmentCompanyID.Value : nullVal,
                     Customer = new Customer()
                     {
-                        Address = t.Customer.Address,
+                        Address = t.Customer.Address.Replace("\r\n", " ").Trim(),
                         ID = t.Customer.ID,
                         MobileNumber1 = t.Customer.MobileNumber1,
                         MobileNumber2 = t.Customer.MobileNumber2,
-                        Name = t.Customer.Name
+                        Name = t.Customer.Name.Replace("\r\n", " ").Trim()
                     },
                     ProductOrders = t.Products.Select(x => new ProductOrder()
                     {
@@ -306,13 +286,14 @@ namespace ClothesShop.Controllers
                                                             o.OrderStatusID == (int)OrderStatuses.NotDelivered
                                                            )
                                                            && !o.EmployeeID.HasValue);
-                var result = orders.Select(n => {
+                var result = orders.Select(n =>
+                {
                     var sum = n.ProductOrders?.Sum(p => p.Quantity * p.SellingPrice);
                     return new OrdersViewModel
                     {
 
                         ID = n.ID,
-                        RequestDate = n.RequestDate,
+                        RequestDate = n.RequestDate.Value.AddHours(GetUtcOffset()),
                         Customer = new CustomerViewModel()
                         {
                             Address = n.Customer != null ? n.Customer.Address : "",
@@ -324,7 +305,7 @@ namespace ClothesShop.Controllers
                         ShipmentPrice = n.ShipmentPrice,
                         OrderStatusName = orderStatuses?.Where(x => x.ID == n.OrderStatusID).FirstOrDefault()?.Name
                     };
-                } );
+                });
                 Filtering<OrdersViewModel> filtering = new Filtering<OrdersViewModel>();
                 filtering.Columns = obj.FilteredColumns;
 
@@ -374,8 +355,9 @@ namespace ClothesShop.Controllers
                 if (filtering.GetValue("OrderStatusID") != null && !string.IsNullOrEmpty(filtering.GetValue("OrderStatusID")))
                     orderStatusId = int.Parse(filtering.GetValue("OrderStatusID"));
 
-                if (filtering.GetValue("RequestDate") != null && !string.IsNullOrEmpty(filtering.GetValue("RequestDate")))
-                    requestDate = DateTime.ParseExact(filtering.GetValue("RequestDate"), "yyyy/MM/dd", System.Globalization.CultureInfo.CurrentCulture).ToString("MM/dd/yyyy");
+
+                if (filtering.GetValue("RequestDate_") != null && !string.IsNullOrEmpty(filtering.GetValue("RequestDate_")))
+                    requestDate = DateTime.ParseExact(filtering.GetValue("RequestDate_").Split(new string[] { " " }, StringSplitOptions.None)[0], "yyyy/MM/dd", System.Globalization.CultureInfo.CurrentCulture).ToString("MM/dd/yyyy");
 
                 string name = filtering.GetValue("Customer_Name");
                 string mobileNumber1 = filtering.GetValue("Customer_MobileNumber1");
@@ -383,16 +365,25 @@ namespace ClothesShop.Controllers
                 string deliveryName = filtering.GetValue("EmployeeName");
                 string sellerName = filtering.GetValue("SellerName");
                 string orderBy = obj.OrderBy?.ColumnName;
+                if (obj.OrderBy?.ColumnName == "RequestDate_")
+                    orderBy = "RequestDate";
                 string orderDirection = obj.OrderBy?.Direction;
                 List<OrderViewModel> data = null;
-                if (GetJobID() == (int)Enums.JobTypes.Manager)
+                if (GetJobID() == (int)JobTypes.Manager)
                     data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, null, out totalRecords).ToList();
                 else
                     data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, GetUserID(), out totalRecords).ToList();
-
                 if (data != null && data.Count() > 0)
-                    data = data.Select(c => { c.OrderStatusName = Helper.EnumToList<OrderStatuses>().Where(x => x.ID == c.OrderStatusID).First().Name; return c; }).ToList();
-                //totalRecords = result.Count();
+                    data = data.Select(c =>
+                    {
+                        var date = c.RequestDate.AddHours(GetUtcOffset());
+                        c.OrderStatusName = Helper.EnumToList<OrderStatuses>()
+                        .Where(x => x.ID == c.OrderStatusID).First().Name;
+                        c.RequestDate = date;
+
+                        c.RequestDate_ = date.ToString("dd/MM/yyyy hh:mm tt");
+                        return c;
+                    }).ToList();
 
                 return Json(new { TotalCount = totalRecords, Data = data });
             }
@@ -413,24 +404,33 @@ namespace ClothesShop.Controllers
                 string DestinationPdfPath = HttpContext.Server.MapPath("~/Images/DestPdfFile/");
 
                 if (Directory.Exists(SourcePdfPath))
-                    Directory.Delete(SourcePdfPath, true);
-
-                Directory.CreateDirectory(SourcePdfPath);
+                {
+                    DirectoryInfo di = new DirectoryInfo(SourcePdfPath);
+                    var files = di.GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+                        file.Delete();
+                    }
+                }
+                else
+                    Directory.CreateDirectory(SourcePdfPath);
 
                 if (Directory.Exists(DestinationPdfPath))
-                    Directory.Delete(DestinationPdfPath, true);
-
-                Directory.CreateDirectory(DestinationPdfPath);
+                {
+                    DirectoryInfo di = new DirectoryInfo(DestinationPdfPath);
+                    var files = di.GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+                        file.Delete();
+                    }
+                }
+                else
+                    Directory.CreateDirectory(DestinationPdfPath);
 
                 foreach (var orderID in orderIDs)
                 {
-                    string path = CreatePDF(orderID);
-                    System.IO.File.Copy(path, SourcePdfPath + orderID + ".pdf", true);
+                    CreatePDF(orderID);
                 }
-                string tempFileDir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
-                if (Directory.Exists(tempFileDir))
-                    Directory.Delete(tempFileDir, true);
-
                 string[] filenames = Directory.GetFiles(SourcePdfPath);
                 string outputFileName = "Orders_" + DateTime.Now.ToString("MMddyyyyhhmmss") + ".pdf";
                 string outputPath = HttpContext.Server.MapPath("~/Images/DestPdfFile/" + outputFileName);
@@ -474,8 +474,6 @@ namespace ClothesShop.Controllers
                 pdfStamper.Close();
                 pdfReader.Close();
 
-                if (Directory.Exists(SourcePdfPath))
-                    Directory.Delete(SourcePdfPath, true);
                 string app = ConfigurationManager.AppSettings["preExists"];
 
                 string FilePathReturn = @"Images/DestPdfFile/" + outputFileName;
@@ -487,7 +485,7 @@ namespace ClothesShop.Controllers
             }
             return null;
         }
-        
+
         [Authorization("Orders", (RoleType.Details))]
         public String CreatePDF(long id)
         {
@@ -503,12 +501,13 @@ namespace ClothesShop.Controllers
                 {
                     CityName = x.City != null ? x.City.Name : "",
                     CustomerAddress = x.Customer != null ? x.Customer.Address : "",
-                    CustomerMobileNumber = x.Customer != null ? string.Join(" - ", new string[] { x.Customer.MobileNumber1, x.Customer.MobileNumber2 }) : "",
+                    CustomerMobileNumber = x.Customer != null
+                    ? (x.Customer.MobileNumber2 != null ? string.Join(" - ", new string[] { x.Customer.MobileNumber1, x.Customer.MobileNumber2 }) : x.Customer.MobileNumber1) : "",
                     CustomerName = x.Customer != null ? x.Customer.Name : "",
                     Notes = x.Notes != null ? x.Notes : Languages.Resources.NoNotes,
                     OrderID = x.ID,
                     ShipmentPrice = x.ShipmentPrice.HasValue ? x.ShipmentPrice : 0,
-                    DisplayDate = DateTime.Now,
+                    DisplayDate = DateTime.UtcNow.AddHours(GetUtcOffset()),
                 };
 
                 var orderDetailsDataSet = x.ProductOrders.Select(v => new
@@ -532,7 +531,7 @@ namespace ClothesShop.Controllers
 
                 //File  
                 string FileName = "Order_" + DateTime.Now.Ticks.ToString() + ".pdf";
-                string dir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
+                string dir = HttpContext.Server.MapPath(@"~\Images\SourcePdfFiles\");
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
                 string FilePath = dir + FileName;
@@ -567,7 +566,6 @@ namespace ClothesShop.Controllers
             {
                 //Report  
                 ReportViewer reportViewer = new ReportViewer();
-
                 reportViewer.ProcessingMode = ProcessingMode.Local;
                 reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice.rdlc");
                 var x = _OrdersRepo.GetByID(id);
@@ -575,12 +573,13 @@ namespace ClothesShop.Controllers
                 {
                     CityName = x.City != null ? x.City.Name : "",
                     CustomerAddress = x.Customer != null ? x.Customer.Address : "",
-                    CustomerMobileNumber = x.Customer != null ? string.Join(" - ", new string[] { x.Customer.MobileNumber1, x.Customer.MobileNumber2 }) : "",
+                    CustomerMobileNumber = x.Customer != null
+                    ? (x.Customer.MobileNumber2 != null ? string.Join(" - ", new string[] { x.Customer.MobileNumber1, x.Customer.MobileNumber2 }) : x.Customer.MobileNumber1) : "",
                     CustomerName = x.Customer != null ? x.Customer.Name : "",
                     Notes = x.Notes != null ? x.Notes : Languages.Resources.NoNotes,
                     OrderID = x.ID,
                     ShipmentPrice = x.ShipmentPrice.HasValue ? x.ShipmentPrice : 0,
-                    DisplayDate = DateTime.Now,
+                    DisplayDate = DateTime.UtcNow.AddHours(GetUtcOffset()),
                 };
 
                 var orderDetailsDataSet = x.ProductOrders.Select(v => new
@@ -606,8 +605,18 @@ namespace ClothesShop.Controllers
                 string FileName = "Order_" + DateTime.Now.Ticks.ToString() + ".pdf";
                 string dir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
                 if (Directory.Exists(dir))
-                    Directory.Delete(dir, true);
-                Directory.CreateDirectory(dir);
+                {
+                    DirectoryInfo di = new DirectoryInfo(dir);
+                    var files = di.GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+                        file.Delete();
+                    }
+                }
+                else
+                    Directory.CreateDirectory(dir);
+
+
                 string FilePath = dir + FileName;
 
                 //create and set PdfReader  

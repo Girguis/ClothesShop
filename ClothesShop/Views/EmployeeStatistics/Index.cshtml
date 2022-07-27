@@ -4,6 +4,18 @@
     ViewBag.Title = Resources.EmployeesStatistics;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        padding: 5px;
+    }
+
+    .grid-item {
+        padding: 5px;
+        text-align: center;
+    }
+</style>
 <div class="container-fluid dir-rtl">
 
     <div class="col-md-12">
@@ -34,8 +46,14 @@
                 </div>
             </div>
             <div class="card-body custom-card-body">
-                <div id="StatisticsChart" style="text-align: -webkit-center;"></div>
-                <div id="StatisticsGrid" class="mt-2"></div>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <div id="StatisticsGrid"></div>
+                    </div>
+                    <div class="grid-item">
+                        <div id="StatisticsChart" style="text-align: -webkit-center;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -49,7 +67,7 @@
             EmployeeStatisticsManager.Instance.Init({
                 "grid_id": "#StatisticsGrid",
                 "chart_id":"#StatisticsChart",
-                "grid_height": "calc(100vh - 200px)",
+                "grid_height": "calc(100vh - 320px)",
                 "next_btn": "#nextMonthBtn",
                 "pre_btn": "#preMonthBtn",
                 "date": {
@@ -63,6 +81,7 @@
                     "totally_delivered": "@Resources.TotallyDelivered",
                     "partialy_delivered": "@Resources.PartialyDelivered",
                     "new": "@Resources.New",
+                    "waiting": "@Resources.Waiting",
                     "canceled_by_agent": "@Resources.CanceledByAgent",
                     "total": "@Resources.Total"
                 },

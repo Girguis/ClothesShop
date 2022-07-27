@@ -39,9 +39,6 @@
 }
 
 @media(max-width:768px) {
-    #sidebar {
-        display: none;
-    }
     .navbar {
         padding: 0.75rem;
         z-index: 99;

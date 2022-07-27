@@ -16,7 +16,7 @@ using Authorization = ClothesShop.Infrastructure.Authorization;
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class ProductSuppliersController : Controller
+    public class ProductSuppliersController : BaseController
     {
         private readonly ProductSuppliersRepo _ProductSuppliersRepo;
         public ProductSuppliersController()
@@ -139,12 +139,19 @@ namespace ClothesShop.Controllers
                 var productSuppliers = _ProductSuppliersRepo.GetAll();
                 var result = productSuppliers.Select(n => GetProductSupllierViewModel(n));
                 Filtering<ProductSuppliersViewModel> filtering = new Filtering<ProductSuppliersViewModel>();
-                if(obj.FilteredColumns.Count()>0 && obj.FilteredColumns[0].ColumnName == "CreatedOn")
-                    obj.FilteredColumns[0].SearchValue = DateTime.ParseExact(obj.FilteredColumns[0].SearchValue, "yyyy/MM/dd", CultureInfo.CurrentCulture).ToString("dd/MM/yyyy");
+
+                var dateSearchValue = string.Empty;
+                if(obj.FilteredColumns.Count() > 0 && obj.FilteredColumns[0].ColumnName == "CreatedOn_")
+                {
+                    var splittedDate = obj.FilteredColumns[0].SearchValue.Split(new string[] { " " }, StringSplitOptions.None).FirstOrDefault();
+                    dateSearchValue = DateTime.ParseExact(splittedDate, "yyyy/MM/dd", CultureInfo.CurrentCulture).ToString("dd/MM/yyyy");
+                    obj.FilteredColumns.Remove(obj.FilteredColumns[0]);
+                }
                 filtering.Columns = obj.FilteredColumns;
 
                 result = filtering.Search(result);
-              
+                if(!string.IsNullOrEmpty(dateSearchValue))
+                    result = result.Where(d => d.CreatedOn_.Split(new string[] { " " }, StringSplitOptions.None).FirstOrDefault() == dateSearchValue);
                 //Sorting    
                 result = filtering.OrderBy(obj.OrderBy, result);
 
@@ -167,7 +174,7 @@ namespace ClothesShop.Controllers
             return new ProductSuppliersViewModel()
             {
                 CreatedBy = productSupplier.CreatedBy,
-                CreatedOn = productSupplier.CreatedOn,
+                CreatedOn = productSupplier.CreatedOn.Value.AddHours(GetUtcOffset()),
                 ID = productSupplier.ID,
                 NumberOfPieces = productSupplier.NumberOfPieces,
                 OrginalPrice = productSupplier.OrginalPrice,
@@ -184,7 +191,7 @@ namespace ClothesShop.Controllers
             return new ProductSupplier()
             {
                 CreatedBy = !isNew ? productSupplier.CreatedBy : Session["UserName"].ToString(),
-                CreatedOn = !isNew ? productSupplier.CreatedOn : DateTime.Now,
+                CreatedOn = !isNew ? productSupplier.CreatedOn : DateTime.UtcNow,
                 ID = productSupplier.ID,
                 NumberOfPieces = productSupplier.NumberOfPieces,
                 OrginalPrice = productSupplier.OrginalPrice,

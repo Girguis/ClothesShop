@@ -203,6 +203,7 @@
     <Compile Include="Areas\Settings\Models\JobRoleViewModel.cs" />
     <Compile Include="Areas\Settings\Models\LoginViewModel.cs" />
     <Compile Include="Areas\Settings\SettingsAreaRegistration.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ColorsController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />

@@ -527,7 +527,7 @@
     <value>جديد</value>
   </data>
   <data name="Waiting" xml:space="preserve">
-    <value>قيد الانتظار</value>
+    <value>جاري التوصيل</value>
   </data>
   <data name="PartialyDelivered" xml:space="preserve">
     <value>تم التسليم جزئي</value>
@@ -845,7 +845,7 @@
     <value>إجمالي عدد الطلبات</value>
   </data>
   <data name="StatisticsAndBalance" xml:space="preserve">
-    <value>الإحصائيات والمعاملات</value>
+    <value>الإحصائيات والمعاملات الماليه</value>
   </data>
   <data name="EmployeesStatistics" xml:space="preserve">
     <value>إحصائيات البائعين</value>

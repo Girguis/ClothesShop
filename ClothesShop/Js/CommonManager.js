@@ -100,6 +100,7 @@
 
         this.getFiltersList = function (filters) {
             var lst = [];
+            console.log(filters);
             if (!filters || filters.length < 1)
                 return lst;
 
@@ -108,9 +109,18 @@
 
             for (var i = 0; i < filters.length; i++) {
                 if (Array.isArray(filters[i]) && !lst.find(function (e) { return e.ColumnName == filters[i][0] })) {
-                    lst.push({ ColumnName: filters[i][0], SearchValue: filters[i][2] });
+                    if (Array.isArray(filters[i][0])) {
+                        for (var j = 0; j < filters[i].length; j++)
+                        {
+                            if (Array.isArray(filters[i][j]) && !lst.find(function (e) { return e.ColumnName == filters[i][j][0] }))
+                                lst.push({ ColumnName: filters[i][j][0], SearchValue: filters[i][j][2] });
+                        }
+                    }
+                    else
+                        lst.push({ ColumnName: filters[i][0], SearchValue: filters[i][2] });
                 }
             }
+            console.log(lst);
             return lst;
         }
 
@@ -118,6 +128,12 @@
             if (sort == null || sort.length < 1)
                 return null;
             sort = sort[0];
+            if (sort.selector.context == undefined) {
+                return {
+                    ColumnName: sort.selector,
+                    Direction: sort.desc ? "DESC" : "ASC"
+                };
+            }
             return {
                 ColumnName: sort.selector.context.column.dataField,
                 Direction: sort.desc ? "DESC" : "ASC"

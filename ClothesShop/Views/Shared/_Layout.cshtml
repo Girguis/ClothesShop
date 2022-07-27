@@ -21,14 +21,21 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/common")
-    <script>
-        $(function () {
-            if (CommonManager.Instance.IsMobileDevice()) {
-                $("#sidebar").removeClass("collapsed");
-                $("#sidebar").addClass("collapsed");
-                $("#sidebar").css("display", "block");
-            }
+<script>
+    //$(function () {
+    //    if (CommonManager.Instance.IsMobileDevice()) {
+    //        $("#sidebar").removeClass("collapsed");
+    //        $("#sidebar").addClass("collapsed");
+    //        $("#sidebar").css("display", "block");
+    //    }
+    //});
+    $(document).ready(function () {
+        $('.content').click(function (e) {
+                if (!$("#sidebar").hasClass("collapsed")) {
+            $("#sidebar").addClass("collapsed");
+                }
         });
+    });
     </script>
 </head>
 

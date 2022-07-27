@@ -15,6 +15,7 @@ namespace DAL
     {
         public long ID { get; set; }
         public System.DateTime RequestDate { get; set; }
+        public string RequestDate_ { get; set; }
         public string CustomerName { get; set; }
         public string CustomerNumber { get; set; }
         public string CustomerAddress { get; set; }

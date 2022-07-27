@@ -16,11 +16,11 @@
 
             var start_date = options["start_date"];
             CommonManager.Instance.InitDateBox(start_date["id"], start_date["div_id"], start_date["message"], noData, TodayTransactionsManager.Instance.SetToDate);
-            
             var end_date = options["end_date"];
             CommonManager.Instance.InitDateBox(end_date["id"], end_date["div_id"], end_date["message"], noData, TodayTransactionsManager.Instance.SetFromDate);
             $(end_date["div_id"]).dxDateBox("instance").option("value", new Date());
 
+            $(start_date["div_id"]).dxDateBox("instance").option("value", options["start_date_val"]);
             getData(options);
 
             $(options["search_btn"]).unbind("click").bind("click", function () {

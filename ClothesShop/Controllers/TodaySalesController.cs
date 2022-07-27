@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
-using BLL.Repositories;
+﻿using BLL.Repositories;
 using ClothesShop.Enums;
 using ClothesShop.Helpers;
 using ClothesShop.Infrastructure;
 using ClothesShop.Models;
 using DAL;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
 using Authorization = ClothesShop.Infrastructure.Authorization;
 
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class TodaySalesController : Controller
+    public class TodaySalesController : BaseController
     {
         private readonly TodayTransactionsRepo _TodayTransactionsRepo;
         public TodaySalesController()
@@ -145,12 +144,11 @@ namespace ClothesShop.Controllers
 
         private TodayTransactionsViewModel GetTodayTransactionsViewModel(TodayTransaction t)
         {
-
             var obj = new TodayTransactionsViewModel()
             {
                 ID = t.ID,
                 CreatedBy = t.CreatedBy,
-                CreatedOn = t.CreatedOn.Value,
+                CreatedOn = t.CreatedOn.Value.AddHours(GetUtcOffset()),
                 IsApproved = t.IsApproved.Value,
                 TodayTotalTransactionsSellingPrice = t.Transactions.Sum(tt => tt.SellingPrice * tt.NumberOfPieces).Value,
                 Transactions = t.Transactions.Select(tt => new TransactionViewModel()
@@ -169,16 +167,16 @@ namespace ClothesShop.Controllers
             obj.TodaySalesSeralized = JsonConvert.SerializeObject(obj.Transactions);
             return obj;
         }
-        private TodayTransaction GetTodayTransactionModel(TodayTransactionsViewModel t , bool isNew = false)
+        private TodayTransaction GetTodayTransactionModel(TodayTransactionsViewModel t, bool isNew = false)
         {
             t.Transactions = JsonConvert.DeserializeObject<List<TransactionViewModel>>(t.TodaySalesSeralized)?.ToList();
             return new TodayTransaction()
             {
                 ID = t.ID,
                 CreatedBy = isNew ? Session["UserName"].ToString() : t.CreatedBy,
-                CreatedOn = isNew ? DateTime.Now : t.CreatedOn,
+                CreatedOn = isNew ? DateTime.UtcNow : t.CreatedOn,
                 IsApproved = t.IsApproved,
-                
+
                 Transactions = t.Transactions.Select(tt => new Transaction()
                 {
                     //EmployeeID = tt.EmployeeID,
@@ -204,15 +202,28 @@ namespace ClothesShop.Controllers
 
                 int totalRecords = 0;
 
-                var transactions = _TodayTransactionsRepo.GetAll();
-                var result = transactions.Select(n => GetTodayTransactionsViewModel(n));
                 Filtering<TodayTransactionsViewModel> filtering = new Filtering<TodayTransactionsViewModel>();
-                if (obj.FilteredColumns.Count() > 0 && obj.FilteredColumns[0].ColumnName == "CreatedOn")
-                    obj.FilteredColumns[0].SearchValue = DateTime.ParseExact(obj.FilteredColumns[0].SearchValue, "yyyy/MM/dd", CultureInfo.CurrentCulture).ToString("dd/MM/yyyy");
+                var dateSearchValue = string.Empty;
+                if (obj.FilteredColumns.Count() > 0 && obj.FilteredColumns[0].ColumnName == "CreatedOn_")
+                {
+                    dateSearchValue = ParseDate(obj.FilteredColumns[0].SearchValue)?.ToString(DateTimeFormatter.DateFormat);
+                    obj.FilteredColumns.Remove(obj.FilteredColumns[0]);
+                }
                 filtering.Columns = obj.FilteredColumns;
+
+                var transactions = _TodayTransactionsRepo.GetAll().Where(c =>
+                {
+                    DateTime? date = c.CreatedOn.HasValue ? c.CreatedOn.Value.AddHours(GetUtcOffset()) : default;
+                    return string.IsNullOrEmpty(dateSearchValue) ||
+                    date?.ToString(DateTimeFormatter.DateFormat) == dateSearchValue;
+                });
+
+                var result = transactions.Select(n => GetTodayTransactionsViewModel(n));
 
                 //Sorting    
                 result = filtering.Search(result);
+                if (obj.OrderBy?.ColumnName == "CreatedOn_")
+                    obj.OrderBy.ColumnName = "CreatedOn";
                 result = filtering.OrderBy(obj.OrderBy, result);
 
                 totalRecords = result.Count();

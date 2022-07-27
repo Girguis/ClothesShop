@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using BLL.Repositories;
+﻿using BLL.Repositories;
 using ClothesShop.Helpers;
 using ClothesShop.Infrastructure;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class StatisticsController : Controller
+    public class StatisticsController : BaseController
     {
         private readonly TodayTransactionsRepo _TodayTransactionsRepo;
         private readonly SalesRatesRepo _SalesRatesRepo;
@@ -29,7 +29,7 @@ namespace ClothesShop.Controllers
         public ActionResult Monthly()
         {
             string viewingDateFormat = DateTimeFormatter.ViewingDateFormat;
-            ViewBag.StartDate = new DateTime(DateTime.Today.Year , DateTime.Today.Month , 1).ToString(viewingDateFormat);
+            ViewBag.StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).ToString(viewingDateFormat);
             ViewBag.EndDate = DateTime.Today.ToString(viewingDateFormat);
             return View();
         }
@@ -39,25 +39,31 @@ namespace ClothesShop.Controllers
             try
             {
                 double days = (end - start).TotalDays + 1;
-                var data = _TodayTransactionsRepo.GetAll().Where(c => c.CreatedOn >= start && c.CreatedOn < end.AddDays(1));
-                var result = data.GroupBy(c => c.CreatedOn.Value.ToString(DateTimeFormatter.DateFormat) ,
-                    (key , value) => new 
-                    { 
-                        CreatedOn_ = key , 
-                        CreatedDate = value.First().CreatedOn.HasValue? value.First().CreatedOn.Value.ToString(DateTimeFormatter.MonthDayDateFormat):"", 
-                        TotalTransactions =  value.Sum(x=>x.Transactions.Sum(cv=>cv.NumberOfPieces * cv.SellingPrice))
-                    }).OrderBy(o=>DateTime.Parse(o.CreatedOn_));
+                var data = _TodayTransactionsRepo.GetAll()
+                    .Where(c =>
+                    {
+                        DateTime? date = c.CreatedOn.HasValue ? c.CreatedOn.Value.AddHours(GetUtcOffset()) : default;
+                        return date >= start && date <= end.AddDays(1);
+                    });
+
+                var result = data.GroupBy(c => c.CreatedOn.Value.AddHours(GetUtcOffset()).ToString(DateTimeFormatter.DateFormat),
+                    (key, value) => new
+                    {
+                        CreatedOn_ = key,
+                        CreatedDate = value.First().CreatedOn.HasValue ? value.First().CreatedOn.Value.ToString(DateTimeFormatter.MonthDayDateFormat) : "",
+                        TotalTransactions = value.Sum(x => x.Transactions.Sum(cv => cv.NumberOfPieces * cv.SellingPrice))
+                    }).OrderBy(o => DateTime.Parse(o.CreatedOn_));
 
                 var paymentAverage = (result.Sum(r => r.TotalTransactions) / days);
 
                 var salesRates = _SalesRatesRepo.GetAll();
 
                 var rate = (salesRates != null && salesRates.Count() > 0) ?
-                    salesRates.Where(r => (r.From.HasValue && r.To.HasValue && r.From <= paymentAverage && r.To >= paymentAverage) || 
+                    salesRates.Where(r => (r.From.HasValue && r.To.HasValue && r.From <= paymentAverage && r.To >= paymentAverage) ||
                     (!r.From.HasValue && r.To >= paymentAverage) || (!r.To.HasValue && r.From <= paymentAverage)).FirstOrDefault() : null;
 
 
-                return Json(new { data = result , PaymentAverage = paymentAverage  , Rate = (rate != null ? rate.Name :"") , RateColor = (rate != null ? rate.RateColor : "") });
+                return Json(new { data = result, PaymentAverage = paymentAverage, Rate = (rate != null ? rate.Name : ""), RateColor = (rate != null ? rate.RateColor : "") });
             }
             catch (Exception ex)
             {

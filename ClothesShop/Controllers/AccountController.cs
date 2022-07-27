@@ -67,6 +67,7 @@ namespace ClothesShop.Controllers
                     Session["UserName"] = model.UserName;
                     Session["UserID"] = login.EmployeeID;
                     Session["JobID"] = login.Employee.JobTypeID;
+                    Session["UtcOffset"] = login.Employee.UtcOffset??2;
                     JobRolesRepo _JobTypesRepo = new JobRolesRepo();
                     List<JobRole>jobRoles = _JobTypesRepo.GetByJobID(login.Employee.JobTypeID).ToList();
                     Session["Roles"] = jobRoles;
@@ -95,6 +96,8 @@ namespace ClothesShop.Controllers
             Session["UserName"] = null;
             Session["UserID"] = null;
             Session["Roles"] = null;
+            Session["JobID"] = null;
+            Session["UtcOffset"] = null;
             return RedirectToAction("Index", "Account");
         }
         [AllowAnonymous]

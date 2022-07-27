@@ -76,7 +76,13 @@
                         allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
                     },
                     {
-                        dataField: "New", caption: captions["new"], width: 80,
+                        dataField: "New", caption: captions["new"], width: 100,
+                        alignment: "right",
+                        dataType: "string",
+                        allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
+                    },
+                    {
+                        dataField: "Waiting", caption: captions["waiting"], width: 100,
                         alignment: "right",
                         dataType: "string",
                         allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
@@ -88,7 +94,7 @@
                         allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
                     },
                     {
-                        dataField: "Total", caption: captions["total"], width: 90,
+                        dataField: "Total", caption: captions["total"], width: 110,
                         alignment: "right",
                         dataType: "string",
                         allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
@@ -107,6 +113,11 @@
                     },
                     {
                         column: "New",
+                        summaryType: "sum",
+                        displayFormat: captions["total"] + ": {0} "
+                    },
+                    {
+                        column: "Waiting",
                         summaryType: "sum",
                         displayFormat: captions["total"] + ": {0} "
                     },
@@ -130,7 +141,7 @@
                             }
                             if (option.summaryProcess === "calculate") {
                                 var row = option.value;
-                                option.totalValue += row.TotallyDelivered + row.PartialyDelivered + row.New + row.CanceledByAgent;
+                                option.totalValue += row.TotallyDelivered + row.PartialyDelivered + row.New + row.CanceledByAgent + row.Waiting;
                             }
                         }
                     },
@@ -202,10 +213,10 @@
             });
         }
         var getData = function (date) {
-            var data = { date: date };
+            var data = { date: moment(date).format(DateFormat.DayMonthYear) };
             CommonManager.Instance.SendRequest(Options["url"], "POST", JSON.stringify(data), function (result) {
                 if (result) {
-                    
+                               
                     var data = result.Data;
                     $(Options["chart_id"]).dxPieChart("instance").option("dataSource", data);
                     $(Options["chart_id"]).dxPieChart("instance").refresh();

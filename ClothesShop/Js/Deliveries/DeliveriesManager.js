@@ -37,13 +37,13 @@
                         allowHeaderFiltering: false,
                     },
                     {
-                        dataField: "NumberOfOrders",
-                        caption: captions["numberOfOrders"],
+                        dataField: "NumberOfOrders", caption: captions["numberOfOrders"],
+                        allowSorting: true,
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
                         minWidth: 80,
                         alignment: "right",
-                        allowFiltering: false,
-                        allowSorting: false,
-                        allowHeaderFiltering: false,
+                        dataType: "string", // date
                     },
                     {
                         dataField: "TotalOrderCash",
@@ -51,7 +51,7 @@
                         minWidth: 80,
                         alignment: "right",
                         allowFiltering: false,
-                        allowSorting: false,
+                        allowSorting: true,
                         allowHeaderFiltering: false,
                     },
                     {

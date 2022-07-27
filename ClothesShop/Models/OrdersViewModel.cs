@@ -92,7 +92,7 @@ namespace ClothesShop.Models
         // [Required(ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.RequiredField))]
         [Display(ResourceType = typeof(Languages.Resources), Name = nameof(Languages.Resources.MobileNumber2))]
         [RegularExpression(@"^([0-9]+)$", ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.NumbersOnly))]
-        [StringLength(11, ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.EqualText), MinimumLength = 0)]
+        [StringLength(11, ErrorMessageResourceType = typeof(Languages.Resources), ErrorMessageResourceName = nameof(Languages.Resources.EqualText), MinimumLength = 8)]
 
         public string MobileNumber2 { get; set; }
     }

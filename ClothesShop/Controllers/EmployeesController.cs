@@ -100,6 +100,7 @@ namespace ClothesShop.Controllers
                 employee.BackSSNURL = UploadFile(employee.ID, employeeViewModel.BackSSN);
                 employee.FrontLicenceURL = UploadFile(employee.ID, employeeViewModel.FrontLicence);
                 employee.BackLicenceURL = UploadFile(employee.ID, employeeViewModel.BackLicence);
+                employee.UtcOffset = 2;
                 _EmployeesRepo.Update(employee);
 
                 return RedirectToAction("Index");
@@ -218,6 +219,7 @@ namespace ClothesShop.Controllers
                 employee.BackLicenceURL = bLicence;
                 employee.FrontSSNURL = fssnUrl;
                 employee.BackSSNURL = bssnUrl;
+                employee.UtcOffset = 2;
                 _EmployeesRepo.Update(employee);
                 return RedirectToAction("Index");
             }
@@ -285,7 +287,7 @@ namespace ClothesShop.Controllers
                 MobileNumber2 = e.MobileNumber2,
                 Salary = e.Salary,
                 SSN = e.SSN,
-                StartWorkingDate = e.StartWorkingDate
+                StartWorkingDate = e.StartWorkingDate,
             };
         }
         private string GetPhysicalPath(string path)

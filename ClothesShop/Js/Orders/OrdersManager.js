@@ -71,7 +71,7 @@
                         }
                     },
                     {
-                        dataField: "RequestDate", caption: captions["request_date"], minWidth: 150,
+                        dataField: "RequestDate_", caption: captions["request_date"], minWidth: 150,
                         allowSorting: true,
                         allowFiltering: true,
                         allowHeaderFiltering: false,
@@ -79,11 +79,7 @@
                         alignment: "right",
                         cssClass: "dir-ltr",
                         dataType: "date", // date
-                        calculateDisplayValue: function (row) {
-                            var date = row.RequestDate;
-                            date = CommonManager.Instance.ParseDate(date, DateFormat.DayMonthYearHourMin);
-                            return date;
-                        }
+                        
                     },
                     {
                         dataField: "Customer_Name", caption: captions["customer_name"], minWidth: 120,

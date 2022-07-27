@@ -5,13 +5,14 @@ using ClothesShop.Models;
 using DAL;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class EmployeeStatisticsController : Controller
+    public class EmployeeStatisticsController : BaseController
     {
         private readonly EmployeesRepo employeesRepo;
         private readonly OrdersRepo ordersRepo;
@@ -23,21 +24,7 @@ namespace ClothesShop.Controllers
             ordersRepo = new OrdersRepo();
             balanceRepo = new EmployeeBalanceRepo();
         }
-        private int GetJobID()
-        {
-            int jobId = 4;
-            if (Session["JobID"] != null && !string.IsNullOrEmpty(Session["JobID"].ToString()))
-                int.TryParse(Session["JobID"].ToString(), out jobId);
-            return jobId;
-
-        }
-        private int GetUserID()
-        {
-            int empID = 0;
-            if (Session["UserID"] != null && !string.IsNullOrEmpty(Session["UserID"].ToString()))
-                int.TryParse(Session["UserID"].ToString(), out empID);
-            return empID;
-        }
+        
         [Authorization("Balance", (RoleType.View))]
         public ActionResult Index()
         {
@@ -75,21 +62,23 @@ namespace ClothesShop.Controllers
                 foreach (var seller in sellers)
                 {
                     var empOrders = ordersRepo.GetAll()
-                        .Where(x => x.SellerID == seller.ID)
-                        .Where(y => (y.RequestDate.Value.Year == year)
-                                && (y.RequestDate.Value.Month == month));
+                        .Where(y => y.SellerID == seller.ID && (y.RequestDate.Value.AddHours(GetUtcOffset()).Year == year)
+                                && (y.RequestDate.Value.AddHours(GetUtcOffset()).Month == month)).ToList();
+
+//                    System.IO.File.WriteAllText(Server.MapPath("~") +"\\File_" + seller.ID + ".txt", Newtonsoft.Json.JsonConvert.SerializeObject(empOrders));
 
                     data.Add(new EmployeeStatisticsViewModel
                     {
                         SellerID = seller.ID,
                         SellerName = seller.FullName,
-                        CanceledByAgent = empOrders.Where(x => x.OrderStatusID == (int)Enums.OrderStatuses.CanceledByAgent).Count(),
-                        New = empOrders.Where(x => x.OrderStatusID == (int)Enums.OrderStatuses.New).Count(),
-                        PartialyDelivered = empOrders.Where(x => x.OrderStatusID == (int)Enums.OrderStatuses.PartialyDelivered).Count(),
-                        TotallyDelivered = empOrders.Where(x => x.OrderStatusID == (int)Enums.OrderStatuses.TotallyDelivered).Count(),
+                        CanceledByAgent = empOrders.Where(x => x.OrderStatusID == (int)OrderStatuses.CanceledByAgent).Count(),
+                        New = empOrders.Where(x => x.OrderStatusID == (int)OrderStatuses.New).Count(),
+                        PartialyDelivered = empOrders.Where(x => x.OrderStatusID == (int)OrderStatuses.PartialyDelivered).Count(),
+                        TotallyDelivered = empOrders.Where(x => x.OrderStatusID == (int)OrderStatuses.TotallyDelivered).Count(),
+                        Waiting = empOrders.Where(x => x.OrderStatusID == (int)OrderStatuses.Waiting).Count()
                     });
                 }
-                data.ForEach(x => x.Total = x.New + x.PartialyDelivered + x.TotallyDelivered + x.CanceledByAgent);
+                data.ForEach(x => x.Total = x.New + x.PartialyDelivered + x.TotallyDelivered + x.CanceledByAgent + x.Waiting);
 
                 int totalRecords = data.Count;
                 return Json(new { TotalCount = totalRecords, Data = data });
@@ -120,20 +109,20 @@ namespace ClothesShop.Controllers
         {
             try
             {
-                int year = date.HasValue ? date.Value.Year : DateTime.Now.Year;
-                int month = date.HasValue ? date.Value.Month : DateTime.Now.Month;
+                int year = date.HasValue ? date.Value.Year : DateTime.UtcNow.AddHours(GetUtcOffset()).Year;
+                int month = date.HasValue ? date.Value.Month : DateTime.UtcNow.AddHours(GetUtcOffset()).Month;
 
                 var seller = employeesRepo.GetByID(id);
                 if (seller == null)
                     return HttpNotFound();
                 var empOrders = ordersRepo.GetAll()
                      .Where(x => x.SellerID == seller.ID)
-                     .Where(y => (y.RequestDate.Value.Year == year)
-                             && (y.RequestDate.Value.Month == month));
+                     .Where(y => (y.RequestDate.Value.AddHours(GetUtcOffset()).Year == year)
+                             && (y.RequestDate.Value.AddHours(GetUtcOffset()).Month == month));
                 var empBalance = balanceRepo.GetAll()
                     .Where(x => x.EmployeeID == id &&
-                    x.CreateDate.Value.Year == year &&
-                    x.CreateDate.Value.Month == month);
+                    x.CreateDate.Value.AddHours(GetUtcOffset()).Year == year &&
+                    x.CreateDate.Value.AddHours(GetUtcOffset()).Month == month);
                 SingleSellerStaticticsViewModel model = new SingleSellerStaticticsViewModel
                 {
                     SellerID = seller.ID,

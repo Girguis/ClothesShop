@@ -44,6 +44,7 @@ namespace DAL
         public string Language { get; set; }
         public string MobileNumber1 { get; set; }
         public string MobileNumber2 { get; set; }
+        public Nullable<double> UtcOffset { get; set; }
     
         public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

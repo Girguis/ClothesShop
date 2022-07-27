@@ -1,4 +1,11 @@
-﻿using System;
+﻿using BLL.Repositories;
+using ClothesShop.Enums;
+using ClothesShop.Helpers;
+using ClothesShop.Infrastructure;
+using ClothesShop.Models;
+using DAL;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,19 +13,12 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using BLL.Repositories;
-using ClothesShop.Enums;
-using ClothesShop.Helpers;
-using ClothesShop.Infrastructure;
-using ClothesShop.Models;
-using DAL;
-using Newtonsoft.Json;
 using Authorization = ClothesShop.Infrastructure.Authorization;
 
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class TodayExpensController : Controller
+    public class TodayExpensController : BaseController
     {
         private readonly TodayExpensesRepo _TodayExpensesRepo;
         public TodayExpensController()
@@ -58,7 +58,7 @@ namespace ClothesShop.Controllers
         public ActionResult Create()
         {
             string dateFormat = DateTimeFormatter.DateFormat;
-            var current = _TodayExpensesRepo.GetAll().Where(c => c.CreatedOn.Value.ToString(dateFormat) == DateTime.Now.ToString(dateFormat) && c.IsApproved == false).FirstOrDefault();
+            var current = _TodayExpensesRepo.GetAll().Where(c => c.CreatedOn.Value.ToString(dateFormat) == DateTime.UtcNow.ToString(dateFormat) && c.IsApproved == false).FirstOrDefault();
             if (current != null)
                 return RedirectToAction("Edit", new { id = current.ID });
 
@@ -98,7 +98,7 @@ namespace ClothesShop.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TodayExpens todayExpens = _TodayExpensesRepo.GetByID(id.Value);
-            
+
             if (todayExpens == null)
             {
                 return HttpNotFound();
@@ -148,7 +148,7 @@ namespace ClothesShop.Controllers
                 ID = e.ID,
                 IsApproved = e.IsApproved.Value,
                 CreatedBy = e.CreatedBy,
-                CreatedOn = e.CreatedOn.Value,
+                CreatedOn = e.CreatedOn.Value.AddHours(GetUtcOffset()),
                 TodayTotalExpensesCost = e.Expenses.Sum(ee => ee.Cost).Value,
                 Expenses = e.Expenses.Select(ee => new ExpensesViewModel()
                 {
@@ -167,7 +167,7 @@ namespace ClothesShop.Controllers
             {
                 ID = e.ID,
                 CreatedBy = isNew ? Session["UserName"].ToString() : e.CreatedBy,
-                CreatedOn = isNew ? DateTime.Now : e.CreatedOn,
+                CreatedOn = isNew ? DateTime.UtcNow : e.CreatedOn,
                 IsApproved = e.IsApproved,
                 Expenses = e.Expenses.Select(ee => new Expens()
                 {
@@ -186,28 +186,39 @@ namespace ClothesShop.Controllers
         {
             try
             {
-                var pageIndex = obj.PageNumber > 0 ?obj.PageNumber - 1 : 0;
+                var pageIndex = obj.PageNumber > 0 ? obj.PageNumber - 1 : 0;
                 var pageSize = obj.PageSize;
 
                 int totalRecords = 0;
 
-                var productSuppliers = _TodayExpensesRepo.GetAll();
-                var result = productSuppliers.Select(n => GetTodayExpensViewModel(n));
                 Filtering<TodayExpenseViewModel> filtering = new Filtering<TodayExpenseViewModel>();
-
-                if (obj.FilteredColumns.Count() > 0 && obj.FilteredColumns[0].ColumnName == "CreatedOn")
-                    obj.FilteredColumns[0].SearchValue = DateTime.ParseExact(obj.FilteredColumns[0].SearchValue, "yyyy/MM/dd", CultureInfo.CurrentCulture).ToString("dd/MM/yyyy");
-
+                var dateSearchValue = string.Empty;
+                if (obj.FilteredColumns.Count() > 0 && obj.FilteredColumns[0].ColumnName == "CreatedOn_")
+                {
+                    dateSearchValue = ParseDate(obj.FilteredColumns[0].SearchValue)?.ToString(DateTimeFormatter.DateFormat);
+                    obj.FilteredColumns.Remove(obj.FilteredColumns[0]);
+                }
                 filtering.Columns = obj.FilteredColumns;
 
+                var productSuppliers = _TodayExpensesRepo.GetAll().Where(c =>
+                {
+                    DateTime? date = c.CreatedOn.HasValue ? c.CreatedOn.Value.AddHours(GetUtcOffset()) : default;
+                    return string.IsNullOrEmpty(dateSearchValue) ||
+                    date?.ToString(DateTimeFormatter.DateFormat) == dateSearchValue;
+                });
+
+                var result = productSuppliers.Select(n => GetTodayExpensViewModel(n));
                 //Sorting    
                 result = filtering.Search(result);
+                if (obj.OrderBy?.ColumnName == "CreatedOn_")
+                    obj.OrderBy.ColumnName = "CreatedOn";
+
                 result = filtering.OrderBy(obj.OrderBy, result);
 
                 totalRecords = result.Count();
 
                 var data = result.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-              
+
 
                 return Json(new { TotalCount = totalRecords, Data = data });
             }

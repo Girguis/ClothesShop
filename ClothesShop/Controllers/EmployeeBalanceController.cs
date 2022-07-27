@@ -12,7 +12,7 @@ using System.Web.Mvc;
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class EmployeeBalanceController : Controller
+    public class EmployeeBalanceController : BaseController
     {
         private readonly EmployeeBalanceRepo employeeBalanceRepo;
         private readonly EmployeesRepo employeesRepo;
@@ -21,21 +21,6 @@ namespace ClothesShop.Controllers
         {
             employeeBalanceRepo = new EmployeeBalanceRepo();
             employeesRepo = new EmployeesRepo();
-        }
-        private int GetJobID()
-        {
-            int jobId = 4;
-            if (Session["JobID"] != null && !string.IsNullOrEmpty(Session["JobID"].ToString()))
-                int.TryParse(Session["JobID"].ToString(), out jobId);
-            return jobId;
-
-        }
-        private int GetUserID()
-        {
-            int empID = 0;
-            if (Session["UserID"] != null && !string.IsNullOrEmpty(Session["UserID"].ToString()))
-                int.TryParse(Session["UserID"].ToString(), out empID);
-            return empID;
         }
 
         // GET: EmployeeBalance
@@ -83,7 +68,7 @@ namespace ClothesShop.Controllers
                     EmployeesBalance employeesBalance = new EmployeesBalance
                     {
                         Amount = model.Amount,
-                        CreateDate = DateTime.Now,
+                        CreateDate = DateTime.UtcNow,
                         EmployeeID = model.SellerID,
                         Type = model.Type
                     };
@@ -156,7 +141,15 @@ namespace ClothesShop.Controllers
         {
             var totalSellerBalances = employeeBalanceRepo.GetAll()
                                     .Where(x => x.EmployeeID == id)
-                                    .Select(x=> new{ x.Amount, x.CreateDate.Value.Year,x.CreateDate.Value.Month,x.ID,x.Type});
+                                    .Select(x=> 
+                                    new
+                                    { 
+                                        x.Amount,
+                                        x.CreateDate.Value.AddHours(GetUtcOffset()).Year,
+                                        x.CreateDate.Value.AddHours(GetUtcOffset()).Month,
+                                        x.ID,
+                                        x.Type
+                                    });
             int totalRecords = totalSellerBalances.Count();
             return Json(new {TotalCount= totalRecords, Data=totalSellerBalances });
         }

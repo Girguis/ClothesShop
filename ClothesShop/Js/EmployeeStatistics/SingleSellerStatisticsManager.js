@@ -47,7 +47,7 @@
             var data = { id: id, date: date };
 
             $.ajax({
-                url: Options["url"] + "?id=" + id + "&date=" + moment(date).format("MM/DD/YYYY"),
+                url: Options["url"] + "?id=" + id + "&date=" + moment(date).format(DateFormat.DayMonthYear),
                 type: "GET",
                 success: function (result) {
                     CommonManager.Instance.ShowHideLoading(false);

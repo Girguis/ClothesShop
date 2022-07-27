@@ -66,7 +66,7 @@
 </div>
 @section scripts{
     @Scripts.Render("~/bundles/statistics")
-    <script>
+<script>
     var days =
         ['@Resources.Sunday',
         '@Resources.Monday',
@@ -94,6 +94,7 @@
                     "id": "#EndDate",
                     "message": "@Resources.Date"
                 },
+                "start_date_val":"@ViewBag.StartDate",
                 "interval": 7,
                 "not_valid_msg": "@string.Format(Resources.CannotExccedDays, "7")",
                 "chart_title": "@Resources.WeeklyStatistics",
@@ -104,5 +105,5 @@
                 "currency": "@Resources.LE"
             });
         });
-    </script>
+</script>
 }

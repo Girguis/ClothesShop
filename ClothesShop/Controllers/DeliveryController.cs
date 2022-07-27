@@ -21,7 +21,7 @@ using Authorization = ClothesShop.Infrastructure.Authorization;
 namespace ClothesShop.Controllers
 {
     [Authentication]
-    public class DeliveryController : Controller
+    public class DeliveryController : BaseController
     {
         private readonly OrdersRepo _OrdersRepo;
 
@@ -84,10 +84,11 @@ namespace ClothesShop.Controllers
 
             var orderStatuses = Helper.EnumToList<OrderStatuses>();
             var orders = employee.Orders.Where(o => o.OrderStatusID == (int)OrderStatuses.Waiting);
+            
             var result = orders.Select(n => new OrdersViewModel
             {
                 ID = n.ID,
-                RequestDate = n.RequestDate,
+                RequestDate = n.RequestDate.Value.AddHours(GetUtcOffset()),
                 Customer = new CustomerViewModel()
                 {
                     Address = n.Customer != null ? n.Customer.Address : "",
@@ -225,7 +226,6 @@ namespace ClothesShop.Controllers
         {
             try
             {
-
                 //Report  
                 ReportViewer reportViewer = new ReportViewer();
 
@@ -242,11 +242,11 @@ namespace ClothesShop.Controllers
                     OrderPrice = n.ProductOrders.Sum(p => p.Quantity * p.SellingPrice).Value,
                     ShipmentPrice = n.ShipmentPrice,
                     OrderCode = n.ID,
-                    RequestDate = n.RequestDate.Value.ToString("dd/MM/yyyy")
+                    RequestDate = n.RequestDate.Value.AddHours(GetUtcOffset()).ToString("dd/MM/yyyy")
                 }).ToList();
                 var deliveryDataSet = new
                 {
-                    CurrentDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"),
+                    CurrentDate = DateTime.UtcNow.AddHours(GetUtcOffset()).ToString("dd/MM/yyyy hh:mm tt"),
                     DeliveryFullName = employee.FullName,
                     DeliveryMobileNumber = string.Join(" - ", new string[] { employee.MobileNumber1, employee.MobileNumber2 }),
                     NumberOfOrders = orders.Count(),
@@ -265,7 +265,7 @@ namespace ClothesShop.Controllers
                 byte[] bytes = reportViewer.LocalReport.Render("Pdf", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
 
                 //File  
-                string FileName = "Sheet_" + DateTime.Now.Ticks.ToString() + ".pdf";
+                string FileName = "Sheet_" + DateTime.UtcNow.AddHours(GetUtcOffset()).Ticks.ToString() + ".pdf";
                 string dir = HttpContext.Server.MapPath(@"~\Images\TempFiles\");
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
@@ -323,12 +323,12 @@ namespace ClothesShop.Controllers
                     OrderPrice = n.ProductOrders.Sum(p => p.Quantity * p.SellingPrice).Value.ToString(),
                     ShipmentPrice = n.ShipmentPrice.ToString(),
                     OrderCode = n.ID.ToString(),
-                    RequestDate = n.RequestDate.Value.ToString("yyyy-MM-dd")
+                    RequestDate = n.RequestDate.Value.AddHours(GetUtcOffset()).ToString("yyyy-MM-dd")
                 }).ToList();
 
                 List<string> deliveryData = new List<string>()
                 {
-                    DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    DateTime.UtcNow.AddHours(GetUtcOffset()).ToString("yyyy-MM-dd hh:mm:ss tt"),
                     employee.FullName,
                     string.Join(" - ", new string[] { employee.MobileNumber1, employee.MobileNumber2 }),
                     orders.Count().ToString(),
@@ -381,7 +381,7 @@ namespace ClothesShop.Controllers
                 sheet.AllocatedRange.AutoFitColumns();
                 sheet.AllocatedRange.AutoFitRows();
 
-                string FileName = "Sheet_" + DateTime.Now.Ticks.ToString() + ".xlsx";
+                string FileName = "Sheet_" + DateTime.UtcNow.AddHours(GetUtcOffset()).Ticks.ToString() + ".xlsx";
                 string dir = HttpContext.Server.MapPath(@"~\Images\ExcelFiles\");
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);

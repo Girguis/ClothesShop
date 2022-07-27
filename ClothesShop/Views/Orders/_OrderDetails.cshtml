@@ -60,6 +60,10 @@
                 </div>
             </div>
         }
+        else
+        {
+            @Html.HiddenFor(model => model.SellerID)
+        }
         @if (HttpContext.Current.Request.Url.AbsoluteUri.ToLower().Contains("edit"))
         {
             <div class="col-md-5 mb-3 d-inline-block">

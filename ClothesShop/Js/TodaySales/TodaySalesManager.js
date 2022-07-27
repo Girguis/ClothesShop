@@ -37,11 +37,12 @@
             var noDataText = options["no_data"];
             var pageInfo = options["page_info"];
             var url = options["url"];
+            debugger;
             return {
                 dataSource: CommonManager.Instance.GetGridDataSource(url, gridId),
                 columns: [
                     {
-                        dataField: "CreatedOn", caption: captions["createdOn"], minWidth: 150,
+                        dataField: "CreatedOn_", caption: captions["createdOn"], minWidth: 150,
                         allowSorting: true,
                         allowFiltering: true,
                         allowHeaderFiltering: false,
@@ -49,11 +50,11 @@
                         alignment: "right",
                         cssClass: "dir-ltr",
                         dataType: "date", // date
-                        calculateDisplayValue: function (row) {
-                            var date = row.CreatedOn;
-                            date = CommonManager.Instance.ParseDate(date, DateFormat.DayMonthYearHourMin);
-                            return date;
-                        }
+                        //calculateDisplayValue: function (row) {
+                        //    var date = row.CreatedOn;
+                        //    date = CommonManager.Instance.ParseDate(date, DateFormat.DayMonthYearHourMin);
+                        //    return date;
+                        //}
                     },
                     {
                         dataField: "TodayTotalTransactionsSellingPrice",
