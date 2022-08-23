@@ -44,11 +44,12 @@
         var getData = function (id, date) {
             
             CommonManager.Instance.ShowHideLoading(true);
-            var data = { id: id, date: date };
+            var data = { id: id, date: moment(date).format(DateFormat.DayMonthYear) };
 
             $.ajax({
-                url: Options["url"] + "?id=" + id + "&date=" + moment(date).format(DateFormat.DayMonthYear),
-                type: "GET",
+                url: Options["url"],
+                data:data,
+                type: "POST",
                 success: function (result) {
                     CommonManager.Instance.ShowHideLoading(false);
                     $("#DataContainer").html(result);

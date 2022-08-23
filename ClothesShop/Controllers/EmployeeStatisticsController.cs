@@ -103,7 +103,7 @@ namespace ClothesShop.Controllers
             };
             return View(m);
         }
-        [HttpGet]
+        [HttpPost]
         [Authorization("Balance", (RoleType.View))]
         public ActionResult GetSellerStatistics(int id, DateTime? date)
         {
