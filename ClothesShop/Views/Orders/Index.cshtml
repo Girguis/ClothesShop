@@ -5,18 +5,19 @@
 @{
     ViewBag.Title = ClothesShop.Languages.Resources.Orders;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var pageID = ViewBag.PageID;
 }
 @section scripts{
     @Scripts.Render("~/bundles/orders")
 
 <script>
     $(document).ready(function () {
-        
+
         OrdersManager.Instance.Init({
 
             "grid_id": "#OrdersGrid",
             "grid_height": "calc(100vh - 200px)",
-            "url": "@Url.Action("GetAll", "Orders")",
+            "url": "@Url.Action("GetAll", "Orders",new {pageID = pageID })",
             "grid_captions": {
                 "id": "@Resources.Code",
                 "request_date": "@Resources.RequestDate",
@@ -27,22 +28,32 @@
                 "total": "@Resources.Total",
                 "shipment_price": "@Resources.ShipmentPrice",
                 "employee_name": "@Resources.DeliveryMan",
-                "seller_name": "@Resources.Seller"
+                "seller_name": "@Resources.SellerName"
             },
 
-            "view_details": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Details)" == "True",
+            "view_details":
+                "@((ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.Details) && pageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                || (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.Details) && pageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09"))"
+                == "True",
             "details_url": "@Url.Action("Details", "Orders")/",
             "details_text": "<i class='dx dx-icon-detailslayout'/> @Resources.Details",
 
-                "view_update": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Edit)" == "True",
+            "view_update":
+                 "@((ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.Edit) && pageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                 || (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.Edit) && pageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09"))"
+                    == "True",
                 "update_url": "@Url.Action("Edit", "Orders")/",
             "update_text": "<i class='dx dx-icon-edit'/> @Resources.Edit",
 
-                "view_print": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Details)" == "True",
+                "view_print":"@((ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.Details) && pageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                 || (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.Details) && pageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09"))"
+                    == "True",
                 "print_url": "@Url.Action("ExportToPDF", "Orders")/",
             "print_text": "<i class='dx dx-icon-print'/> @Resources.Print",
-
-                "view_delete": "@ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Delete)" == "True",
+            "pageID": "@pageID",
+                "view_delete": "@((ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.Delete) && pageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                 || (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.Delete) && pageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09"))"
+                    == "True",
                 "delete_url": "@Url.Action("Delete", "Orders")/",
             "delete_text": "<i class='dx dx-icon-trash'/> @Resources.Delete",
                 "confirm_delete": "@Html.Raw(ClothesShop.Languages.Resources.AreYouSureDeleteOrder)",
@@ -64,14 +75,16 @@
 </script>
 }
 <div class="container-fluid">
-    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Add))
+    @if ((ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.Add) && pageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+        || (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.Add)&& pageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09"))
     {
 
-        <a href="@Url.Action("Create", "Orders", new { area = "" })" class="btn btn-success mb-2">
+        <a href="@Url.Action("Create", "Orders", new { area = "", pageID = pageID })" class="btn btn-success mb-2">
             @ClothesShop.Languages.Resources.AddOrder <i class="dx dx-icon-add"></i>
         </a>
     }
-    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Details))
+    @if ((ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.Add) && pageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+        || (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.Add) && pageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09"))
     {
         <a href="#" id="PrintMultipleBtn" class="btn btn-secondary mb-2">
             @ClothesShop.Languages.Resources.Print <i class="dx dx-icon-print"></i>

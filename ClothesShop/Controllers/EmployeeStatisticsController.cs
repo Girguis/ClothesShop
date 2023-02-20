@@ -57,7 +57,9 @@ namespace ClothesShop.Controllers
                 }
 
                 var allEmps = employeesRepo.GetAll(true);
-                List<Employee> sellers = allEmps.Where(x => x.JobTypeID == (int)Enums.JobTypes.Worker).ToList();
+                List<Employee> sellers = allEmps.Where(x => x.JobTypeID == (int)JobTypes.Seller 
+                                                    || x.JobTypeID == (int)JobTypes.PageOneSeller
+                                                    || x.JobTypeID == (int)JobTypes.PageTwoSeller).ToList();
                 var data = new List<EmployeeStatisticsViewModel>();
                 foreach (var seller in sellers)
                 {

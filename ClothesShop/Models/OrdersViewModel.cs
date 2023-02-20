@@ -40,6 +40,8 @@ namespace ClothesShop.Models
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
 
+        public string PageID { get; set; }
+
         [Display(ResourceType = typeof(Languages.Resources), Name = nameof(Languages.Resources.DeliveryDate))]
         [DataType(DataType.Date)]
         public DateTime? DeliveryDate { get; set; }

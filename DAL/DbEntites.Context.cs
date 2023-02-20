@@ -81,7 +81,7 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSystemData");
         }
     
-        public virtual ObjectResult<OrderViewModel> GetOrders(Nullable<int> orderID, string requestDate, string customerName, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName, string orderBy, string orderDirection, Nullable<int> pageNumber, Nullable<int> pageSize, Nullable<int> employeeID, ObjectParameter totalCount)
+        public virtual ObjectResult<OrderViewModel> GetOrders(Nullable<int> orderID, string requestDate, string customerName, string customerAddress, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName, string orderBy, string orderDirection, Nullable<int> pageNumber, Nullable<int> pageSize, Nullable<int> employeeID, ObjectParameter totalCount, string pageID)
         {
             var orderIDParameter = orderID.HasValue ?
                 new ObjectParameter("OrderID", orderID) :
@@ -94,6 +94,10 @@ namespace DAL
             var customerNameParameter = customerName != null ?
                 new ObjectParameter("CustomerName", customerName) :
                 new ObjectParameter("CustomerName", typeof(string));
+    
+            var customerAddressParameter = customerAddress != null ?
+                new ObjectParameter("CustomerAddress", customerAddress) :
+                new ObjectParameter("CustomerAddress", typeof(string));
     
             var customerNumberParameter = customerNumber != null ?
                 new ObjectParameter("CustomerNumber", customerNumber) :
@@ -131,10 +135,14 @@ namespace DAL
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<OrderViewModel>("GetOrders", orderIDParameter, requestDateParameter, customerNameParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter, orderByParameter, orderDirectionParameter, pageNumberParameter, pageSizeParameter, employeeIDParameter, totalCount);
+            var pageIDParameter = pageID != null ?
+                new ObjectParameter("PageID", pageID) :
+                new ObjectParameter("PageID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<OrderViewModel>("GetOrders", orderIDParameter, requestDateParameter, customerNameParameter, customerAddressParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter, orderByParameter, orderDirectionParameter, pageNumberParameter, pageSizeParameter, employeeIDParameter, totalCount, pageIDParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> GetOrdersCount(Nullable<int> orderID, string requestDate, string customerName, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName, Nullable<int> employeeID)
+        public virtual ObjectResult<Nullable<int>> GetOrdersCount(Nullable<int> orderID, string requestDate, string customerName, string customerAddress, string customerNumber, Nullable<int> orderStatus, string sellerName, string deliveryName, Nullable<int> employeeID, string pageID)
         {
             var orderIDParameter = orderID.HasValue ?
                 new ObjectParameter("OrderID", orderID) :
@@ -147,6 +155,10 @@ namespace DAL
             var customerNameParameter = customerName != null ?
                 new ObjectParameter("CustomerName", customerName) :
                 new ObjectParameter("CustomerName", typeof(string));
+    
+            var customerAddressParameter = customerAddress != null ?
+                new ObjectParameter("CustomerAddress", customerAddress) :
+                new ObjectParameter("CustomerAddress", typeof(string));
     
             var customerNumberParameter = customerNumber != null ?
                 new ObjectParameter("CustomerNumber", customerNumber) :
@@ -168,7 +180,11 @@ namespace DAL
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetOrdersCount", orderIDParameter, requestDateParameter, customerNameParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter, employeeIDParameter);
+            var pageIDParameter = pageID != null ?
+                new ObjectParameter("PageID", pageID) :
+                new ObjectParameter("PageID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetOrdersCount", orderIDParameter, requestDateParameter, customerNameParameter, customerAddressParameter, customerNumberParameter, orderStatusParameter, sellerNameParameter, deliveryNameParameter, employeeIDParameter, pageIDParameter);
         }
     }
 }

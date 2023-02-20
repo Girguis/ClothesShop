@@ -96,7 +96,7 @@ namespace ClothesShop.Helpers
 
                 EmployeesRepo repo = new EmployeesRepo();
 
-                var sellers = repo.GetAll(true).Where(c => c.JobTypeID == (int)JobTypes.Worker);
+                var sellers = repo.GetAll(true).Where(c => c.JobTypeID == (int)JobTypes.Seller || c.JobTypeID == (int)JobTypes.PageOneSeller || c.JobTypeID == (int)JobTypes.PageTwoSeller);
                 var res = sellers.Select(j => new General() { ID = j.ID, Name = j.FullName }).ToList();
                 return res;
             }

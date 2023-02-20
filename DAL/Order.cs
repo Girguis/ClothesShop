@@ -34,6 +34,7 @@ namespace DAL
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<long> SellerID { get; set; }
+        public string PageID { get; set; }
     
         public virtual City City { get; set; }
         public virtual Customer Customer { get; set; }

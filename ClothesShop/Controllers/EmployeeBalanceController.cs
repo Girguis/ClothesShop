@@ -37,7 +37,9 @@ namespace ClothesShop.Controllers
         public ActionResult GetAll()
         {
             var sellers = employeesRepo.GetAll(true)
-                .Where(x => x.JobTypeID == (int)Enums.JobTypes.Worker)
+                .Where(x => x.JobTypeID == (int)JobTypes.Seller
+                || x.JobTypeID == (int)JobTypes.PageOneSeller
+                || x.JobTypeID == (int)JobTypes.PageTwoSeller)
                 .Select(x=>new {x.ID,x.FullName });
             return Json(new { TotalCount = sellers.Count(), Data = sellers });
         }

@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /ClothesShop/Images/ExcelFiles
 /ClothesShop/Images/TempFiles
+/ClothesShop/Images/SourcePdfFiles
+/ClothesShop/Images/DestPdfFile

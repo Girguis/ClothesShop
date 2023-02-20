@@ -928,6 +928,8 @@
     <Content Include="DataSets\OrderDetailsDataSet.xss">
       <DependentUpon>OrderDetailsDataSet.xsd</DependentUpon>
     </Content>
+    <EmbeddedResource Include="Reports\Invoice.rdlc" />
+    <EmbeddedResource Include="Reports\Invoice2.rdlc" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -1164,7 +1166,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Invoice.rdlc" />
+    <EmbeddedResource Include="Reports\Invoice1.rdlc" />
     <EmbeddedResource Include="Reports\Sheet.rdlc" />
   </ItemGroup>
   <ItemGroup>

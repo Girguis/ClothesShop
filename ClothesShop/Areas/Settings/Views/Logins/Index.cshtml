@@ -38,7 +38,7 @@
 </script>
 }
 <div class="container-fluid">
-    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Add))
+    @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Logins", ClothesShop.Enums.RoleType.Add))
     {
             <a href="@Url.Action("Create","Logins", new { area = "Settings" })" class="btn btn-success mb-2">
                 @Resources.AddLogin <i class="dx dx-icon-add"></i>

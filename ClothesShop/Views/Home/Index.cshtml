@@ -8,12 +8,6 @@
             <hr>
         </div>
         <div class="mt-2 text-center">
-            @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Add))
-            {
-                    <a href="@Url.Action("Create", "Orders", new { area = "" })" class="btn btn-success m-2">
-                        <i class="dx dx-icon-add"></i> @ClothesShop.Languages.Resources.AddOrder
-                    </a>
-            }
             @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales", ClothesShop.Enums.RoleType.Add))
             {
                     <a href="@Url.Action("Create", "TodaySales", new { area = "" })" class="btn btn-success m-2">

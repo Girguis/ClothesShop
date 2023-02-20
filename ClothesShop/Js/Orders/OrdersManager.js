@@ -18,7 +18,7 @@
                 }
                 else {
                     var ids = selectedRow.join(",");
-                    CommonManager.Instance.print(options["print_multiple_url"] + "?ids=" + ids);
+                    CommonManager.Instance.print(options["print_multiple_url"] + "?ids=" + ids + "&PageID=" + options["pageID"]);
 
                     return true;
                 }
@@ -53,6 +53,7 @@
             var pageInfo = options["page_info"];
             let orderStatuses = CommonManager.Instance.NeowtonsoftDesealize(options["order_statuses"]);
             var url = options["url"];
+            debugger;
             return {
                 dataSource: CommonManager.Instance.GetGridDataSource(url, gridId),
                 columns: [
@@ -107,10 +108,10 @@
                         allowHeaderFiltering: false,
                     },
                     {
-                        dataField: "CustomerAddress", caption: captions["address"], minWidth: 120,
+                        dataField: "Customer_Address", caption: captions["address"], minWidth: 120,
                         alignment: "right",
                         dataType: "string",
-                        allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
+                        allowFiltering: true, allowSorting: false, allowHeaderFiltering: false,
                         calculateDisplayValue: function (row) {
                             var address = "";
                             if (!row.CustomerAddress)
@@ -253,7 +254,7 @@
             }
         }
         this.print = function (id) {
-            CommonManager.Instance.print(Options["print_url"] + "?id=" + id);
+            CommonManager.Instance.print(Options["print_url"] + "?id=" + id + "&PageID=" + Options["pageID"]);
         }
     }
 

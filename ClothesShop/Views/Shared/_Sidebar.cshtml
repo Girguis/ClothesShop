@@ -1,6 +1,7 @@
 ﻿@using ClothesShop.Languages
 @{
-    bool isViewOrders = ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.View);
+    bool isViewOrders1 = ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.View);
+    bool isViewOrders2 = ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.View);
     bool isViewDelivery = ClothesShop.Helpers.RolesHelper.CheckRoleRight("Delivery", ClothesShop.Enums.RoleType.View);
     bool isViewTodayTransactions = ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodayTransactions", ClothesShop.Enums.RoleType.View);
     bool isViewTodaySales = ClothesShop.Helpers.RolesHelper.CheckRoleRight("TodaySales", ClothesShop.Enums.RoleType.View);
@@ -35,19 +36,26 @@
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand sidebar-link" href="@Url.Action("Index", "Home", new { area = ""})">
             <img src="~/Images/logo.png" style="height:50px;" />
-            <span>@Resources.Elba4a</span>
+            <span>EY Store</span>
         </a>
         <ul class="sidebar-nav">
-            @if (isViewOrders || isViewDelivery)
+            @if (isViewOrders1 || isViewOrders2 || isViewDelivery)
             {
                 <li class="sidebar-header">
                     @Resources.Home
                 </li>
-                if (isViewOrders)
+                if (isViewOrders1)
                 {
-                    <li class="sidebar-item active" id="Orders">
-                        <a class="sidebar-link" href="@Url.Action("Index", "Orders")">
-                            <img class="sidebarImage align-middle" src="~/Images/orders.png" /> <span class="align-middle">@Resources.Orders</span>
+                    <li class="sidebar-item active" id="Orders1">
+                        <a class="sidebar-link" href="@Url.Action("Index", "Orders", new { area = "", PageID = "137D0514-F286-48AA-BCD4-B7FE7C5B79D8" })">
+                            <img class="sidebarImage align-middle" src="~/Images/orders.png" /> <span class="align-middle">@Resources.Orders - EY Store</span>
+                        </a>
+                    </li>
+                }
+                if (isViewOrders2) { 
+                    <li class="sidebar-item active" id="Orders2">
+                        <a class="sidebar-link" href="@Url.Action("Index", "Orders",new { area = "", PageID = "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09" })">
+                            <img class="sidebarImage align-middle" src="~/Images/orders.png" /> <span class="align-middle">@Resources.Orders - Wolf Store</span>
                         </a>
                     </li>
                 }

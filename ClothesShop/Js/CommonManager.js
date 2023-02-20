@@ -349,11 +349,13 @@
             var activeItem = "";
             var url = window.location.href;
             url = url.toLowerCase();
-
             if (!url.includes("/settings/")) {
                 // first menu
-                if (url.includes("/orders")) {
-                    activeItem = "Orders";
+                if (url.includes("/orders?pageid=137d0514-f286-48aa-bcd4-b7fe7c5b79d8")) {
+                    activeItem = "Orders1";
+                }
+                else if (url.includes("/orders?pageid=80db4628-f4d2-45ea-b82f-b0e2b7e9fd09")) {
+                    activeItem = "Orders2";
                 }
                 else if (url.includes("/delivery")) {
                     activeItem = "Delivery";
@@ -412,13 +414,16 @@
                     activeItem = "ManagerRoles";
                 }
                 else if (url.includes("roles/edit/2")) {
-                    activeItem = "WorkerRoles";
+                    activeItem = "SellerRoles";
                 }
                 else if (url.includes("roles/edit/3")) {
                     activeItem = "DeliveryManRoles";
                 }
                 else if (url.includes("roles/edit/4")) {
-                    activeItem = "EmployeeRoles";
+                    activeItem = "PageOneSellerRoles";
+                }
+                else if (url.includes("roles/edit/5")) {
+                    activeItem = "PageTwoSellerRoles";
                 }
                 else if (url.includes("/logins")) {
                     activeItem = "AccountsRoles";
@@ -471,7 +476,7 @@
                             totalCount: totalCount
                         });
                     });
-
+                    debugger;
                     return deferred.promise();
                 }
             }

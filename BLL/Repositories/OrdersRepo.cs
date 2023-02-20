@@ -48,14 +48,14 @@ namespace BLL.Repositories
         {
             return ClothesShopEntities.Orders;
         }
-        public IEnumerable<OrderViewModel> Get(int? OrderID,string RequestDate,string CustomerName,string CustomerNumber,
-            int? OrderStatus,string SellerName,string DeliveryName,string OrderBy,string OrderDirection,
-            int? PageNumber,int? PageSize,int? empID,out int totalCount_)
+        public IEnumerable<OrderViewModel> Get(int? OrderID,string RequestDate,string CustomerName, string CustomerAddress
+            , string CustomerNumber,int? OrderStatus,string SellerName,string DeliveryName,string OrderBy,string OrderDirection,
+            int? PageNumber,int? PageSize,int? empID,string pageID,out int totalCount_)
         {
             totalCount_ = 0;
             ObjectParameter TotalCount=new ObjectParameter("TotalCount", typeof(int));
-            ObjectResult<OrderViewModel> result =  ClothesShopEntities.GetOrders(OrderID,RequestDate,CustomerName,CustomerNumber,OrderStatus,SellerName,DeliveryName,OrderBy,OrderDirection,PageNumber,PageSize, empID, TotalCount);
-            ObjectResult<int?> res2 = ClothesShopEntities.GetOrdersCount(OrderID, RequestDate, CustomerName, CustomerNumber, OrderStatus, SellerName, DeliveryName, empID);
+            ObjectResult<OrderViewModel> result =  ClothesShopEntities.GetOrders(OrderID,RequestDate,CustomerName, CustomerAddress,CustomerNumber, OrderStatus,SellerName,DeliveryName,OrderBy,OrderDirection,PageNumber,PageSize, empID, TotalCount, pageID);
+            ObjectResult<int?> res2 = ClothesShopEntities.GetOrdersCount(OrderID, RequestDate, CustomerName, CustomerAddress, CustomerNumber, OrderStatus, SellerName, DeliveryName, empID, pageID);
             List<int?> lst = res2.ToList();
             if (lst != null && lst.Count >= 1)
                 totalCount_ = lst[0].Value;

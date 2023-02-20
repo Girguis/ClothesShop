@@ -346,9 +346,6 @@
   <data name="Employee" xml:space="preserve">
     <value>Employee</value>
   </data>
-  <data name="Worker" xml:space="preserve">
-    <value>Seller</value>
-  </data>
   <data name="Manager" xml:space="preserve">
     <value>Manager</value>
   </data>
@@ -864,5 +861,14 @@
   </data>
   <data name="StatisticsDetails" xml:space="preserve">
     <value>Statistics Details</value>
+  </data>
+  <data name="PageOneSeller" xml:space="preserve">
+    <value>EY Seller</value>
+  </data>
+  <data name="PageTwoSeller" xml:space="preserve">
+    <value>Wolf Seller</value>
+  </data>
+  <data name="SellerName" xml:space="preserve">
+    <value>Seller Name</value>
   </data>
 </root>

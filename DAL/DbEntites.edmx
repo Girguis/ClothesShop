@@ -114,6 +114,7 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="nvarchar(max)" />
           <Property Name="SellerID" Type="bigint" />
+          <Property Name="PageID" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ProductColors">
           <Key>
@@ -520,6 +521,7 @@
           <Parameter Name="OrderID" Type="int" Mode="In" />
           <Parameter Name="RequestDate" Type="nvarchar" Mode="In" />
           <Parameter Name="CustomerName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CustomerAddress" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="CustomerNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="OrderStatus" Type="int" Mode="In" />
           <Parameter Name="SellerName" Type="nvarchar(max)" Mode="In" />
@@ -530,16 +532,19 @@
           <Parameter Name="PageSize" Type="int" Mode="In" />
           <Parameter Name="EmployeeID" Type="int" Mode="In" />
           <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+          <Parameter Name="PageID" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="GetOrdersCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OrderID" Type="int" Mode="In" />
           <Parameter Name="RequestDate" Type="nvarchar" Mode="In" />
           <Parameter Name="CustomerName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CustomerAddress" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="CustomerNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="OrderStatus" Type="int" Mode="In" />
           <Parameter Name="SellerName" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="DeliveryName" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="EmployeeID" Type="int" Mode="In" />
+          <Parameter Name="PageID" Type="nvarchar(max)" Mode="In" />
         </Function>
         <EntityContainer Name="ClothesShopModelStoreContainer">
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
@@ -785,6 +790,7 @@
             <Parameter Name="OrderID" Mode="In" Type="Int32" />
             <Parameter Name="RequestDate" Mode="In" Type="String" />
             <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="CustomerAddress" Mode="In" Type="String" />
             <Parameter Name="CustomerNumber" Mode="In" Type="String" />
             <Parameter Name="OrderStatus" Mode="In" Type="Int32" />
             <Parameter Name="SellerName" Mode="In" Type="String" />
@@ -795,16 +801,19 @@
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
             <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
             <Parameter Name="TotalCount" Mode="InOut" Type="Int32" />
+            <Parameter Name="PageID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetOrdersCount" ReturnType="Collection(Int32)">
             <Parameter Name="OrderID" Mode="In" Type="Int32" />
             <Parameter Name="RequestDate" Mode="In" Type="String" />
             <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="CustomerAddress" Mode="In" Type="String" />
             <Parameter Name="CustomerNumber" Mode="In" Type="String" />
             <Parameter Name="OrderStatus" Mode="In" Type="Int32" />
             <Parameter Name="SellerName" Mode="In" Type="String" />
             <Parameter Name="DeliveryName" Mode="In" Type="String" />
             <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+            <Parameter Name="PageID" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="EmployeesBalances" EntityType="ClothesShopModel.EmployeesBalance" />
           <AssociationSet Name="FK_EmployeesBalance_Employees" Association="ClothesShopModel.FK_EmployeesBalance_Employees">
@@ -931,6 +940,7 @@
           <NavigationProperty Name="Seller" Relationship="ClothesShopModel.FK_Orders_Seller" FromRole="Order" ToRole="Employee" />
           <NavigationProperty Name="ShipmentCompany" Relationship="ClothesShopModel.FK_Orders_ShipmentCompany" FromRole="Order" ToRole="ShipmentCompany" />
           <NavigationProperty Name="ProductOrders" Relationship="ClothesShopModel.FK_ProductOrders_Orders" FromRole="Order" ToRole="ProductOrder" />
+          <Property Name="PageID" Type="String" FixedLength="false" MaxLength="Max" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductColor">
           <Key>
@@ -1478,6 +1488,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ClothesShopModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
                 <ScalarProperty Name="SellerID" ColumnName="SellerID" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />

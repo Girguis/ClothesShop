@@ -24,24 +24,36 @@ namespace ClothesShop.Controllers
     public class OrdersController : BaseController
     {
         private readonly OrdersRepo _OrdersRepo;
+        private static Dictionary<string,RoleType> _roles = new Dictionary<string, RoleType>() { { "Orders1", RoleType.Details }, { "Orders2", RoleType.Details } };
         public OrdersController()
         {
             _OrdersRepo = new OrdersRepo();
         }
-        [Authorization("Orders", (RoleType.View))]
-        public ActionResult Index()
+        [Authorization("Orders1,Orders2", (RoleType.View))]
+        public ActionResult Index(string PageID)
         {
-            return View();
+            ViewBag.PageID = PageID;
+            if (hasPageOrderAccess(PageID,RoleType.View))
+                return View();
+            else
+                return View("Error");
         }
-
+        private bool hasPageOrderAccess(string pageID,RoleType roleType)
+        {
+            //Page1->137D0514-F286-48AA-BCD4-B7FE7C5B79D8
+            //Page2->80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09
+            return ((pageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8" && RolesHelper.CheckRoleRight("Orders1", roleType))
+                    || (pageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09" && RolesHelper.CheckRoleRight("Orders2", roleType)));
+        }
         private bool CheckEmpOrder(long? empSellerId, long? deliveryId)
         {
             int empId = GetUserID();
-            if (GetJobID() == (int)Enums.JobTypes.Manager)
+            if (GetJobID() != (int)JobTypes.DeliveryMan)
                 return true;
-            return empId == empSellerId || empId == deliveryId;
+            return empId == deliveryId;
         }
-        [Authorization("Orders", (RoleType.Details))]
+
+        [Authorization("Orders1,Orders2", (RoleType.View))]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -54,15 +66,16 @@ namespace ClothesShop.Controllers
                 return HttpNotFound();
             }
             var ex = GetOrdersViewModel(order);
-            if (CheckEmpOrder(ex.SellerID, ex.EmployeeID))
+            if (CheckEmpOrder(ex.SellerID, ex.EmployeeID) && hasPageOrderAccess(ex.PageID,RoleType.Details))
                 return View(ex);
             else
-                return RedirectToAction("Index", "Orders");
+                return RedirectToAction("Index", "Orders",new {PageID =ex.PageID });
         }
-        [Authorization("Orders", (RoleType.Add))]
-        public ActionResult Create()
+        [Authorization("Orders1,Orders2", (RoleType.Add))]
+        public ActionResult Create(string pageID)
         {
             OrdersViewModel model = new OrdersViewModel();
+            model.PageID = pageID;
             if (GetJobID() != (int)JobTypes.Manager)
                 model.SellerID = GetUserID();
             model.OrderStatusID = (int)OrderStatuses.New;
@@ -71,7 +84,7 @@ namespace ClothesShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorization("Orders", (RoleType.Add))]
+        [Authorization("Orders1,Orders2", (RoleType.Add))]
         public ActionResult Create(OrdersViewModel order)
         {
             ModelState.Remove("Product.ID");
@@ -88,11 +101,11 @@ namespace ClothesShop.Controllers
                 if (GetJobID() != (int)JobTypes.Manager && today.SellerID == null)
                     today.SellerID = GetUserID();
                 _OrdersRepo.Add(today);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { PageID = order.PageID});
             }
             return View(order);
         }
-        [Authorization("Orders", (RoleType.Edit))]
+        [Authorization("Orders1,Orders2", (RoleType.Edit))]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -107,7 +120,7 @@ namespace ClothesShop.Controllers
             }
 
             var model = GetOrdersViewModel(order);
-            if (CheckEmpOrder(model.SellerID, model.EmployeeID))
+            if (CheckEmpOrder(model.SellerID, model.EmployeeID) && hasPageOrderAccess(model.PageID,RoleType.Edit))
             {
                 if (order.OrderStatusID == (int)OrderStatuses.TotallyDelivered)
                     return View("Details", model);
@@ -115,12 +128,12 @@ namespace ClothesShop.Controllers
                     return View(model);
             }
             else
-                return RedirectToAction("Index", "Orders");
+                return RedirectToAction("Index", "Orders",new { PageID = model.PageID});
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorization("Orders", (RoleType.Edit))]
+        [Authorization("Orders1,Orders2", (RoleType.Edit))]
         public ActionResult Edit(OrdersViewModel order)
         {
             ModelState.Remove("Product.ID");
@@ -141,12 +154,12 @@ namespace ClothesShop.Controllers
 
                 var model = GetOrderModel(order);
                 _OrdersRepo.Update(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { PageID = model.PageID});
             }
             return View(order);
         }
         [HttpPost]
-        [Authorization("Orders", (RoleType.Delete))]
+        [Authorization("Orders1,Orders2", (RoleType.Delete))]
         public JsonResult Delete(long? id)
         {
             if (!id.HasValue)
@@ -176,6 +189,7 @@ namespace ClothesShop.Controllers
                     EmployeeID = t.EmployeeID.HasValue ? t.EmployeeID : 0,
                     SellerID = t.SellerID.HasValue ? t.SellerID : 0,
                     Notes = t.Notes,
+                    PageID = t.PageID,
                     OrderStatusID = t.OrderStatusID.HasValue ? t.OrderStatusID.Value : (int)OrderStatuses.New,
                     ShipmentCompanyID = t.ShipmentCompanyID.HasValue ? t.ShipmentCompanyID : 0,
                     Customer = new CustomerViewModel()
@@ -240,6 +254,7 @@ namespace ClothesShop.Controllers
                     SellerID = t.SellerID.HasValue && t.SellerID != 0 ? t.SellerID.Value : nullVal,
                     Notes = t.Notes?.Replace("\r\n", " ").Trim(),
                     OrderStatusID = t.OrderStatusID,
+                    PageID = t.PageID,
                     ShipmentCompanyID = t.ShipmentCompanyID.HasValue && t.ShipmentCompanyID != 0 ? t.ShipmentCompanyID.Value : nullVal,
                     Customer = new Customer()
                     {
@@ -269,7 +284,7 @@ namespace ClothesShop.Controllers
         }
 
         [HttpPost]
-        [Authorization("Orders", (RoleType.View))]
+        [Authorization("Orders1,Orders2", (RoleType.View))]
         public ActionResult GetAllUnAssignedOrders(SearchViewModel obj)
         {
             try
@@ -303,7 +318,9 @@ namespace ClothesShop.Controllers
                         },
                         OrderTotalPrice = sum ?? 0,
                         ShipmentPrice = n.ShipmentPrice,
-                        OrderStatusName = orderStatuses?.Where(x => x.ID == n.OrderStatusID).FirstOrDefault()?.Name
+                        OrderStatusName = orderStatuses?.Where(x => x.ID == n.OrderStatusID).FirstOrDefault()?.Name,
+                        PageID = n.PageID,
+                        SellerName = n.Seller?.FullName
                     };
                 });
                 Filtering<OrdersViewModel> filtering = new Filtering<OrdersViewModel>();
@@ -317,6 +334,11 @@ namespace ClothesShop.Controllers
                 string address = filtering.GetValue("Customer.Address");
                 if (!string.IsNullOrEmpty(address))
                     result = result.Where(c => c.Customer.Address != null && c.Customer.Address.ToLower().Contains(address.ToLower()));
+
+                string seller = filtering.GetValue("SellerName");
+                if (!string.IsNullOrEmpty(seller))
+                    result = result.Where(c => c.SellerName != null && c.SellerName.ToLower().Contains(seller.ToLower()));
+
 
                 result = filtering.OrderBy(obj.OrderBy, result);
 
@@ -334,8 +356,8 @@ namespace ClothesShop.Controllers
 
 
         [HttpPost]
-        [Authorization("Orders", (RoleType.View))]
-        public ActionResult GetAll(SearchViewModel obj)
+        [Authorization("Orders1,Orders2", (RoleType.View))]
+        public ActionResult GetAll(SearchViewModel obj,string pageID)
         {
             try
             {
@@ -369,10 +391,10 @@ namespace ClothesShop.Controllers
                     orderBy = "RequestDate";
                 string orderDirection = obj.OrderBy?.Direction;
                 List<OrderViewModel> data = null;
-                if (GetJobID() == (int)JobTypes.Manager)
-                    data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, null, out totalRecords).ToList();
+                if (GetJobID() != (int)JobTypes.DeliveryMan)
+                    data = _OrdersRepo.Get(orderId, requestDate, name,address, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, null, pageID,out totalRecords).ToList();
                 else
-                    data = _OrdersRepo.Get(orderId, requestDate, name, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, GetUserID(), out totalRecords).ToList();
+                    data = _OrdersRepo.Get(orderId, requestDate, name, address, mobileNumber1, orderStatusId, sellerName, deliveryName, orderBy, orderDirection, pageNumber, pageSize, GetUserID(),pageID ,out totalRecords).ToList();
                 if (data != null && data.Count() > 0)
                     data = data.Select(c =>
                     {
@@ -394,8 +416,8 @@ namespace ClothesShop.Controllers
             }
         }
 
-        [Authorization("Orders", (RoleType.Details))]
-        public ActionResult ExportMultipleBills(string ids)
+        [Authorization("Orders1,Orders2", (RoleType.Details))]
+        public ActionResult ExportMultipleBills(string ids,string PageID)
         {
             try
             {
@@ -429,7 +451,7 @@ namespace ClothesShop.Controllers
 
                 foreach (var orderID in orderIDs)
                 {
-                    CreatePDF(orderID);
+                    CreatePDF(orderID,PageID);
                 }
                 string[] filenames = Directory.GetFiles(SourcePdfPath);
                 string outputFileName = "Orders_" + DateTime.Now.ToString("MMddyyyyhhmmss") + ".pdf";
@@ -486,8 +508,8 @@ namespace ClothesShop.Controllers
             return null;
         }
 
-        [Authorization("Orders", (RoleType.Details))]
-        public String CreatePDF(long id)
+        [Authorization("Orders1,Orders2", (RoleType.Details))]
+        public String CreatePDF(long id, string PageID)
         {
             try
             {
@@ -495,7 +517,10 @@ namespace ClothesShop.Controllers
                 ReportViewer reportViewer = new ReportViewer();
 
                 reportViewer.ProcessingMode = ProcessingMode.Local;
-                reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice.rdlc");
+                if(PageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                    reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice1.rdlc");
+                else
+                    reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice2.rdlc");
                 var x = _OrdersRepo.GetByID(id);
                 var orderDataSet = new
                 {
@@ -508,6 +533,7 @@ namespace ClothesShop.Controllers
                     OrderID = x.ID,
                     ShipmentPrice = x.ShipmentPrice.HasValue ? x.ShipmentPrice : 0,
                     DisplayDate = DateTime.UtcNow.AddHours(GetUtcOffset()),
+                    SellerName = x.Seller?.FullName
                 };
 
                 var orderDetailsDataSet = x.ProductOrders.Select(v => new
@@ -559,15 +585,18 @@ namespace ClothesShop.Controllers
             return null;
         }
 
-        [Authorization("Orders", (RoleType.Details))]
-        public ActionResult ExportToPDF(long id)
+        [Authorization("Orders1,Orders2", (RoleType.Details))]
+        public ActionResult ExportToPDF(long id, string PageID)
         {
             try
             {
                 //Report  
                 ReportViewer reportViewer = new ReportViewer();
                 reportViewer.ProcessingMode = ProcessingMode.Local;
-                reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice.rdlc");
+                if (PageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                    reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice1.rdlc");
+                else
+                    reportViewer.LocalReport.ReportPath = Server.MapPath(@"~\Reports\Invoice2.rdlc");
                 var x = _OrdersRepo.GetByID(id);
                 var orderDataSet = new
                 {
@@ -580,6 +609,7 @@ namespace ClothesShop.Controllers
                     OrderID = x.ID,
                     ShipmentPrice = x.ShipmentPrice.HasValue ? x.ShipmentPrice : 0,
                     DisplayDate = DateTime.UtcNow.AddHours(GetUtcOffset()),
+                    SellerName = x.Seller?.FullName
                 };
 
                 var orderDetailsDataSet = x.ProductOrders.Select(v => new

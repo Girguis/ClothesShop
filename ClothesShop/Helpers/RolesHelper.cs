@@ -49,7 +49,7 @@ namespace ClothesShop.Helpers
                 if (roleType == RoleType.View)
                     return jobRole.View == true;
                 if (roleType == RoleType.Details)
-                    return jobRole.View == true;
+                    return jobRole.Details == true;
             }
             catch (Exception ex)
             {

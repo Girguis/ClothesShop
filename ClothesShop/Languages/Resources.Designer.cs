@@ -19,7 +19,7 @@ namespace ClothesShop.Languages {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -1510,6 +1510,24 @@ namespace ClothesShop.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EY Seller.
+        /// </summary>
+        public static string PageOneSeller {
+            get {
+                return ResourceManager.GetString("PageOneSeller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wolf Seller.
+        /// </summary>
+        public static string PageTwoSeller {
+            get {
+                return ResourceManager.GetString("PageTwoSeller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paid Amount.
         /// </summary>
         public static string PaidAmount {
@@ -1758,6 +1776,15 @@ namespace ClothesShop.Languages {
         public static string Seller {
             get {
                 return ResourceManager.GetString("Seller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seller Name.
+        /// </summary>
+        public static string SellerName {
+            get {
+                return ResourceManager.GetString("SellerName", resourceCulture);
             }
         }
         
@@ -2325,15 +2352,6 @@ namespace ClothesShop.Languages {
         public static string WithoutShipmentCompany {
             get {
                 return ResourceManager.GetString("WithoutShipmentCompany", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seller.
-        /// </summary>
-        public static string Worker {
-            get {
-                return ResourceManager.GetString("Worker", resourceCulture);
             }
         }
         

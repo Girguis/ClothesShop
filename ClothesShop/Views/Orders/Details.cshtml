@@ -133,13 +133,17 @@
             </div>
         </div>
         <div class="card-footer">
-            @if (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders", ClothesShop.Enums.RoleType.Edit) && Model.OrderStatusID != (int)ClothesShop.Enums.OrderStatuses.TotallyDelivered)
+            @if (
+                ((ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders1", ClothesShop.Enums.RoleType.Edit) && Model.PageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                || (ClothesShop.Helpers.RolesHelper.CheckRoleRight("Orders2", ClothesShop.Enums.RoleType.Edit) && Model.PageID == "80DB4628-F4D2-45EA-B82F-B0E2B7E9FD09"))
+                && Model.OrderStatusID != (int)ClothesShop.Enums.OrderStatuses.TotallyDelivered
+                )
             {
                 <a type="button" class="btn btn-lg btn-success" href="@Url.Action("Edit", "Orders")/@Model.ID">
                     <i class="dx dx-icon-edit"></i> @Resources.Update
                 </a>
             }
-            <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "Orders")">
+            <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "Orders",new { PageID = Model.PageID })">
                 @Resources.BackToList
             </a>
         </div>

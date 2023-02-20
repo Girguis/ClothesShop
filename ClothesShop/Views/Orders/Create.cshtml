@@ -17,6 +17,7 @@
         @Html.HiddenFor(m => m.ShipmentCompanyID)
         @Html.HiddenFor(m => m.PaidAmount)
         @Html.HiddenFor(m => m.ShipmentCompanyID)
+        @Html.HiddenFor(m => m.PageID)
         @Html.HiddenFor(model => model.ProductSeralized)
         @Html.ValidationSummary(true, "", new { @class = "form-label text-danger" })
         <div class="card m-0">
@@ -34,7 +35,7 @@
                 <button type="submit" class="btn btn-md btn-success" id="submit">
                      @Resources.Save
                 </button>
-                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "Orders")">
+                <a type="button" class="btn btn-md btn-primary pull-left" href="@Url.Action("Index", "Orders",new { PageID = Model.PageID })">
                     @Resources.BackToList
                 </a>
             </div>

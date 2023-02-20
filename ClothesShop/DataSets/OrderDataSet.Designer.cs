@@ -295,6 +295,8 @@ namespace ClothesShop.DataSets {
             
             private global::System.Data.DataColumn columnNotes;
             
+            private global::System.Data.DataColumn columnSellerName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public OrderDataTable() {
@@ -394,6 +396,14 @@ namespace ClothesShop.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SellerNameColumn {
+                get {
+                    return this.columnSellerName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -429,7 +439,7 @@ namespace ClothesShop.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public OrderRow AddOrderRow(string CityName, string CustomerName, string CustomerAddress, string CustomerMobileNumber, long OrderID, System.DateTime DisplayDate, double ShipmentPrice, string Notes) {
+            public OrderRow AddOrderRow(string CityName, string CustomerName, string CustomerAddress, string CustomerMobileNumber, long OrderID, System.DateTime DisplayDate, double ShipmentPrice, string Notes, string SellerName) {
                 OrderRow rowOrderRow = ((OrderRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CityName,
@@ -439,7 +449,8 @@ namespace ClothesShop.DataSets {
                         OrderID,
                         DisplayDate,
                         ShipmentPrice,
-                        Notes};
+                        Notes,
+                        SellerName};
                 rowOrderRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowOrderRow);
                 return rowOrderRow;
@@ -477,6 +488,7 @@ namespace ClothesShop.DataSets {
                 this.columnDisplayDate = base.Columns["DisplayDate"];
                 this.columnShipmentPrice = base.Columns["ShipmentPrice"];
                 this.columnNotes = base.Columns["Notes"];
+                this.columnSellerName = base.Columns["SellerName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -498,6 +510,8 @@ namespace ClothesShop.DataSets {
                 base.Columns.Add(this.columnShipmentPrice);
                 this.columnNotes = new global::System.Data.DataColumn("Notes", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNotes);
+                this.columnSellerName = new global::System.Data.DataColumn("SellerName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSellerName);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnOrderID}, true));
                 this.columnCityName.MaxLength = 50;
@@ -772,6 +786,22 @@ namespace ClothesShop.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string SellerName {
+                get {
+                    try {
+                        return ((string)(this[this.tableOrder.SellerNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SellerName\' in table \'Order\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOrder.SellerNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsCityNameNull() {
                 return this.IsNull(this.tableOrder.CityNameColumn);
             }
@@ -852,6 +882,18 @@ namespace ClothesShop.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetNotesNull() {
                 this[this.tableOrder.NotesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSellerNameNull() {
+                return this.IsNull(this.tableOrder.SellerNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSellerNameNull() {
+                this[this.tableOrder.SellerNameColumn] = global::System.Convert.DBNull;
             }
         }
         

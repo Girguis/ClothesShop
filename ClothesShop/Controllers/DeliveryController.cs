@@ -101,6 +101,8 @@ namespace ClothesShop.Controllers
                 PaidAmount = (n.PaidAmount.HasValue ? n.PaidAmount.Value : 0),
                 OrderStatusName = orderStatuses.Where(x => x.ID == n.OrderStatusID).First().Name,
                 OrderStatusID = n.OrderStatusID.HasValue ? n.OrderStatusID.Value : 0,
+                PageID = n.PageID,
+                SellerName = n.Seller?.FullName
             }).ToList();
 
             ViewBag.EmployeeName = employee.FullName;
@@ -221,7 +223,13 @@ namespace ClothesShop.Controllers
             }
         }
 
-
+        private string GetPageName(string PageID)
+        {
+            if (PageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                return "EY";
+            else
+                return "Wolf";
+        }
         public ActionResult ExportToPDF(long id)
         {
             try
@@ -238,7 +246,7 @@ namespace ClothesShop.Controllers
                     CustomerName = n.Customer != null ? n.Customer.Name : "",
                     CustomerAddress = n.Customer != null ? GetLastPartOfAddress(n.Customer.Address) : "",
                     CustomerMobileNumber = n.Customer.MobileNumber1,
-                    SellerName = n.Seller != null ? n.Seller.FullName : "",
+                    SellerName = n.Seller != null ? GetPageName(n.PageID)+"-"+n.Seller.FullName : GetPageName(n.PageID),
                     OrderPrice = n.ProductOrders.Sum(p => p.Quantity * p.SellingPrice).Value,
                     ShipmentPrice = n.ShipmentPrice,
                     OrderCode = n.ID,
@@ -319,7 +327,7 @@ namespace ClothesShop.Controllers
                     CustomerName = n.Customer != null ? n.Customer.Name : "",
                     CustomerAddress = n.Customer != null ? GetLastPartOfAddress(n.Customer.Address) : "",
                     CustomerMobileNumber = n.Customer.MobileNumber1.ToString(),
-                    SellerName = n.Seller != null ? n.Seller.FullName : "",
+                    SellerName = n.Seller != null ? GetPageName(n.PageID) + "-" + n.Seller.FullName : GetPageName(n.PageID),
                     OrderPrice = n.ProductOrders.Sum(p => p.Quantity * p.SellingPrice).Value.ToString(),
                     ShipmentPrice = n.ShipmentPrice.ToString(),
                     OrderCode = n.ID.ToString(),

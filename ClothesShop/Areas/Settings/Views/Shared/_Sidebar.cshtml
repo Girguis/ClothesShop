@@ -15,7 +15,7 @@
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand sidebar-link" href="@Url.Action("Index", "Home", new { area = ""})">
             <img src="~/Images/logo.png" style="height:50px;" />
-            <span>@Resources.Elba4a</span>
+            <span>EY Store</span>
         </a>
         <ul class="sidebar-nav">
             @if (hasRole)
@@ -30,17 +30,24 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item" id="EmployeeRoles">
-                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.Employee })">
-                        <img class="sidebarImage" src="~/Images/employee.png" /> <span class="align-middle">@Resources.Employee</span>
+                <li class="sidebar-item" id="SellerRoles">
+                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.Seller })">
+                        <img class="sidebarImage" src="~/Images/employee.png" /> <span class="align-middle">@Resources.Seller</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item" id="WorkerRoles">
-                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.Worker })">
-                        <img class="sidebarImage" src="~/Images/employee.png" /> <span class="align-middle">@Resources.Worker</span>
+                <li class="sidebar-item" id="PageOneSellerRoles">
+                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.PageOneSeller })">
+                        <img class="sidebarImage" src="~/Images/employee.png" /> <span class="align-middle">@Resources.PageOneSeller</span>
                     </a>
                 </li>
+
+                <li class="sidebar-item" id="PageTwoSellerRoles">
+                    <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.PageTwoSeller })">
+                        <img class="sidebarImage" src="~/Images/employee.png" /> <span class="align-middle">@Resources.PageTwoSeller</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-item" id="DeliveryManRoles">
                     <a class="sidebar-link" href="@Url.Action("Edit", "Roles", new { area = "Settings", id = (int)JobTypes.DeliveryMan })">
                         <img class="sidebarImage" src="~/Images/motorcycle.png" /> <span class="align-middle">@Resources.DeliveryMan</span>

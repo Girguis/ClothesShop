@@ -346,9 +346,6 @@
   <data name="Employee" xml:space="preserve">
     <value>موظف</value>
   </data>
-  <data name="Worker" xml:space="preserve">
-    <value>بائع</value>
-  </data>
   <data name="Manager" xml:space="preserve">
     <value>مدير</value>
   </data>
@@ -695,7 +692,7 @@
     <value>طباعة</value>
   </data>
   <data name="Seller" xml:space="preserve">
-    <value>اسم البائع</value>
+    <value>بائع</value>
   </data>
   <data name="NoSeller" xml:space="preserve">
     <value>بدون بائع</value>
@@ -864,5 +861,14 @@
   </data>
   <data name="StatisticsDetails" xml:space="preserve">
     <value>تفاصيل الإحصائيات</value>
+  </data>
+  <data name="PageOneSeller" xml:space="preserve">
+    <value>بائع EY Store</value>
+  </data>
+  <data name="PageTwoSeller" xml:space="preserve">
+    <value>بائع Wolf Store</value>
+  </data>
+  <data name="SellerName" xml:space="preserve">
+    <value>اسم البائع</value>
   </data>
 </root>

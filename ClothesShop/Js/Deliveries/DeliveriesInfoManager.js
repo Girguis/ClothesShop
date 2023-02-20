@@ -136,6 +136,24 @@
                         allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
                     },
                     {
+                        dataField: "PageID", caption: "", minWidth: 90,
+                        alignment: "right",
+                        dataType: "string",
+                        allowFiltering: false, allowSorting: false, allowHeaderFiltering: false,
+                        calculateDisplayValue: function (row) {
+                            if (row.PageID == "137D0514-F286-48AA-BCD4-B7FE7C5B79D8")
+                                return "EY Store";
+                            else
+                                return "Wolf Store";
+                        }
+                    },
+                    {
+                        dataField: "SellerName", caption: captions["seller_name"], minWidth: 90,
+                        alignment: "right",
+                        dataType: "string",
+                        allowFiltering: true, allowSorting: false, allowHeaderFiltering: false,
+                    },
+                    {
                         dataField: "OrderStatusName", caption: captions["order_status"], width: 120,
                         allowSorting: false,
                         allowFiltering: false,
